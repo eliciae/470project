@@ -23,15 +23,7 @@
       <button id="auth_button">Authorize</button>
     </main>
 
-    <script>
-      function drawSquare()
-      {
-        alert('drawing');
-        svg.innerHTML = '<circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />';
-      }
-    </script>
-
-        <svg id="svg" width="500" height="500" onclick="drawSquare()"/>
+        <svg id="svg" width="500" height="500"/>
 
 
     <script>
@@ -90,10 +82,6 @@
         var string = model.createString();
         string.setText('Welcome to the Quickstart App!');
         model.getRoot().set('demo_string', string);
-
-        var htmlString = model.createString();
-        htmlString.setText('');
-        model.getRoot().set('svgString', htmlString);
       }
 
       // After a file has been initialized and loaded, we can access the
@@ -102,8 +90,7 @@
         var collaborativeString = doc.getModel().getRoot().get('demo_string');
         wireTextBoxes(collaborativeString);
 
-        var otherString = doc.getModel().getRoot().get('svgString');
-        wireSVG(otherString);
+        alert(doc.getModel.getRoot().get('causalVarShape'));
       }
 
       // Connects the text boxes to the collaborative string
@@ -115,36 +102,46 @@
         gapi.drive.realtime.databinding.bindString(collaborativeString, textArea2);
       }
 
-      function wireSVG(otherString)
+
+
+
+      // Call this function before calling gapi.drive.realtime.load
+      function registerCustomTypes()
       {
-        var svgInner = document.getElementById('svg').innerHTML;
-        gapi.drive.realtime.databinding.bindString(otherString, svgInner);
+          var causalVar = function () { };
+
+          // function initializeCausalVar()
+          // {
+          //     var model = gapi.drive.realtime.custom.getModel(this);
+
+          //     this.reviews = model.createList();
+          //     this.content = model.createString();
+          // }
+
+          gapi.drive.realtime.custom.registerType(causalVar, 'causalVar');
+
+          causalVar.prototype.xCenter = gapi.drive.realtime.custom.collaborativeField('xCenter');
+          causalVar.prototype.yCenter = gapi.drive.realtime.custom.collaborativeField('yCenter');
+
+          //gapi.drive.realtime.custom.setInitializer(causalVar, initializeBook);
       }
 
 
+      document.getElementById("svg").addEventListener("click", 
+        function drawSquare()
+        {
+          alert('drawing');
+          svg.innerHTML = '<circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />';
 
+          var causalVarShape = model.create('causalVar');
+          causalVarShape.xCenter = 10;
+          causalVarShape.yCenter = 10;
 
-      // // Call this function before calling gapi.drive.realtime.load
-      // function registerCustomTypes()
-      // {
-      //     var causalVar = function () { };
+          model.getRoot().set('causalVarShape', causalVarShape);
 
-      //     // function initializeCausalVar()
-      //     // {
-      //     //     var model = gapi.drive.realtime.custom.getModel(this);
-
-      //     //     this.reviews = model.createList();
-      //     //     this.content = model.createString();
-      //     // }
-
-      //     gapi.drive.realtime.custom.registerType(causalVar, 'causalVar');
-
-      //     causalVar.prototype.xCenter = gapi.drive.realtime.custom.collaborativeField('xCenter');
-      //     causalVar.prototype.yCenter = gapi.drive.realtime.custom.collaborativeField('yCenter');
-
-      //     //gapi.drive.realtime.custom.setInitializer(causalVar, initializeBook);
-      // }
-
+          causalVarShape.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doValueChanged);
+        }
+      );
 
 
     </script>
