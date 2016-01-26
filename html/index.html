@@ -115,26 +115,26 @@
       }
 
 
-      // Call this function before calling gapi.drive.realtime.load
-      function registerCustomTypes()
-      {
-          var causalVar = function () { };
+      // // Call this function before calling gapi.drive.realtime.load
+      // function registerCustomTypes()
+      // {
+      //     var causalVar = function () { };
 
-          // function initializeCausalVar()
-          // {
-          //     var model = gapi.drive.realtime.custom.getModel(this);
+      //     // function initializeCausalVar()
+      //     // {
+      //     //     var model = gapi.drive.realtime.custom.getModel(this);
 
-          //     this.reviews = model.createList();
-          //     this.content = model.createString();
-          // }
+      //     //     this.reviews = model.createList();
+      //     //     this.content = model.createString();
+      //     // }
 
-          gapi.drive.realtime.custom.registerType(causalVar, 'causalVar');
+      //     gapi.drive.realtime.custom.registerType(causalVar, 'causalVar');
 
-          causalVar.prototype.xCenter = gapi.drive.realtime.custom.collaborativeField('xCenter');
-          causalVar.prototype.yCenter = gapi.drive.realtime.custom.collaborativeField('yCenter');
+      //     causalVar.prototype.xCenter = gapi.drive.realtime.custom.collaborativeField('xCenter');
+      //     causalVar.prototype.yCenter = gapi.drive.realtime.custom.collaborativeField('yCenter');
 
-          //gapi.drive.realtime.custom.setInitializer(causalVar, initializeBook);
-      }
+      //     //gapi.drive.realtime.custom.setInitializer(causalVar, initializeBook);
+      // }
 
 
 
