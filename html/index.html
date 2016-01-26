@@ -23,11 +23,9 @@
       <button id="auth_button">Authorize</button>
     </main>
 
-    <canvas id="canvas" width="500" height="500" onclick="drawSquare(event)"></canvas>
 
     <script>
-      var canvas = document.getElementById('canvas');
-      var ctx = canvas.getContext('2d');
+      var svg = document.getElementById('svg');
 
 
       var clientId = '707956241542-4s76mlqlkm2rol57nneobntvjb6h5sck.apps.googleusercontent.com';
@@ -83,9 +81,7 @@
         string.setText('Welcome to the Quickstart App!');
         model.getRoot().set('demo_string', string);
 
-        var htmlString = model.createString();
-        htmlString.setText("");
-        model.getRoot().set('canvasString', htmlString);
+        var htmlString = model.
       }
 
       // After a file has been initialized and loaded, we can access the
@@ -94,8 +90,8 @@
         var collaborativeString = doc.getModel().getRoot().get('demo_string');
         wireTextBoxes(collaborativeString);
 
-        var otherString = doc.getModel().getRoot().get('canvasString');
-        wireCanvas(otherString);
+        var otherString = doc.getModel().getRoot().get('svgString');
+        wireSVG(otherString);
       }
 
       // Connects the text boxes to the collaborative string
@@ -107,17 +103,44 @@
         gapi.drive.realtime.databinding.bindString(collaborativeString, textArea2);
       }
 
-      function wireCanvas(otherString)
+      function wireSVG(otherString)
       {
-        var canvasInner = document.getElementById('canvas').innerHTML;
-        gapi.drive.realtime.databinding.bindString(otherString, canvasInner);
+        var svgInner = document.getElementById('svg').innerHTML;
+        gapi.drive.realtime.databinding.bindString(otherString, svgInner);
       }
 
-      function drawSquare(e)
+      function drawSquare()
       {
-        ctx.fillStyle = "#FF0000";
-        ctx.fillRect(e.clientX, e.clientY, 20, 20);
+        svg.innerHTML = '<circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />';
       }
+
+
+      // Call this function before calling gapi.drive.realtime.load
+      function registerCustomTypes()
+      {
+          var causalVar = function () { };
+
+          // function initializeCausalVar()
+          // {
+          //     var model = gapi.drive.realtime.custom.getModel(this);
+
+          //     this.reviews = model.createList();
+          //     this.content = model.createString();
+          // }
+
+          gapi.drive.realtime.custom.registerType(causalVar, 'causalVar');
+
+          causalVar.prototype.xCenter = gapi.drive.realtime.custom.collaborativeField('xCenter');
+          causalVar.prototype.yCenter = gapi.drive.realtime.custom.collaborativeField('yCenter');
+
+          //gapi.drive.realtime.custom.setInitializer(causalVar, initializeBook);
+      }
+
+
+
     </script>
+
+    
+    <svg id="svg" width="500" height="500" onclick="drawSquare()"/>
   </body>
 </html>
