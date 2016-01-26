@@ -32,6 +32,8 @@
 
       var clientId = '707956241542-4s76mlqlkm2rol57nneobntvjb6h5sck.apps.googleusercontent.com';
 
+      var localModel;
+
       if (!/^([0-9])$/.test(clientId[0])) {
         alert('Invalid Client ID - did you forget to insert your application Client ID?');
       }
@@ -79,6 +81,8 @@
       // document structure. This function will add a collaborative string
       // to our model at the root.
       function onFileInitialize(model) {
+        localModel = model;
+
         var string = model.createString();
         string.setText('Welcome to the Quickstart App!');
         model.getRoot().set('demo_string', string);
@@ -87,6 +91,9 @@
       // After a file has been initialized and loaded, we can access the
       // document. We will wire up the data model to the UI.
       function onFileLoaded(doc) {
+
+        localModel = doc.getModel();
+
         var collaborativeString = doc.getModel().getRoot().get('demo_string');
         wireTextBoxes(collaborativeString);
 
@@ -133,11 +140,11 @@
           alert('drawing');
           svg.innerHTML = '<circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />';
 
-          var causalVarShape = model.create('causalVar');
+          var causalVarShape = localModel.create('causalVar');
           causalVarShape.xCenter = 10;
           causalVarShape.yCenter = 10;
 
-          model.getRoot().set('causalVarShape', causalVarShape);
+          localModel.getRoot().set('causalVarShape', causalVarShape);
 
           causalVarShape.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doValueChanged);
         }
