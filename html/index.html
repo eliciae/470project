@@ -81,7 +81,9 @@
         string.setText('Welcome to the Quickstart App!');
         model.getRoot().set('demo_string', string);
 
-        var htmlString = model.
+        var htmlString = model.createString();
+        htmlString.setText('');
+        model.getRoot().set('svgString', htmlString);
       }
 
       // After a file has been initialized and loaded, we can access the
@@ -140,7 +142,7 @@
 
     </script>
 
-    
+
     <svg id="svg" width="500" height="500" onclick="drawSquare()"/>
   </body>
 </html>
