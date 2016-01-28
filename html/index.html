@@ -13,7 +13,7 @@
     <!-- Load the utility library -->
     <script src="https://www.gstatic.com/realtime/realtime-client-utils.js"></script>
   </head>
-  <link rel="stylesheet" type="text/css" href="../CSS/styling.css">
+  <link rel="stylesheet" type="text/css" href="../css/styling.css">
   <body>
     <main>
       <h1>Realtime Collaboration Quickstart</h1>
@@ -85,6 +85,11 @@
         // is not an id in the URL.
         var id = realtimeUtils.getParam('id');
         if (id) {
+
+
+          registerCustomTypes();
+
+
           // Load the document id from the URL
           realtimeUtils.load(id.replace('/', ''), onFileLoaded, onFileInitialize);
         } else {
@@ -105,6 +110,11 @@
         var string = model.createString();
         string.setText('Welcome to the Quickstart App!');
         model.getRoot().set('demo_string', string);
+
+        //create new object 
+
+
+        alert(model.getRoot().get('causalVarShape'));
       }
 
       // After a file has been initialized and loaded, we can access the
@@ -116,7 +126,7 @@
         var collaborativeString = doc.getModel().getRoot().get('demo_string');
         wireTextBoxes(collaborativeString);
 
-        alert(doc.getModel.getRoot().get('causalVarShape'));
+        alert("file loaded. xcoord: " + localModel.getRoot().get('causalVarShape').xCenter);
       }
 
       // Connects the text boxes to the collaborative string
@@ -127,6 +137,7 @@
         gapi.drive.realtime.databinding.bindString(collaborativeString, textArea1);
         gapi.drive.realtime.databinding.bindString(collaborativeString, textArea2);
       }
+
 
       // Call this function before calling gapi.drive.realtime.load
       function registerCustomTypes()
@@ -206,10 +217,13 @@
 			  var causalVarShape = localModel.create('causalVar');
 			  causalVarShape.xCenter = initialX;
 			  causalVarShape.yCenter = initialY;
+        causalVarShape.radius = radius;
 	
 			  localModel.getRoot().set('causalVarShape', causalVarShape);
 			  
 			  causalVarShape.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doValueChanged);
+
+        alert(localModel.getRoot().get('causalVarShape'));
 		  }
 		  else {
 			var width = currentX - initialX;
