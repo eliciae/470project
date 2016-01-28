@@ -13,7 +13,7 @@
     <!-- Load the utility library -->
     <script src="https://www.gstatic.com/realtime/realtime-client-utils.js"></script>
   </head>
-  <link rel="stylesheet" type="text/css" href="../CSS/styling.css">
+  <link rel="stylesheet" type="text/css" href="../css/styling.css">
   <body>
     <main>
       <h1>Realtime Collaboration Quickstart</h1>
@@ -58,6 +58,9 @@
       }
       // Create a new instance of the realtime utility with your client ID.
       var realtimeUtils = new utils.RealtimeUtils({ clientId: clientId });
+
+      registerCustomTypes();
+      gapi.load("auth:client,drive-realtime,drive-share", callback);
 
       authorize();
 
