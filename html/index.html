@@ -138,15 +138,15 @@
         function drawSquare()
         {
           alert('drawing');
-          svg.innerHTML = '<circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />';
+          // svg.innerHTML = '<circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />';
 
-          var causalVarShape = localModel.create('causalVar');
-          causalVarShape.xCenter = 10;
-          causalVarShape.yCenter = 10;
+          // var causalVarShape = localModel.create('causalVar');
+          // causalVarShape.xCenter = 10;
+          // causalVarShape.yCenter = 10;
 
-          localModel.getRoot().set('causalVarShape', causalVarShape);
+          // localModel.getRoot().set('causalVarShape', causalVarShape);
 
-          causalVarShape.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doValueChanged);
+          // causalVarShape.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doValueChanged);
         }
       );
 
