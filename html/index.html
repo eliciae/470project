@@ -136,20 +136,29 @@
       {
           var causalVar = function () { };
 
-          // function initializeCausalVar()
-          // {
-          //     var model = gapi.drive.realtime.custom.getModel(this);
-
-          //     this.reviews = model.createList();
-          //     this.content = model.createString();
-          // }
+          function initializeCausalVar()
+          {
+            this.xCenter = 10;
+            this.yCenter = 10;
+            this.radius = 10;
+          }
 
           gapi.drive.realtime.custom.registerType(causalVar, 'causalVar');
 
           causalVar.prototype.xCenter = gapi.drive.realtime.custom.collaborativeField('xCenter');
           causalVar.prototype.yCenter = gapi.drive.realtime.custom.collaborativeField('yCenter');
+          causalVar.prototype.radius = gapi.drive.realtime.custom.collaborativeField('radius');
 
-          //gapi.drive.realtime.custom.setInitializer(causalVar, initializeBook);
+          gapi.drive.realtime.custom.setInitializer(causalVar, initializeCausalVar);
+      }
+
+
+      function doOnLoaded() {
+        // Note that "this" is the newly created object, even though
+        // this method is statically defined. The onLoaded event is
+        // always called in the context of the loaded object.
+        this.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED,
+            alert("xCenter: " + this.xCenter));
       }
 
 
