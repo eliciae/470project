@@ -59,9 +59,6 @@
       // Create a new instance of the realtime utility with your client ID.
       var realtimeUtils = new utils.RealtimeUtils({ clientId: clientId });
 
-      registerCustomTypes();
-      gapi.load("auth:client,drive-realtime,drive-share", callback);
-
       authorize();
 
       function authorize() {
@@ -88,6 +85,11 @@
         // is not an id in the URL.
         var id = realtimeUtils.getParam('id');
         if (id) {
+
+
+          registerCustomTypes();
+
+
           // Load the document id from the URL
           realtimeUtils.load(id.replace('/', ''), onFileLoaded, onFileInitialize);
         } else {
