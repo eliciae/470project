@@ -13,6 +13,7 @@
     <!-- Load the utility library -->
     <script src="https://www.gstatic.com/realtime/realtime-client-utils.js"></script>
   </head>
+  <link rel="stylesheet" type="text/css" href="../CSS/styling.css">
   <body>
     <main>
       <h1>Realtime Collaboration Quickstart</h1>
@@ -22,17 +23,35 @@
       <textarea id="text_area_2"></textarea>
       <button id="auth_button">Authorize</button>
     </main>
+    
+    <!--TOOLBAR-->
+    <table> 
+      <tr>
+        <td id="btnUndo">undo</td>
+        <td id="btnRedo">redo</td> 
+        <td id="btnCreateCircle">circle</td>
+        <td id="btnCreateEllipse">ellipse</td>
+        <td id="btnCreateRect">rectangle</td>
+        <td id="btnCreateConnection">connection</td>
+        <td id="btnCreateComment">comment</td>
+      </tr>
+	</table>
 
-        <svg id="svg" width="500" height="500"/>
+    <svg id="svg" width="100%" height="900" style="background-color:#CCC;">
+	</svg>
 
-
+	<!---JAVASCRIPT here down-->
     <script>
-      var svg = document.getElementById('svg');
-
-
+	  //VARIABLES
       var clientId = '707956241542-4s76mlqlkm2rol57nneobntvjb6h5sck.apps.googleusercontent.com';
-
       var localModel;
+	  
+	  var mouseIsDown = false;
+	  var currentX;
+	  var currentY;
+	  var initalX;
+	  var initialY;
+	  var tempHtml;
 
       if (!/^([0-9])$/.test(clientId[0])) {
         alert('Invalid Client ID - did you forget to insert your application Client ID?');
@@ -134,23 +153,102 @@
       }
 
 
-      document.getElementById("svg").addEventListener("click", 
-        function drawSquare()
+	//SET TO CREATING 
+      document.getElementById("btnCreateCircle").addEventListener("click", 
+        function drawVariable()
         {
-          alert('drawing');
-          // svg.innerHTML = '<circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />';
-
-          // var causalVarShape = localModel.create('causalVar');
-          // causalVarShape.xCenter = 10;
-          // causalVarShape.yCenter = 10;
-
-          // localModel.getRoot().set('causalVarShape', causalVarShape);
-
-          // causalVarShape.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doValueChanged);
+		      document.getElementById("btnCreateCircle").selected = true;
         }
       );
-
-
+	  
+	  document.getElementById("btnCreateRect").addEventListener("click", 
+        function drawVariable()
+        {
+		 document.getElementById("btnCreateRect").selected = true;
+        }
+      );
+	  
+	  document.getElementById("btnCreateEllipse").addEventListener("click", 
+        function drawVariable()
+        {
+		 document.getElementById("btnCreateEllipse").selected = true;
+        }
+      );
+	  
+	  
+	//Start drawing once clicked after selected a variable
+	  document.onmousedown = function(e){
+		  if ((document.getElementById("btnCreateCircle").selected)||(document.getElementById("btnCreateRect").selected) || (document.getElementById("btnCreateEllipse"))){
+			  mouseIsDown = true;
+			  initialX = currentX;
+			  initialY = currentY;
+			  tempHtml = svg.innerHTML;
+		  }
+	  }
+	  
+	 //on mouseup stop drawing  
+	  document.onmouseup = function(e){
+		  mouseIsDown = false;
+		  
+		  if ((document.getElementById("btnCreateCircle").selected)){
+			  var radius = Math.sqrt( (currentX-initialX)*(currentX-initialX) + (currentY-initialY)*(currentY-initialY) );
+			  tempHtml = tempHtml + '<circle cx=' + initialX + ' cy=' + initialY + ' r=' + radius + ' stroke="black" stroke-width="3" fill="red" />';
+			  svg.innerHTML = tempHtml; 
+			  document.getElementById("btnCreateCircle").selected = false;
+				
+			//Probably should change this so that there is just variables that are rectangle based (ie: rectangle & ovals)	
+			  var causalVarShape = localModel.create('causalVar');
+			  causalVarShape.xCenter = initialX;
+			  causalVarShape.yCenter = initialY;
+	
+			  localModel.getRoot().set('causalVarShape', causalVarShape);
+			  
+			  causalVarShape.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doValueChanged);
+		  }
+		  else {
+			var width = currentX - initialX;
+			var height = currentY - initialY;
+			var centerX = (initialX - currentX)/2 + initialX;
+			var centerY = (initialY - currentY)/2 + initialY;
+			if ((document.getElementById("btnCreateRect").selected)){
+			  tempHtml = tempHtml + '<rect x=' + centerX + ' y=' + centerY +' width=' + width + ' height=' + height + ' stroke="black" stroke-width="3" fill="red" />';
+			  svg.innerHTML = tempHtml; 
+		 	  document.getElementById("btnCreateRect").selected = false;
+			  
+			}
+			else if ((document.getElementById("btnCreateEllipse").selected)){
+			  tempHtml = tempHtml + '<ellipse cx=' + centerX + ' cy=' + centerY +' rx=' + width + ' ry=' + height + ' stroke="black" stroke-width="3" fill="red" />';
+			  svg.innerHTML = tempHtml; 
+		      document.getElementById("btnCreateEllipse").selected = false;
+			}
+		  }
+	  }
+		 
+	//resize while mouse is moving & down. Always update current X and Y 
+	  document.onmousemove = function(e){
+		currentX = e.screenX;
+		currentY = e.screenY - 356;
+		if (mouseIsDown){
+			if (document.getElementById("btnCreateCircle").selected){
+				var radius = Math.sqrt( (currentX-initialX)*(currentX-initialX) + (currentY-initialY)*(currentY-initialY) );
+				svg.innerHTML = tempHtml + '<circle cx=' + initialX + ' cy=' + initialY + ' r=' + radius + ' stroke="black" stroke-width="3" fill="blue" />';	
+			}
+			else {
+				var width = currentX - initialX;
+				var height = currentY - initialY;
+				var centerX = (initialX - currentX)/2 + initialX;
+				var centerY = (initialY - currentY)/2 + initialY;
+				if (document.getElementById("btnCreateRect").selected){
+					svg.innerHTML = tempHtml + '<rect x=' + centerX + ' y=' + centerY +' width=' + width + ' height=' + height + ' stroke="black" stroke-width="3" fill="blue" />';
+				}
+				else if(document.getElementById("btnCreateEllipse").selected){
+					svg.innerHTML = tempHtml + '<ellipse cx=' + centerX + ' cy=' + centerY +' rx=' + width + ' ry=' + height + ' stroke="black" stroke-width="3" fill="red" />';
+				}
+					
+			}
+				
+		}
+	  }
     </script>
   </body>
 </html>
