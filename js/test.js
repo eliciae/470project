@@ -151,15 +151,15 @@
 
 	function getHTML(shape)
 			{
-			if (shape == "circle"){
-			alert("here");
+			if (shape == "circle")
 				return '<circle cx=' + initialX + ' cy=' + initialY + ' r=' + radius + ' stroke="black" stroke-width="3" fill=' + color +' />';
-			}
 			 else if (shape == "ellipse")
 				return '<ellipse cx=' + centerX + ' cy=' + centerY +' rx=' + width + ' ry=' + height + ' stroke="black" stroke-width="3" fill=' + color +' />';
 			else if (shape == "rectangle")
 				return '<rect x=' + centerX + ' y=' + centerY +' width=' + width + ' height=' + height + ' stroke="black" stroke-width="3" fill=' + color +' />';
-	
+			else if (shape == "connection"){
+				return '<line x1=' + initialX + ' y1=' + initialY + ' x2=' + currentX +' y2=' + currentY + ' style="stroke:rgb(0,0,0);stroke-width:2" />';
+				}
 			}
 		
 		//update color picker
@@ -189,8 +189,12 @@
         }
       );
 	  
-	  
-	  
+	  document.getElementById("btnCreateConnection").addEventListener("click", 
+        function drawConnection()
+        {
+		 	selectedName = "connection";
+        }
+      );
 	  
 	//Start drawing once clicked after variable is selected
 	  document.onmousedown = function(e){
