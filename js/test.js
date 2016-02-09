@@ -17,7 +17,10 @@
 	var distanceToTopOfPage = 0;
 	
 	//mouse positions
-	var currentX, currentY, initialX, initialY;
+	var currentX = 0;
+	var currentY = 0;
+	var initialX = 0; 
+	var initialY = 0;
 	
 	//calculated 
 	var radius, width, height, centerX, centerY;
@@ -51,6 +54,8 @@
       }
 
       function start() {
+		 updateCalculatedValues();
+		  
         // With auth taken care of, load a file, or create one if there
         // is not an id in the URL.
         var id = realtimeUtils.getParam('id');
@@ -118,11 +123,11 @@
           function initializeCausalVar()
           {
             alert("init causal var");
-            this.xCenter = 10;
-            this.yCenter = 10;
-      			this.width = 10;
-      			this.height = 10;
-      			this.name = "";
+            this.xCenter = initialX;
+            this.yCenter = initialY;
+      		this.width = width;
+      		this.height = height;
+      		this.name = "";
           }
 
           gapi.drive.realtime.custom.registerType(causalVar, 'causalVar');
@@ -166,6 +171,7 @@
 			else if (shape == "connection"){
 				return '<line x1=' + initialX + ' y1=' + initialY + ' x2=' + currentX +' y2=' + currentY + ' style="stroke:rgb(0,0,0);stroke-width:2" />';
 				}
+			 else{}
 			}
 		
 		//update color picker
