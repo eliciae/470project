@@ -1,7 +1,10 @@
-
 <!DOCTYPE html>
 <html>
-  <head>
+<body>
+    <svg id="svg" width="2000px" height="2000px" style="background-color:#FFF;">
+	</svg>
+    	<!--HEADER-->
+	<header>
     <title>Google Realtime Quickstart</title>
 
     <!-- Load Styles -->
@@ -12,23 +15,37 @@
 
     <!-- Load the utility library -->
     <script src="https://www.gstatic.com/realtime/realtime-client-utils.js"></script>
-  </head>
   <link rel="stylesheet" type="text/css" href="../css/styling.css">
-  <body>
-    <main>
-      <h1>Realtime Collaboration Quickstart</h1>
+      <h1>Collaborative Causal Loop Diagram Builder</h1>
       <p>Now that your application is running, simply type in either text box and see your changes instantly appear in the other one. Open
       this same document in a <a onclick="window.open(window.location.href);return false;" target="_blank">new tab</a> to see it work across tabs.</p>
       <textarea id="text_area_1"></textarea>
       <textarea id="text_area_2"></textarea>
       <button id="auth_button">Authorize</button>
-    </main>
-    
-    <!--TOOLBAR-->
-    <table> 
+</header>
+
+    <!--toolbar -->
+            <!--LEFT COLUMN-->
+                <table align="left">
+               		 <tr>
+                      	<td></td>
+                      </tr
+                      <tr>
+                      	<td>variable</td>
+                      </tr>
+                      <tr>
+                      	<td>connection</td>
+                      </tr>
+                      <tr>
+                      	<td>comment</td>
+                      </tr>
+                </table>
+    <!--top toolbar-->
+    <table align="center"> 
       <tr>
-        <td id="btnUndo">undo</td>
-        <td id="btnRedo">redo</td> 
+        <td id="btnUndo"><img src="../graphics/undo.jpg" alt="undo" style="width:50px;height:25px;">
+</td>
+        <td id="btnRedo"><img src="../graphics/redo.jpg" alt="redo" style="width:50px;height:25px;"></td> 
         <td id="btnCreateCircle">circle</td>
         <td id="btnCreateEllipse">ellipse</td>
         <td id="btnCreateRect">rectangle</td>
@@ -36,13 +53,10 @@
         <td id="btnCreateComment">comment</td>
         <td>Color: <input class="jscolor" onchange="update(this.jscolor)" value="FFFFFF" name="variableColor"></td>
       </tr>
-	</table>
+	</table>   
 
-    <svg id="svg" width="100%" height="900" style="background-color:#CCC;">
-	</svg>
-
-	<!---JAVASCRIPT-->
+    	<!---JAVASCRIPT-->
     <script src="../js/jscolor.js"></script>
 	<script src="../js/test.js"></script>
-  </body>
+</body>
 </html>

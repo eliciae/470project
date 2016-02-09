@@ -9,7 +9,7 @@
 	var selectedName = "";
 	
 	//distance from svg & top of page
-	var distanceToTopOfPage = 270;
+	var distanceToTopOfPage = 0;
 	
 	//mouse positions
 	var currentX, currentY, initialX, initialY;
@@ -141,8 +141,8 @@
 	  
 	  function updateCalculatedValues(){
 			//update calcuated variables
-			width = currentX - initialX;
-			height = currentY - initialY;
+			width = Math.abs(currentX - initialX);
+			height = Math.abs(currentY - initialY);
 			radius = Math.sqrt( width * width + height * height );
 			centerX = (initialX - currentX)/2 + initialX;
 			centerY = (initialY - currentY)/2 + initialY;
