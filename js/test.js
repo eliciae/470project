@@ -1,4 +1,9 @@
-	var clientId = '707956241542-t1qe821rk6jkmnmrcth0aafrjcfjg441.apps.googleusercontent.com';
+	//this is the one for the server
+  var clientId = '707956241542-t1qe821rk6jkmnmrcth0aafrjcfjg441.apps.googleusercontent.com';
+
+  //this is the local one
+  //var clientId = '707956241542-4s76mlqlkm2rol57nneobntvjb6h5sck.apps.googleusercontent.com';
+
 	var localModel, tempHtml;
 	var mouseIsDown = false;
 	
@@ -233,7 +238,7 @@
       causalVarShape.width = width;
       causalVarShape.height = height;
       causalVarShape.name = selectedName;
-      
+
   		localModel.getRoot().set('causalVarShape', causalVarShape);
   		//causalVarShape.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doValueChanged);
       alert("mouse up: xcoord: " + localModel.getRoot().get('causalVarShape').xCenter);
