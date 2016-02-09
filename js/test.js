@@ -1,4 +1,4 @@
-	var clientId = '707956241542-4s76mlqlkm2rol57nneobntvjb6h5sck.apps.googleusercontent.com';
+	var clientId = '707956241542-t1qe821rk6jkmnmrcth0aafrjcfjg441.apps.googleusercontent.com';
 	var localModel, tempHtml;
 	var mouseIsDown = false;
 	
@@ -22,6 +22,7 @@
       }
       // Create a new instance of the realtime utility with your client ID.
       var realtimeUtils = new utils.RealtimeUtils({ clientId: clientId });
+
 
       authorize();
 
@@ -77,7 +78,6 @@
       // After a file has been initialized and loaded, we can access the
       // document. We will wire up the data model to the UI.
       function onFileLoaded(doc) {
-
         localModel = doc.getModel();
 
         var collaborativeString = doc.getModel().getRoot().get('demo_string');
@@ -112,11 +112,12 @@
 
           function initializeCausalVar()
           {
+            alert("init causal var");
             this.xCenter = 10;
             this.yCenter = 10;
-			this.width = 10;
-			this.height = 10;
-			this.name = "";
+      			this.width = 10;
+      			this.height = 10;
+      			this.name = "";
           }
 
           gapi.drive.realtime.custom.registerType(causalVar, 'causalVar');
@@ -124,8 +125,8 @@
           causalVar.prototype.xCenter = gapi.drive.realtime.custom.collaborativeField('xCenter');
           causalVar.prototype.yCenter = gapi.drive.realtime.custom.collaborativeField('yCenter');
           causalVar.prototype.width = gapi.drive.realtime.custom.collaborativeField('width');
-		  causalVar.prototype.height = gapi.drive.realtime.custom.collaborativeField('height');
-		  causalVar.prototype.name = gapi.drive.realtime.custom.collaborativeField('name');
+    		  causalVar.prototype.height = gapi.drive.realtime.custom.collaborativeField('height');
+    		  causalVar.prototype.name = gapi.drive.realtime.custom.collaborativeField('name');
 
           gapi.drive.realtime.custom.setInitializer(causalVar, initializeCausalVar);
       }
@@ -206,38 +207,49 @@
 		  }
 	  }
 	  
+    function doValueChanged()
+    {
+      causalVarShape.xCenter = initialX;
+      causalVarShape.yCenter = initialY;
+      causalVarShape.width = width;
+      causalVarShape.height = height;
+      causalVarShape.name = selectedName;
+    }
+
 	 //on mouseup stop drawing  
-	  document.onmouseup = function(e){
-		mouseIsDown = false;
-		updateCalculatedValues();
-		tempHtml = tempHtml + getHTML(selectedName);
-		svg.innerHTML = tempHtml; 
-		selectedName = "";
-		  
-				
-		//create new causalVarShape	
-		var causalVarShape = localModel.create('causalVar');
-		causalVarShape.xCenter = initialX;
-		causalVarShape.yCenter = initialY;
-		causalVarShape.width = width;
-		causalVarShape.height = height;
-		causalVarShape.name = selectedName;
-		
-		localModel.getRoot().set('causalVarShape', causalVarShape);
-		causalVarShape.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doValueChanged);
+	  document.onmouseup = function(e)
+    {
+  		mouseIsDown = false;
+  		updateCalculatedValues();
+  		tempHtml = tempHtml + getHTML(selectedName);
+  		svg.innerHTML = tempHtml; 
+  		selectedName = "";
+  		  
+  				
+  		//create new causalVarShape	
+  		var causalVarShape = localModel.create('causalVar');
+  		causalVarShape.xCenter = initialX;
+      causalVarShape.yCenter = initialY;
+      causalVarShape.width = width;
+      causalVarShape.height = height;
+      causalVarShape.name = selectedName;
+      
+  		localModel.getRoot().set('causalVarShape', causalVarShape);
+  		//causalVarShape.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doValueChanged);
+      alert("mouse up: xcoord: " + localModel.getRoot().get('causalVarShape').xCenter);
 	  }
 		 
 	//resize while mouse is moving & down. Always update current X and Y 
-	  document.onmousemove = function(e){  
+	  document.onmousemove = function(e)
+    {  
 		//update calulated shape values on move
 		currentX = e.pageX;
 		currentY = e.pageY - distanceToTopOfPage;
 		updateCalculatedValues();
 		
-		if (mouseIsDown){
+		if (mouseIsDown)
+    {
 			//draw shape that is selected
 			svg.innerHTML = tempHtml + getHTML(selectedName);			
 	  }
-		
-		
-	  }
+	}
