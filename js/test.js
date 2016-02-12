@@ -101,8 +101,13 @@
 
       function drawFromModel()
       {
-        tempHtml = tempHtml + '<circle cx=' + localModel.getRoot().get('causalVarShape').xCenter + ' cy=' + localModel.getRoot().get('causalVarShape').yCenter + ' r=' + localModel.getRoot().get('causalVarShape').radius + ' stroke="black" stroke-width="3" fill="green" />';
-        svg.innerHTML = tempHtml; 
+		var tempHeight = localModel.getRoot().get('causalVarShape').height;
+		var tempWidth = localModel.getRoot().get('causalVarShape').width;
+		var tempRadius = Math.sqrt( tempWidth * tempWidth + tempHeight * tempHeight );
+		alert(tempRadius + " width: " + tempWidth + " height: " + tempHeight);
+		
+        tempHtml = tempHtml + '<circle cx=' + localModel.getRoot().get('causalVarShape').xCenter + ' cy=' + localModel.getRoot().get('causalVarShape').yCenter + ' r=' + tempRadius + ' stroke="black" stroke-width="3" fill="green" />';
+		svg.innerHTML = tempHtml; 
       }
 
       // Connects the text boxes to the collaborative string
@@ -122,7 +127,6 @@
 
           function initializeCausalVar()
           {
-            alert("init causal var");
             this.xCenter = initialX;
             this.yCenter = initialY;
       		this.width = width;
@@ -230,24 +234,27 @@
 	 //on mouseup stop drawing  
 	  document.onmouseup = function(e)
     {
-  		mouseIsDown = false;
-  		updateCalculatedValues();
-  		tempHtml = tempHtml + getHTML(selectedName);
-  		svg.innerHTML = tempHtml; 
-  		selectedName = "";
-  		  
-  				
-  		//create new causalVarShape	
-  		var causalVarShape = localModel.create('causalVar');
-  		causalVarShape.xCenter = initialX;
-      causalVarShape.yCenter = initialY;
-      causalVarShape.width = width;
-      causalVarShape.height = height;
-      causalVarShape.name = selectedName;
-
-  		localModel.getRoot().set('causalVarShape', causalVarShape);
-  		//causalVarShape.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doValueChanged);
-      alert("mouse up: xcoord: " + localModel.getRoot().get('causalVarShape').xCenter);
+		if (selectedName != ""){
+			mouseIsDown = false;
+			updateCalculatedValues();
+			tempHtml = tempHtml + getHTML(selectedName);
+			svg.innerHTML = tempHtml; 
+			selectedName = "";
+			  
+					
+			//create new causalVarShape	
+			var causalVarShape = localModel.create('causalVar');
+			causalVarShape.xCenter = initialX;
+		  causalVarShape.yCenter = initialY;
+		  causalVarShape.width = width;
+		  causalVarShape.height = height;
+		  causalVarShape.name = selectedName;
+		  alert("SETTING radius: " + radius + " width: " + width + " height: " + height);
+	
+			localModel.getRoot().set('causalVarShape', causalVarShape);
+			//causalVarShape.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doValueChanged);
+		  alert("mouse up: xcoord: " + localModel.getRoot().get('causalVarShape').xCenter);
+		}
 	  }
 		 
 	//resize while mouse is moving & down. Always update current X and Y 
