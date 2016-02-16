@@ -21,6 +21,8 @@
 	var currentY = 0;
 	var initialX = 0; 
 	var initialY = 0;
+	var count = 0;
+	var countString = "0";
 	var editingSelected = false;
 	
 	//calculated 
@@ -90,50 +92,58 @@
       // document. We will wire up the data model to the UI.
       function onFileLoaded(doc) {
         localModel = doc.getModel();
+		count = localModel.getRoot().size;
+		alert(localModel.getRoot().size);
+		countString = count.toString();
 
         var collaborativeString = doc.getModel().getRoot().get('demo_string');
         wireTextBoxes(collaborativeString);
 
         drawFromModel();
 
-        alert("file loaded. xcoord: " + localModel.getRoot().get('causalVarShape').xCenter);
+        alert("file loaded. xcoord: " + localModel.getRoot().get(countString).xCenter);
       }
 	  
 
 
       function drawFromModel()
       {
-		var tempHeight = localModel.getRoot().get('causalVarShape').height;
-		var tempWidth = localModel.getRoot().get('causalVarShape').width;
-		var tempRadius = Math.sqrt( tempWidth * tempWidth + tempHeight * tempHeight );
-		//alert(tempRadius + " width: " + tempWidth + " height: " + tempHeight);
-		
-       // if (localModel.getRoot().get('causalVarShape').name == "circle"){
-		tempHtml = tempHtml + '<circle onclick="selectShape()" cx=' + localModel.getRoot().get('causalVarShape').xCenter + ' cy=' + localModel.getRoot().get('causalVarShape').yCenter + ' r=' + tempRadius + ' stroke="black" stroke-width="3" fill="green" />';
-		svg.innerHTML = tempHtml; 
-		//}
-		/*if (localModel.getRoot().get('causalVarShape').name == "rectangle"){
-		tempHtml = tempHtml + '<rect x=' + localModel.getRoot().get('causalVarShape').centerX + ' y=' + localModel.getRoot().get('causalVarShape').centerY +' width=' + tempWidth + ' height=' + tempHeight + ' stroke="black" stroke-width="3" fill=' + color +' />';
-		svg.innerHTML = tempHtml;
+		//  alert("lm size" + localModel.getRoot().size);
+		for (var i = 1; i <= count; i++){
+			//alert("HERE!!! I am: " + i);
+			
+			if (localModel.getRoot().get(i.toString()) != null){
+			
+				var tempHeight = localModel.getRoot().get(i.toString()).height;
+				var tempWidth = localModel.getRoot().get(i.toString()).width;
+				var tempRadius = Math.sqrt( tempWidth * tempWidth + tempHeight * tempHeight );
+				//alert(tempRadius + " width: " + tempWidth + " height: " + tempHeight);
+				
+			   // if (localModel.getRoot().get(countString).name == "circle"){
+				tempHtml = tempHtml + '<circle onclick="selectShape()" cx=' + localModel.getRoot().get(i.toString()).xCenter + ' cy=' + localModel.getRoot().get(i.toString()).yCenter + ' r=' + tempRadius + ' stroke="black" stroke-width="3" fill="green" />';
+				svg.innerHTML = tempHtml; 
+				//}
+				/*if (localModel.getRoot().get(countString).name == "rectangle"){
+				tempHtml = tempHtml + '<rect x=' + localModel.getRoot().get(countString).centerX + ' y=' + localModel.getRoot().get(countString).centerY +' width=' + tempWidth + ' height=' + tempHeight + ' stroke="black" stroke-width="3" fill=' + color +' />';
+				svg.innerHTML = tempHtml;
+				}
+				else {}*/
+			}
 		}
-		else {}*/
       }
 	  
 	  function selectShape(){
 		  alert("selected!");
-		  var causalVarShape = localModel.create('causalVar');
-		  causalVarShape.xCenter = initialX;
-		  causalVarShape.yCenter = initialY;
-		  causalVarShape.width = width;
-		  causalVarShape.height = height;
-		  causalVarShape.name = selectedName;
 		  editingSelected = true;
+		  initialX = 0;
+		  initialY = 0;
 		  
-		  initialX = localModel.getRoot().get('causalVarShape').xCenter;
-		  initialY = localModel.getRoot().get('causalVarShape').yCenter;
-		  width = localModel.getRoot().get('causalVarShape').width;
-		  height = localModel.getRoot().get('causalVarShape').height;
-		  selectedName = localModel.getRoot().get('causalVarShape').name;
+		  initialX = localModel.getRoot().get(countString).xCenter;
+		  initialY = localModel.getRoot().get(countString).yCenter;
+		  width = localModel.getRoot().get(countString).width;
+		  height = localModel.getRoot().get(countString).height;
+		  selectedName = localModel.getRoot().get(countString).name;
+		  //alert(initialX + "," + initialY);
 		  
 	  }
 
@@ -178,7 +188,7 @@
         // this method is statically defined. The onLoaded event is
         // always called in the context of the loaded object.
         this.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED,
-            alert("xCenter: " + this.xCenter));
+           alert("xCenter: " + this.xCenter));
       }
 	  
 	  function updateCalculatedValues(){
@@ -271,17 +281,21 @@
 				  
 						
 				//create new causalVarShape	
+				count = count + 1;
+				countString = count.toString();
+				
+				
 				var causalVarShape = localModel.create('causalVar');
 				causalVarShape.xCenter = initialX;
 			  causalVarShape.yCenter = initialY;
 			  causalVarShape.width = width;
 			  causalVarShape.height = height;
 			  causalVarShape.name = selectedName;
-			  alert("SETTING radius: " + radius + " width: " + width + " height: " + height);
+			 // alert("SETTING radius: " + radius + " width: " + width + " height: " + height);
 		
-				localModel.getRoot().set('causalVarShape', causalVarShape);
+				localModel.getRoot().set(countString, causalVarShape);
 				//causalVarShape.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doValueChanged);
-			  alert("mouse up: xcoord: " + localModel.getRoot().get('causalVarShape').xCenter);
+			//  alert("mouse up: xcoord: " + localModel.getRoot().get(countString).xCenter);
 			}
 		//	editingSelected = false;
 		//}
