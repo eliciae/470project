@@ -34,6 +34,31 @@
       // Create a new instance of the realtime utility with your client ID.
       var realtimeUtils = new utils.RealtimeUtils({ clientId: clientId });
 
+	// Call this function before calling gapi.drive.realtime.load
+      function registerCustomTypes()
+      {
+          var causalVar = function () { };
+
+          function initializeCausalVar()
+          {
+            this.xCenter = initialX;
+            this.yCenter = initialY;
+      		this.width = width;
+      		this.height = height;
+      		this.name = "";
+          }
+
+          gapi.drive.realtime.custom.registerType(causalVar, 'causalVar');
+
+          causalVar.prototype.xCenter = gapi.drive.realtime.custom.collaborativeField('xCenter');
+          causalVar.prototype.yCenter = gapi.drive.realtime.custom.collaborativeField('yCenter');
+          causalVar.prototype.width = gapi.drive.realtime.custom.collaborativeField('width');
+    	  causalVar.prototype.height = gapi.drive.realtime.custom.collaborativeField('height');
+          causalVar.prototype.name = gapi.drive.realtime.custom.collaborativeField('name');
+
+          gapi.drive.realtime.custom.setInitializer(causalVar, initializeCausalVar);
+      }
+
 
       authorize();
 
@@ -86,6 +111,8 @@
         var string = model.createString();
         string.setText('Welcome to the Quickstart App!');
         model.getRoot().set('demo_string', string);
+		model.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, displayObjectChangedEvent);
+		
       }
 
       // After a file has been initialized and loaded, we can access the
@@ -99,17 +126,19 @@
         var collaborativeString = doc.getModel().getRoot().get('demo_string');
         wireTextBoxes(collaborativeString);
 
-        drawFromModel();
+        
 
-        alert("file loaded. xcoord: " + localModel.getRoot().get(countString).xCenter);
+        //alert("file loaded. xcoord: " + localModel.getRoot().get(countString).xCenter);
+		localModel.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, displayObjectChangedEvent);
+		drawFromModel();
       }
 	  
 
 
       function drawFromModel()
       {
-		//  alert("lm size" + localModel.getRoot().size);
-		for (var i = 1; i <= count; i++){
+		  alert("lm size" + localModel.getRoot().size);
+		for (var i = 1; i <= localModel.getRoot().size; i++){
 			//alert("HERE!!! I am: " + i);
 			
 			if (localModel.getRoot().get(i.toString()) != null){
@@ -123,11 +152,6 @@
 				tempHtml = tempHtml + '<circle onclick="selectShape()" cx=' + localModel.getRoot().get(i.toString()).xCenter + ' cy=' + localModel.getRoot().get(i.toString()).yCenter + ' r=' + tempRadius + ' stroke="black" stroke-width="3" fill="green" />';
 				svg.innerHTML = tempHtml; 
 				//}
-				/*if (localModel.getRoot().get(countString).name == "rectangle"){
-				tempHtml = tempHtml + '<rect x=' + localModel.getRoot().get(countString).centerX + ' y=' + localModel.getRoot().get(countString).centerY +' width=' + tempWidth + ' height=' + tempHeight + ' stroke="black" stroke-width="3" fill=' + color +' />';
-				svg.innerHTML = tempHtml;
-				}
-				else {}*/
 			}
 		}
       }
@@ -158,7 +182,7 @@
 
 
       // Call this function before calling gapi.drive.realtime.load
-      function registerCustomTypes()
+    /*  function registerCustomTypes()
       {
           var causalVar = function () { };
 
@@ -180,7 +204,7 @@
           causalVar.prototype.name = gapi.drive.realtime.custom.collaborativeField('name');
 
           gapi.drive.realtime.custom.setInitializer(causalVar, initializeCausalVar);
-      }
+      }*/
 
 
       function doOnLoaded() {
@@ -315,3 +339,18 @@
 			svg.innerHTML = tempHtml + getHTML(selectedName);			
 	  }
 	}
+	
+	function displayObjectChangedEvent(evt) {
+	  var events = evt.events;
+	  var eventCount = evt.events.length;
+	  for (var i = 0; i < eventCount; i++) {
+		console.log('Event type: '  + events[i].type);
+		console.log('Local event: ' + events[i].isLocal);
+		console.log('User ID: '     + events[i].userId);
+		console.log('Session ID: '  + events[i].sessionId);
+		if (!events[i].isLocal){
+			drawFromModel();
+		}
+	  }
+}
+
