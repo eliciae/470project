@@ -1,6 +1,6 @@
 // JavaScript Document
 //COMMENT
-//fields: center(x,y), width, hieght, text
+//fields: center(x,y), width, hieght, text, id
 
 //METHODS
 //draw deselected

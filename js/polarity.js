@@ -1,6 +1,6 @@
 // JavaScript Document
 //POLARITY
-//fields: center(x,y), width, hieght, value, label
+//fields: center(x,y), width, hieght, value, label, id
 
 //METHODS
 //draw deselected

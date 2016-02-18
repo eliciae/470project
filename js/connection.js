@@ -1,6 +1,6 @@
 // JavaScript Document
 //CONNECTION
-//fields: start(x,y), end(x,y), list of nodes, label, label postion relative to start point(x,y), startArrow, endArrow 
+//fields: start(x,y), end(x,y), list of nodes, label, label postion relative to start point(x,y), startArrow, endArrow, id
 
 //METHODS
 //draw deselected
