@@ -43,12 +43,35 @@
 
 
 function updateCalculatedValues(){
-			//update calcuated variables
+			//update calcuated variables 
 			width = Math.abs(currentX - initialX);
 			height = Math.abs(currentY - initialY);
+			
+			 if (selectedName == "circle"){
+				if (width < 20)
+					width = 20;
+				if (height < 20)
+					height = 20;
+			  }
+			  else if (selectedName == "rectangle"){
+				if (width < 90)
+					width = 90;
+				if (height < 35)
+					height = 35;
+			  }
+			  else if (selectedName == "ellipse"){
+				if (width < 65)
+					width = 65;
+				if (height < 20)
+					height = 20;
+			  }
+			  else {} 
+
+			
 			radius = Math.sqrt( width * width + height * height );
 			centerX = (initialX - currentX)/2 + initialX;
 			centerY = (initialY - currentY)/2 + initialY;
+			
 		}
 
 
@@ -111,7 +134,6 @@ function updateCalculatedValues(){
 			  initialX = currentX;
 			  initialY = currentY;
 			  tempHTML = svg.innerHTML;
-		  }
 	  }
 	  
     function doValueChanged()
@@ -134,7 +156,7 @@ function updateCalculatedValues(){
 				tempHTML = tempHTML + getTempHTML(selectedName);
 				svg.innerHTML = tempHTML; 
 
-				  
+			}
 						
 				//create new causalVarShape	
 				count = count + 1;
@@ -155,9 +177,10 @@ function updateCalculatedValues(){
 				localModel.getRoot().set(countString, causalVarShape);
 				//causalVarShape.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, doValueChanged);
 			//  alert("mouse up: xcoord: " + localModel.getRoot().get(countString).xCenter);
+			selectedName = "";
 			}
 		//	editingSelected = false;
-		selectedName = "";
+		
 		//}
 	  }
 		 
