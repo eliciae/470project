@@ -5,6 +5,7 @@
   //var clientId = '707956241542-4s76mlqlkm2rol57nneobntvjb6h5sck.apps.googleusercontent.com';
 
 	var localModel;
+	var tempPermHTML = "";
 	
 
 	
@@ -26,7 +27,7 @@
       		this.width = width;
       		this.height = height;
       		this.name = "";
-			//this.color = "#FFFFFF";
+			this.color = "#FFFFFF";
 			
           }
 		  
@@ -38,7 +39,7 @@
           causalVar.prototype.width = gapi.drive.realtime.custom.collaborativeField('width');
     	  causalVar.prototype.height = gapi.drive.realtime.custom.collaborativeField('height');
           causalVar.prototype.name = gapi.drive.realtime.custom.collaborativeField('name');
-		 // causalVar.prototype.color = gapi.drive.realtime.custom.collaborativeField('color');
+		  causalVar.prototype.color = gapi.drive.realtime.custom.collaborativeField('color');
 
           gapi.drive.realtime.custom.setInitializer(causalVar, initializeCausalVar);
       }
@@ -123,14 +124,16 @@
       {
 		 // alert("lm size" + localModel.getRoot().size);
 		//svg.innerHTML = "";
+		tempPErmHTML = "";
 		for (var i = 1; i <= localModel.getRoot().size; i++){
 			//alert("HERE!!! I am: " + i);
 			
 			if (localModel.getRoot().get(i.toString()) != null){	
 				//svg.appendChild(localModel.getRoot().get(i.toString()).getHTML());
-				svg.innerHTML = svg.innerHTML + getHTML(i.toString());
+				tempPermHTML = tempPermHTML + getHTML(i.toString());
 			}
 		}
+		svg.innerHTML = tempPermHTML;
       }
 	  
 	  function selectShape(){
@@ -180,15 +183,22 @@
 	}
 	
 	function getHTML(id){
-		alert("local model item: " +localModel.getRoot().get(id));
-		var tempHeight = localModel.getRoot().get(id).height;
-		var tempWidth = localModel.getRoot().get(id).width;
+		//alert("HERE!");
+		var item = localModel.getRoot().get(id);
+		alert(item.name);
+		var tempHeight = item.height;
+		var tempWidth = item.width;
 		var tempRadius = Math.sqrt( tempWidth * tempWidth + tempHeight * tempHeight );
-		//alert(tempRadius + " width: " + tempWidth + " height: " + tempHeight);
-		
-	   // if (localModel.getRoot().get(countString).name == "circle"){
-		return '<circle onclick="selectShape()" cx=' + localModel.getRoot().get(id).xCenter + ' cy=' + localModel.getRoot().get(id).yCenter + ' r=' + tempRadius + ' stroke="black" stroke-width="3" fill="green" />';
-		
-		//}
+
+	    if (item.name == "circle"){
+			return '<ellipse class = "draggable" id = ' + id + ' onclick="selectShape()" cx=' + item.xCenter + ' cy=' + item.yCenter +' rx=' + tempRadius + ' ry=' + tempRadius + ' stroke="black" stroke-width="3" fill=' + item.color +' />';
+		}
+		else if (item.name == "ellipse"){
+			return '<ellipse class = "draggable" id = ' + id + '  onclick="selectShape()" cx=' + item.xCenter + ' cy=' + item.yCenter +' rx=' + item.width + ' ry=' + item.height + ' stroke="black" stroke-width="3" fill=' + item.color +' />';
+		}
+		else if (item.name == "rectangle"){
+			return '<rect class = "draggable" id = ' + id + '  onclick="selectShape()" x=' + item.xCenter + ' y=' + item.yCenter +' width=' + item.width + ' height=' + item.height + ' stroke="black" stroke-width="3" fill=' + item.color +' />';
+		}
+		else{}	
 	}
 

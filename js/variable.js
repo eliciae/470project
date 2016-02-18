@@ -52,19 +52,23 @@ function updateCalculatedValues(){
 		}
 
 
-	function getTempHTML(shape)
+		function getTempHTML(shape)
 			{
+				//count is +1 because the object isn't actually created yet and the counter will be incremented before it is created
+				//this only works for newly created causalVars
 			if (shape == "circle")
-				return '<circle   onclick="selectShape()" cx=' + initialX + ' cy=' + initialY + ' r=' + radius + ' stroke="black" stroke-width="3" fill=' + color +' />';
+				//return '<circle class = "draggable" id = ' + count+1 + ' onclick="selectShape()" cx=' + initialX + ' cy=' + initialY + ' r=' + radius + ' stroke="black" stroke-width="3" fill=' + color +' />';
+				return '<ellipse cx=' + centerX + ' cy=' + centerY +' rx=' + radius + ' ry=' + radius + ' stroke="black" stroke-width="3" fill=' + color +' />';
 			 else if (shape == "ellipse")
 				return '<ellipse cx=' + centerX + ' cy=' + centerY +' rx=' + width + ' ry=' + height + ' stroke="black" stroke-width="3" fill=' + color +' />';
 			else if (shape == "rectangle")
-				return '<rect x=' + centerX + ' y=' + centerY +' width=' + width + ' height=' + height + ' stroke="black" stroke-width="3" fill=' + color +' />';
+				return '<rect  class = "draggable" id = ' + count+1 + ' onclick="selectShape()" x=' + centerX + ' y=' + centerY +' width=' + width + ' height=' + height + ' stroke="black" stroke-width="3" fill=' + color +' />';
 			else if (shape == "connection"){
-				return '<line x1=' + initialX + ' y1=' + initialY + ' x2=' + currentX +' y2=' + currentY + ' style="stroke:rgb(0,0,0);stroke-width:2" />';
+				return '<line  class = "draggable" id = ' + count+1 + ' onclick="selectShape()" x1=' + initialX + ' y1=' + initialY + ' x2=' + currentX +' y2=' + currentY + ' style="stroke:rgb(0,0,0);stroke-width:2" />';
 				}
 			 else{}
 			}
+			
 		
 		//update color picker
 		function update(jscolor) {
@@ -116,7 +120,7 @@ function updateCalculatedValues(){
       causalVarShape.yCenter = initialY;
       causalVarShape.width = width;
       causalVarShape.height = height;
-      causalVarShape.name = selectedName;
+      //causalVarShape.name = selectedName;
     }
 
 	 //on mouseup stop drawing  
@@ -129,7 +133,7 @@ function updateCalculatedValues(){
 				updateCalculatedValues();
 				tempHTML = tempHTML + getTempHTML(selectedName);
 				svg.innerHTML = tempHTML; 
-				selectedName = "";
+
 				  
 						
 				//create new causalVarShape	
@@ -139,11 +143,13 @@ function updateCalculatedValues(){
 				
 				var causalVarShape = localModel.create('causalVar');
 				alert("CREATED IN MODEL! tada!!");
-				causalVarShape.xCenter = initialX;
-			  	causalVarShape.yCenter = initialY;
+				causalVarShape.xCenter = centerX;
+			  	causalVarShape.yCenter = centerY;
 			  	causalVarShape.width = width;
 			 	causalVarShape.height = height;
 			  	causalVarShape.name = selectedName;
+				causalVarShape.color = color;
+				alert("selected name = " + selectedName);
 				// alert("SETTING radius: " + radius + " width: " + width + " height: " + height);
 		
 				localModel.getRoot().set(countString, causalVarShape);
@@ -151,6 +157,7 @@ function updateCalculatedValues(){
 			//  alert("mouse up: xcoord: " + localModel.getRoot().get(countString).xCenter);
 			}
 		//	editingSelected = false;
+		selectedName = "";
 		//}
 	  }
 		 
