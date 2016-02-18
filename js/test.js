@@ -7,7 +7,6 @@
 	var localModel;
 	var tempPermHTML = "";
 	
-
 	
       if (!/^([0-9])$/.test(clientId[0])) {
         alert('Invalid Client ID - did you forget to insert your application Client ID?');
@@ -124,7 +123,7 @@
       {
 		 // alert("lm size" + localModel.getRoot().size);
 		//svg.innerHTML = "";
-		tempPErmHTML = "";
+		tempPermHTML = '<defs> <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><rect fill="black" x="0" y="0" width="10" height="10" opacity="0.1"/><rect fill="white" x="10" y="0" width="10" height="10"/><rect fill="black" x="10" y="10" width="10" height="10" opacity="0.1"/><rect fill="white" x="0" y="10" width="10" height="10"/></pattern></defs><rect fill="url(#grid)" x="0" y="0" width="100%" height="100%"/>';
 		for (var i = 1; i <= localModel.getRoot().size; i++){
 			//alert("HERE!!! I am: " + i);
 			
