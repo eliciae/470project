@@ -60,10 +60,10 @@ function updateCalculatedValues(){
 					height = 35;
 			  }
 			  else if (selectedName == "ellipse"){
-				if (width < 65)
+				if (width < 70)
 					width = 65;
-				if (height < 20)
-					height = 20;
+				if (height < 25)
+					height = 25;
 			  }
 			  else {} 
 

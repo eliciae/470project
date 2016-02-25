@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Spline Editor</title>
+<style>
+
+body {
+  font: 13px sans-serif;
+  position: relative;
+  width: 960px;
+  height: 500px;
+}
+
+form {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
+rect {
+  fill: none;
+  pointer-events: all;
+}
+
+circle,
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+circle {
+  fill: #fff;
+  fill-opacity: .2;
+  cursor: move;
+}
+
+.selected {
+  fill: #ff7f0e;
+  stroke: #ff7f0e;
+}
+
+</style>
+<html>
+	<header>
+    <title>Google Realtime Quickstart</title>
+
+    <!-- Load Styles -->
+    <link href="https://www.gstatic.com/realtime/quickstart-styles.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Load the Realtime JavaScript library -->
+    <script src="https://apis.google.com/js/api.js"></script>
+
+    <!-- Load the utility library -->
+    <script src="https://www.gstatic.com/realtime/realtime-client-utils.js"></script>
+      <h1>Collaborative Causal Loop Diagram Builder</h1>
+      <p>Now that your application is running, simply type in either text box and see your changes instantly appear in the other one. Open
+      this same document in a <a onclick="window.open(window.location.href);return false;" target="_blank">new tab</a> to see it work across tabs.</p>
+      <textarea id="text_area_1"></textarea>
+      <textarea id="text_area_2"></textarea>
+      <button id="auth_button">Authorize</button>
+</header>
+<body>
+<table align="center"> 
+      <tr>
+        <td id="btnUndo">undo</td>
+        <td id="btnRedo">redo</td> 
+        <td id="btnCreateCircle">circle</td>
+        <td id="btnCreateEllipse">ellipse</td>
+        <td id="btnCreateRect">rectangle</td>
+        <td id="btnCreateConnection">connection</td>
+        <td id="btnCreateComment">comment</td>
+        <td>Color: <input class="jscolor" onchange="update(this.jscolor)" value="FFFFFF" name="variableColor"></td>
+      </tr>
+	</table>  
+<form>
+  <label for="interpolate">Interpolate:</label>
+  <select id="interpolate"></select><br>
+</form>
+</body>
+</html>
+<script src="470project/js/d3.js"></script>
+
+<script>
+var clientId = '707956241542-t1qe821rk6jkmnmrcth0aafrjcfjg441.apps.googleusercontent.com';
+
+  //this is the local one
+  //var clientId = '707956241542-4s76mlqlkm2rol57nneobntvjb6h5sck.apps.googleusercontent.com';
+
+	var localModel;
+	var tempPermHTML = "";
+	
+	var width = 960,
+    height = 500;
+
+	var points, dragged;
+	
+	
+      if (!/^([0-9])$/.test(clientId[0])) {
+        alert('Invalid Client ID - did you forget to insert your application Client ID?');
+      }
+      // Create a new instance of the realtime utility with your client ID.
+      var realtimeUtils = new utils.RealtimeUtils({ clientId: clientId });
+
+	// Call this function before calling gapi.drive.realtime.load
+      function registerCustomTypes()
+      {
+         //CONNECTION REGISTRATION
+		   var connection = function () { };
+
+          function initializeconnection()
+          {
+      		this.weight = 10;
+      		this.name = "";
+			this.color = "#FFFFFF";
+			var model = gapi.drive.realtime.custom.getModel(this);
+		  	this.points = model.createList();
+          }
+		  
+		  connection.prototype.addPoint = function(newPoint){
+			  this.points.push(newPoint);
+		  }
+		  connection.prototype.getPoints = function(){
+			  return this.points.asArray();
+		  }
+		  
+
+          gapi.drive.realtime.custom.registerType(connection, 'connection');
+
+
+          connection.prototype.weight = gapi.drive.realtime.custom.collaborativeField('weight');
+          connection.prototype.name = gapi.drive.realtime.custom.collaborativeField('name');
+		  connection.prototype.color = gapi.drive.realtime.custom.collaborativeField('color');
+		  connection.prototype.points = gapi.drive.realtime.custom.collaborativeField('points');
+
+          gapi.drive.realtime.custom.setInitializer(connection, initializeconnection);
+		  
+		  
+	  }
+
+
+      authorize();
+
+      function authorize() {
+        // Attempt to authorize
+        realtimeUtils.authorize(function(response){
+          if(response.error){
+            // Authorization failed because this is the first time the user has used your application,
+            // show the authorize button to prompt them to authorize manually.
+            var button = document.getElementById('auth_button');
+            button.classList.add('visible');
+            button.addEventListener('click', function () {
+              realtimeUtils.authorize(function(response){
+                start();
+              }, true);
+            });
+          } else {
+              start();
+          }
+        }, false);
+      }
+
+      function start() {
+		  
+        // With auth taken care of, load a file, or create one if there
+        // is not an id in the URL.
+        var id = realtimeUtils.getParam('id');
+        if (id) {
+          //allows for custom types (needs to be done before load)
+          registerCustomTypes();
+
+          // Load the document id from the URL
+          realtimeUtils.load(id.replace('/', ''), onFileLoaded, onFileInitialize);
+        } else {
+          // Create a new document, add it to the URL
+          realtimeUtils.createRealtimeFile('New Quickstart File', function(createResponse) {
+            window.history.pushState(null, null, '?id=' + createResponse.id);
+            realtimeUtils.load(createResponse.id, onFileLoaded, onFileInitialize);
+          });
+        }
+      }
+
+      // The first time a file is opened, it must be initialized with the
+      // document structure. This function will add a collaborative string
+      // to our model at the root.
+      function onFileInitialize(model) {
+        localModel = model;
+		
+		//alert("init this: " + this);
+
+        var string = model.createString();
+        string.setText('Welcome to the Quickstart App!');
+        model.getRoot().set('demo_string', string);
+		model.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, displayObjectChangedEvent);
+		
+		
+      }
+
+      // After a file has been initialized and loaded, we can access the
+      // document. We will wire up the data model to the UI.
+      function onFileLoaded(doc) {
+        localModel = doc.getModel();
+		count = localModel.getRoot().size;
+		alert(localModel.getRoot().size);
+		countString = count.toString();
+		//initializeConVars(localModel);
+		//redraw();
+		//points = localModel.getRoot().get('testCon').getPoints();
+		//redraw();
+
+        var collaborativeString = doc.getModel().getRoot().get('demo_string');
+        wireTextBoxes(collaborativeString);
+
+        
+
+        //alert("file loaded. xcoord: " + localModel.getRoot().get(countString).xCenter);
+		localModel.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, displayObjectChangedEvent);
+		drawFromModel();
+      }
+	  
+
+
+      function drawFromModel()
+      {
+
+      }
+	  
+	   // Connects the text boxes to the collaborative string
+      function wireTextBoxes(collaborativeString) {
+        var textArea1 = document.getElementById('text_area_1');
+        var textArea2 = document.getElementById('text_area_2');
+
+        gapi.drive.realtime.databinding.bindString(collaborativeString, textArea1);
+        gapi.drive.realtime.databinding.bindString(collaborativeString, textArea2);
+      }
+	  
+	  function displayObjectChangedEvent(evt) {
+	  var events = evt.events;
+	  var eventCount = evt.events.length;
+	  for (var i = 0; i < eventCount; i++) {
+		console.log('Event type: '  + events[i].type);
+		console.log('Local event: ' + events[i].isLocal);
+		console.log('User ID: '     + events[i].userId);
+		console.log('Session ID: '  + events[i].sessionId);
+		if (!events[i].isLocal){
+			//drawFromModel();
+			//initializeConVars(localModel);
+			
+		}
+	  }
+	}
+
+
+
+
+
+function initializeConVars(model){
+	var newCon = localModel.create('connection');
+	newCon.addEventListener(gapi.drive.realtime.EventType.VALUE_CHANGED, displayObjectChangedEvent);
+  	localModel.getRoot().set("testCon", newCon);
+	
+	points = localModel.getRoot().get("testCon").getPoints();
+	/*points = d3.range(1, 5).map(function(i) {
+	  return [i * width / 5, 50 + Math.random() * (height - 100)];
+	});*/
+	dragged = null,
+    	selected = points[0];
+}
+
+points = d3.range(0, 0).map(function(i) {
+  return [i * width / 5, 50 + Math.random() * (height - 100)];
+});
+
+var line = d3.svg.line();
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("tabindex", 1);
+
+svg.append("rect")
+    .attr("width", width)
+    .attr("height", height)
+    .on("mousedown", mousedown);
+
+svg.append("path")
+    .datum(points)
+    .attr("class", "line")
+    .call(redraw);
+
+d3.select(window)
+    .on("mousemove", mousemove)
+    .on("mouseup", mouseup)
+    .on("keydown", keydown);
+
+d3.select("#interpolate")
+    .on("change", change)
+  .selectAll("option")
+    .data([
+      "linear",
+      "cardinal"
+    ])
+  .enter().append("option")
+    .attr("value", function(d) { return d; })
+    .text(function(d) { return d; });
+
+svg.node().focus();
+
+
+function redraw() {
+  	svg.select("path").attr("d", line); //draws lines
+
+  //here down draws circles
+  var circle = svg.selectAll("circle")
+      .data(points, function(d) { return d; });
+
+  circle.enter().append("circle")
+      .attr("r", 1e-6)
+      .on("mousedown", function(d) { selected = dragged = d; redraw(); })
+    .transition()
+      .duration(750)
+      .ease("elastic")
+      .attr("r", 5);
+
+
+  circle
+      .classed("selected", function(d) { return d === selected; })
+      .attr("cx", function(d) { return d[0]; })
+      .attr("cy", function(d) { return d[1]; });
+
+  circle.exit().remove();
+
+  if (d3.event) {
+    d3.event.preventDefault();
+    d3.event.stopPropagation();
+  }
+}
+
+function change() {
+  line.interpolate(this.value);
+  redraw();
+}
+
+function mousedown() {
+  
+  //add new node to model with listener
+ // var newCon = localModel.create('connection');
+  //localModel.getRoot().set("testCon", newCon);
+  //localModel.getRoot().get("testCon").addPoint(svg.node());
+  localModel.getRoot().get("testCon").addPoint(selected = dragged = d3.mouse(svg.node()));
+  points = localModel.getRoot().get("testCon").getPoints();
+ // points.push(selected = dragged = d3.mouse(svg.node()));
+  //points = localModel.getRoot().get("testCon").getPoints();
+  alert("mouse down: " + points);
+  alert("model : " + localModel.getRoot().get("testCon").getPoints());
+  redraw();
+}
+
+function mousemove() {
+  if (!dragged) return;
+  var m = d3.mouse(svg.node());
+  //make sure new x & y are on the svg by: 
+  //1: taking the larger value out of 0 and the new value
+  //2. taking the smaller value of the largest value and the new value 
+  dragged[0] = Math.max(0, Math.min(width, m[0]));
+  dragged[1] = Math.max(0, Math.min(height, m[1]));
+  //model gets update model 
+  	//alert(points);
+  redraw();
+}
+
+function mouseup() {
+  if (!dragged) return;
+  mousemove();
+  dragged = null;
+}
+
+//delete connection node if delete or backspace is pressed while selected
+function keydown() {
+  if (!selected) return;
+  switch (d3.event.keyCode) {
+    case 8: // backspace
+    case 46: { // delete
+      var i = points.indexOf(selected);
+      points.splice(i, 1);
+      selected = points.length ? points[i > 0 ? i - 1 : 0] : null;
+      redraw();
+      break;
+    }
+  }
+}
+
+
+</script>
+

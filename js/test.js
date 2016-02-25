@@ -17,7 +17,8 @@
 	// Call this function before calling gapi.drive.realtime.load
       function registerCustomTypes()
       {
-          var causalVar = function () { };
+         //CAUSAL VAR REGISTRATION
+		  var causalVar = function () { };
 
           function initializeCausalVar()
           {
@@ -41,6 +42,33 @@
 		  causalVar.prototype.color = gapi.drive.realtime.custom.collaborativeField('color');
 
           gapi.drive.realtime.custom.setInitializer(causalVar, initializeCausalVar);
+		  
+		  //CONNECTION REGISTRATION
+		  var causalCon = function () { };
+
+          function initializeCausalVar()
+          {
+            this.xCenter = initialX;
+            this.yCenter = initialY;
+      		this.width = width;
+      		this.height = height;
+      		this.name = "";
+			this.color = "#FFFFFF";
+			
+          }
+		  
+
+          gapi.drive.realtime.custom.registerType(causalCon, 'causalCon');
+
+          causalCon.prototype.xCenter = gapi.drive.realtime.custom.collaborativeField('xCenter');
+          causalVar.prototype.yCenter = gapi.drive.realtime.custom.collaborativeField('yCenter');
+          causalVar.prototype.width = gapi.drive.realtime.custom.collaborativeField('width');
+    	  causalVar.prototype.height = gapi.drive.realtime.custom.collaborativeField('height');
+          causalVar.prototype.name = gapi.drive.realtime.custom.collaborativeField('name');
+		  causalVar.prototype.color = gapi.drive.realtime.custom.collaborativeField('color');
+
+          gapi.drive.realtime.custom.setInitializer(causalVar, initializeCausalVar);
+		  
       }
 
 
