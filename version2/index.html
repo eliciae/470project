@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <link rel="canonical" href="http://www.jointjs.com/" />
+        <meta name="description" content="Create interactive diagrams in JavaScript easily. JointJS plugins for ERD, Org chart, FSA, UML, PN, DEVS, LDM diagrams are ready to use." />
+        <meta name="keywords" content="JointJS, JavaScript, diagrams, diagramming library, UML, charts" />
+
+        <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" rel="stylesheet" type="text/css" />
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+        
+        <title>JointJS - JavaScript diagramming library - Demos.</title>
+        
+    </head>
+
+    <script>
+      SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function(toElement) {
+          return toElement.getScreenCTM().inverse().multiply(this.getScreenCTM());
+      };
+    </script>
+
+    <script src="jquery.min.js"></script>
+    <script src="loaddash.min.js"></script>
+    <script src="backbone-min.js"></script>
+
+    <body>
+        <header class="simple_header">
+
+    <div class="logo"></div>
+    </header>
+        <main class="content layout_sidebar">
+          <nav class="sidebar_container demos"> </nav>
+
+
+          <section class="demos_container fsa">	
+
+	<article>
+  		<h2>Finite State Machines</h2>
+  	</article>
+
+  	<div class="example">
+  		<div id="paper" class="paper"></div>
+  	</div><!--end example-->
+
+        <link rel="stylesheet" href="joint.min.css" />
+        <script src="joint.min.js"></script>
+        <script src="fsa.js"></script>
+
+</section>
+
+
+        </main>
+
+        <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-5029684-2']);
+    _gaq.push(['_setAllowLinker', true]);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+
+
+        <script src="main.js"></script>
+        <link rel="stylesheet" href="prism.css">
+        <script src="prism.js"></script>
+    </body>
+</html>

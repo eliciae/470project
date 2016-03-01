@@ -1,0 +1,28 @@
+/* Typography, Colors, etc. */
+#svg{
+	background-color:#CCC;
+}
+
+.panelHeading{
+	background-color: #999;
+	padding-left: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size:20px;
+	text-align: left;
+}
+
+text{
+	width: 100%
+}
+
+.TabbedPanelsContent{
+	//text-align: center;
+	//vertical-align:middle;
+}
+
+.MenuBarHorizontal{
+	//text-align: center;
+	//vertical-align:middle;
+}
+
