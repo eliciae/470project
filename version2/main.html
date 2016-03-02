@@ -91,27 +91,25 @@ Do the following if you're using your customized build of modernizr (http://www.
   	</div><!--end example-->
 
         <link rel="stylesheet" href="joint.min.css" />
-        <script src="joint.min.js"></script>
-        <script src="fsa.js"></script>
+        
 
 </section>
 </div>
 <div id="sideMenu">
   <div id="TabbedPanels1" class="TabbedPanels">
   <ul class="TabbedPanelsTabGroup">
-    <li class="TabbedPanelsTab" tabindex="0">Variable</li>
-    <li class="TabbedPanelsTab" tabindex="0">Connection</li>
-    <li class="TabbedPanelsTab" tabindex="0">Notation</li>
-    <li class="TabbedPanelsTab" tabindex="0">Mark Up</li>
+    <li id="variable-tab" class="TabbedPanelsTab" tabindex="0">Variable</li>
+    <li id="connection-tab" class="TabbedPanelsTab" tabindex="0">Connection</li>
+    <li id="notation-tab" class="TabbedPanelsTab" tabindex="0">Notation</li>
+    <li id="markup-tab" class="TabbedPanelsTab" tabindex="0">Mark Up</li>
   </ul>
   <div class="TabbedPanelsContentGroup">
     <div class="TabbedPanelsContent">
      <div class="panelHeading">Shape</div>
-      <ul id="MenuBar5" class="MenuBarHorizontal">
-        <li><a href="#">rectangle</a></li>
-        <li><a href="#">oval</a></li>
-        <li><a href="#">point</a></li>
-        <li><a href="#">none</a></li>
+      <ul id="MenuBarShape" class="MenuBarHorizontal">
+        <li><a id="rectShape" href="#">rectangle</a></li>
+        <li id="ellipseShape"><a href="#">oval</a></li>
+        <li id="noShape"><a href="#">no shape</a></li>
       </ul>
       <p>&nbsp;</p>
       <br>
@@ -217,5 +215,7 @@ var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2");
         <script src="main.js"></script>
         <link rel="stylesheet" href="prism.css">
         <script src="prism.js"></script>
+        <script src="joint.js"></script>
+        <script src="fsa.js"></script>
 </body>
 </html>
