@@ -30,6 +30,7 @@ function registerCustomTypes()
       this.name = "name";
       this.color = "#FFFFFF";
       this.shape = "ellipse"
+	  this.idName = "";
   }
       
 
@@ -42,6 +43,7 @@ function registerCustomTypes()
   causalVar.prototype.name = gapi.drive.realtime.custom.collaborativeField('name');
   causalVar.prototype.color = gapi.drive.realtime.custom.collaborativeField('color');
   causalVar.prototype.shape = gapi.drive.realtime.custom.collaborativeField('shape');
+  causalVar.prototype.idName = gapi.drive.realtime.custom.collaborativeField('idName');
 
   gapi.drive.realtime.custom.setInitializer(causalVar, initializeCausalVar);
   
@@ -129,7 +131,21 @@ function registerCustomTypes()
         console.log('User ID: '     + events[i].userId);
         console.log('Session ID: '  + events[i].sessionId);
         if (!events[i].isLocal){
-            //redraw();
+			//only draw and add to the model if it wasn't local
+			//check if there is an item with id count-1 in the svg
+			//if there is NOT then create it
+			var lastItemCreatedID = count-1;
+			
+			//if (document.getElementById(lastItemCreatedID.toString()) == null){
+			alert ("new item added: " + $("." + lastItemCreatedID.toString()).first());
+			if ($("." + lastItemCreatedID.toString()).first().toString() != "[Object object]" ){
+				alert("new object added");
+            	drawShape(localModel.getRoot().get(lastItemCreatedID.toString()));
+				
+			}
+			else{
+				alert("moved");
+			}
         }
       }
     }
@@ -182,7 +198,7 @@ function state(x, y, label) {
 function ellipse(cVar) {
   alert("ellipse drawing");
     var cell = new joint.shapes.basic.Ellipse({
-        id: cVar.id,
+        class: cVar.id,
         position: { x: cVar.x, y: cVar.y},
         size: { width: cVar.width, height: cVar.height },
         attrs: {
@@ -288,13 +304,13 @@ function createNewCausalVar(x, y, width, height, label, shape)
   causalVarShape.name = label;
   causalVarShape.color = "#000000";
   causalVarShape.shape = shape;
-  causalVarShape.id = countString;
+  causalVarShape.idName = countString;
 
   alert("shape: " + shape);
 
   localModel.getRoot().set(countString, causalVarShape);
 
-  localModel.getRoot().get(countString).addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateShape(countString));
+  //localModel.getRoot().get(countString).addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateShape(countString));
   count++;
   countString = count.toString();
 
@@ -333,10 +349,12 @@ function updateShape(id)
 {
   alert("the id: " + id);
   var modelObj = localModel.getRoot().get(id);
-  var htmlObj = $('#' + id).get("position");
+  var htmlObj = $('.' + id);
+  alert("update shape");
 
-  modelObj.x = htmlObj.x;
-  modelObj.y = htmlObj.y;
+	htmlObj.position(modelObj.x, modelobj.y);
+ // htmlObj.x = modelObj.x;
+ // htmlObj.y = modelObj.y;
 }
 
 
@@ -359,7 +377,7 @@ $('svg').on('click', function(e){
         var y = (e.pageY - $('svg').offset().top) + $(window).scrollTop();
 
         var newCausalVar = createNewCausalVar(x, y, 75, 50, selectedShape, selectedShape);
-
+		
         drawShape(newCausalVar);
        
         $('#markup-tab').click();
