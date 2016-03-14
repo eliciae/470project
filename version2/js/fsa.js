@@ -134,18 +134,29 @@ function registerCustomTypes()
 			//only draw and add to the model if it wasn't local
 			//check if there is an item with id count-1 in the svg
 			//if there is NOT then create it
-			var lastItemCreatedID = count-1;
+			var lastItemCreatedID = count -1;
 			
 			//if (document.getElementById(lastItemCreatedID.toString()) == null){
-			alert ("new item added: " + $("." + lastItemCreatedID.toString()).first());
-			if ($("." + lastItemCreatedID.toString()).first().toString() != "[Object object]" ){
+			//alert ("new item added: " + $("." + lastItemCreatedID.toString()).first());
+			
+			for (var i = 1; i <= localModel.getRoot().size; i++){			  
+			  if (localModel.getRoot().get(i.toString()) != null){  
+				if ($("." + i.toString()) != "[Object object]"){
+					alert("new object added");
+					drawShape(localModel.getRoot().get(i.toString()));
+				}
+			  }
+			}
+			
+			
+			
+			/*if ($("." + lastItemCreatedID.toString()).first().toString() != "[Object object]" ){
 				alert("new object added");
             	drawShape(localModel.getRoot().get(lastItemCreatedID.toString()));
-				
-			}
-			else{
-				alert("moved");
-			}
+			}*/
+		//	else{
+		//		alert("moved");
+		//	}
         }
       }
     }
@@ -165,7 +176,7 @@ function registerCustomTypes()
 
 
 
-var selectedShape;
+var selectedShape ="ellipse";
 
 var graph = new joint.dia.Graph();
 
@@ -210,19 +221,29 @@ function ellipse(cVar) {
             }
         }
     });
+	
+	function updateSvgElement(){
+		alert("updating cell");
+		cell.position(cVar.x, cVar.y);
+	}
+	
       graph.addCell(cell);
 
       cell.on("change:position", function(element){
         cVar.x = element.get("position").x;
         cVar.y = element.get("position").y;
     });
+	//if the associated model object is changed, then update the svg element
+	cVar.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateSvgElement);
+	
+	
 
     return cell;
 }
 
 
 function rect(x, y, width, height, label) {
-    
+	
     var cell = new joint.shapes.basic.Rect({
         position: { x: x, y: y},
         size: { width: width, height: height },
@@ -353,8 +374,6 @@ function updateShape(id)
   alert("update shape");
 
 	htmlObj.position(modelObj.x, modelobj.y);
- // htmlObj.x = modelObj.x;
- // htmlObj.y = modelObj.y;
 }
 
 
