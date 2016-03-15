@@ -74,6 +74,8 @@ function registerCustomTypes()
 
   function dostart() 
   {
+	  $('#markup-tab').click(); 
+	  
     // With auth taken care of, load a file, or create one if there
     // is not an id in the URL.
     var id = realtimeUtils.getParam('id');
@@ -108,7 +110,7 @@ function registerCustomTypes()
   // document. We will wire up the data model to the UI.
   function onFileLoaded(doc) 
   {
-    alert("load");
+   // alert("load");
     localModel = doc.getModel();
     count = localModel.getRoot().size;
     alert(localModel.getRoot().size);
@@ -138,11 +140,12 @@ function registerCustomTypes()
 			
 			//if (document.getElementById(lastItemCreatedID.toString()) == null){
 			//alert ("new item added: " + $("." + lastItemCreatedID.toString()).first());
-			
-			for (var i = 1; i <= localModel.getRoot().size; i++){			  
-			  if (localModel.getRoot().get(i.toString()) != null){  
-				if ($("." + i.toString()) != "[Object object]"){
-					alert("new object added");
+			for (var i = 1; i <= localModel.getRoot().size+10; i++){
+			  if (localModel.getRoot().get(i.toString()) != null){ 
+			  alert(($("body").data("cID")).length);
+			   //if the element does not exist then create it in the SVG
+				if (!($("body").data("cID"))){
+					alert("draw new SVG elements");
 					drawShape(localModel.getRoot().get(i.toString()));
 				}
 			  }
@@ -207,9 +210,9 @@ function state(x, y, label) {
 }
 
 function ellipse(cVar) {
-  alert("ellipse drawing");
+	alert("id: " + cVar.idName);
+	var mouseIsDown = true;
     var cell = new joint.shapes.basic.Ellipse({
-        class: cVar.id,
         position: { x: cVar.x, y: cVar.y},
         size: { width: cVar.width, height: cVar.height },
         attrs: {
@@ -217,27 +220,37 @@ function ellipse(cVar) {
             'ellipse': {
                 fill: '#f6f6f6',
                 stroke: '#000000',
-                'stroke-width': 2
-            }
+                'stroke-width': 2,
+				'data-cID': cVar.idName	
+            }		
         }
     });
 	
 	function updateSvgElement(){
-		alert("updating cell");
-		cell.position(cVar.x, cVar.y);
+		//alert("GAHH Mouse is still down!");
+		//cell.position(cVar.x, cVar.y);
+		//alert("updateSVG up: " + cVar.y + " " + cell.get("position").y);	
 	}
 	
-      graph.addCell(cell);
+    graph.addCell(cell);
 
-      cell.on("change:position", function(element){
-        cVar.x = element.get("position").x;
-        cVar.y = element.get("position").y;
-    });
 	//if the associated model object is changed, then update the svg element
 	cVar.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateSvgElement);
 	
-	
 
+	paper.on('cell:pointerup', 
+		function(cellView, evt, x, y) { 
+			//alert("UP!");
+			cVar.x = cell.get("position").x;
+			cVar.y = cell.get("position").y;
+			//cVar.x = x;
+			//cVar.y = y;
+			//cell.position(x, y);
+    	}
+	);
+	
+	//alert("ellipse fn: " + cVar.y);
+	
     return cell;
 }
 
@@ -317,7 +330,6 @@ link(start, code,  'start');
 function createNewCausalVar(x, y, width, height, label, shape)
 {
   var causalVarShape = localModel.create('causalVar');
-
   causalVarShape.x = x;
   causalVarShape.y = y;
   causalVarShape.width = width;
@@ -327,7 +339,7 @@ function createNewCausalVar(x, y, width, height, label, shape)
   causalVarShape.shape = shape;
   causalVarShape.idName = countString;
 
-  alert("shape: " + shape);
+  //alert("shape: " + shape);
 
   localModel.getRoot().set(countString, causalVarShape);
 
@@ -368,12 +380,12 @@ function redraw()
 
 function updateShape(id)
 {
-  alert("the id: " + id);
+ // alert("the id: " + id);
   var modelObj = localModel.getRoot().get(id);
   var htmlObj = $('.' + id);
-  alert("update shape");
+ // alert("update shape");
 
-	htmlObj.position(modelObj.x, modelobj.y);
+	htmlObj.position(modelObj.x, modelObj.y);
 }
 
 
@@ -407,6 +419,9 @@ $('svg').on('click', function(e){
         $('#markup-tab').click();
     }
 });
+
+
+
 
 
 

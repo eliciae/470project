@@ -99,7 +99,7 @@
  * content panel so that it looks like the tab is part of the content panel.
  */
 .TabbedPanelsTabSelected {
-	background-color: #73670b;
+	background-color: #D8C220;
 }
 
 /* This selector is an example of how to make a link inside of a tab button
@@ -198,7 +198,7 @@
  * the TabGroup, and its top border from the TabGroup or tab button above it.
  */
 .VTabbedPanels .TabbedPanelsTabSelected {
-	background-color: #73670b;
+	background-color: #D8C220;
 }
 
 /* This selector floats the content panels for the widget so that they
