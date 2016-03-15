@@ -68,15 +68,11 @@
 	position: relative;
 	top: 1px;
 	float: left;
-	padding: 4px 10px;
-	margin: 0px 1px 0px 0px;
+	padding: 20px 10px;
+	margin: 0px 10px 10px 0px;
 	font: bold 0.7em sans-serif;
-	background-color: #DDD;
+	background-color: #003940;
 	list-style: none;
-	border-left: solid 1px #CCC;
-	border-bottom: solid 1px #999;
-	border-top: solid 1px #999;
-	border-right: solid 1px #999;
 	-moz-user-select: none;
 	-khtml-user-select: none;
 	cursor: pointer;
@@ -88,11 +84,11 @@
  * and exits the container.
  */
 .TabbedPanelsTabHover {
-	background-color: #CCC;
+	background-color: #52969f;
 }
 
 /* This selector is an example of how to change the appearance of a tab button
- * container after the user has clicked on it to activate a content panel.
+ * container after the user has clicked on it to activate a  panel.
  * The class "TabbedPanelsTabSelected" is programatically added and removed
  * from the tab element as the user clicks on the tab button containers in
  * the widget.
@@ -103,8 +99,7 @@
  * content panel so that it looks like the tab is part of the content panel.
  */
 .TabbedPanelsTabSelected {
-	background-color: #EEE;
-	border-bottom: 1px solid #EEE;
+	background-color: #73670b;
 }
 
 /* This selector is an example of how to make a link inside of a tab button
@@ -128,11 +123,9 @@
  */
 .TabbedPanelsContentGroup {
 	clear: both;
-	border-left: solid 1px #CCC;
-	border-bottom: solid 1px #CCC;
-	border-top: solid 1px #999;
-	border-right: solid 1px #999;
-	background-color: #EEE;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #62b1bd;
 }
 
 /* This is the selector for the Content panel. The Content panel holds the
@@ -184,10 +177,6 @@
 	height: 20em;
 	background-color: #EEE;
 	position: relative;
-	border-top: solid 1px #999;
-	border-right: solid 1px #999;
-	border-left: solid 1px #CCC;
-	border-bottom: solid 1px #CCC;
 }
 
 /* This selector disables the float property that is placed on each tab button
@@ -209,8 +198,7 @@
  * the TabGroup, and its top border from the TabGroup or tab button above it.
  */
 .VTabbedPanels .TabbedPanelsTabSelected {
-	background-color: #EEE;
-	border-bottom: solid 1px #999;
+	background-color: #73670b;
 }
 
 /* This selector floats the content panels for the widget so that they

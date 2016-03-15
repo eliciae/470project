@@ -25,7 +25,6 @@
     <script src="https://www.gstatic.com/realtime/realtime-client-utils.js"></script>
   <link rel="stylesheet" type="text/css" href="../css/styling.css">
       
-</head>
 
     <script>
       SVGElement.prototype.getTransformToElement = SVGElement.prototype.getTransformToElement || function(toElement) {
@@ -42,16 +41,6 @@
 <link href="../css/boilerplate.css" rel="stylesheet" type="text/css">
 <link href="../css/styling.css" rel="stylesheet" type="text/css">
 <link href="../css/layout.css" rel="stylesheet" type="text/css">
-<style type="text/css">
-#apDiv1 {
-	position: absolute;
-	left: 71px;
-	top: 71px;
-	width: 764px;
-	height: 102px;
-	z-index: 1;
-}
-</style>
 <link href="../SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryMenuBarVertical.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryTabbedPanels.css" rel="stylesheet" type="text/css">
@@ -71,157 +60,184 @@ Do the following if you're using your customized build of modernizr (http://www.
 <script src="../respond.min.js"></script>
 <script src="../SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
 <script src="../SpryAssets/SpryTabbedPanels.js" type="text/javascript"></script>
+<link rel="stylesheet" href="../css/joint.min.css" /> 
 </head>
 <body>
 
-
-
+<!--FLOATING AREA-->
+<div id="floatingArea">
   <p>Now that your application is running, simply type in either text box and see your changes instantly appear in the other one. Open
   this same document in a <a onclick="window.open(window.location.href);return false;" target="_blank">new tab</a> to see it work across tabs.</p>
   <textarea id="text_area_1"></textarea>
   <textarea id="text_area_2"></textarea>
   <button id="auth_button">Authorize</button>
-
+</div>
 
 <div class="gridContainer clearfix">
-<div id="docTitle">
-  <form name="form1" method="post" action="">
-    <label for="title3">title</label>
-    <input type="text" name="title" id="title3">
-  </form>
-</div>
-<div id="collaborators">Active Collaborators:</div>
-<div id="share">
-  <ul id="MenuBar2" class="MenuBarHorizontal">
-    <li><a href="#">share</a>    </li>
-  </ul>
-</div>
-<div id="topMenu">
-  <ul id="MenuBar1" class="MenuBarHorizontal">
-    <li><a href="#">save</a>    </li>
-    <li><a href="#">undo</a></li>
-    <li><a href="#">redo</a>    </li>
-  </ul>
-</div>
-<div id="svgCtn">
-<section class="demos_container fsa">	
-  	<div class="example">
-  		<div id="paper" class="paper"></div>
-  	</div><!--end example-->
-
-        <link rel="stylesheet" href="../css/joint.min.css" />
+	<!--TOP MENU BAR-->
+	<div id="topBar">
+      <div id="topLeftDiv">
+            <div id="docTitle">
+              <form name="form1" method="post" action="">
+                <label for="title3">title</label>
+                <input type="text" name="title" id="title3">
+              </form>
+            </div>
+            <br>
+            <div id="topMenu">
+              <ul id="MenuBar1" class="MenuBarHorizontal">
+                <li><a href="#">save</a></li>
+                <li><a href="#">undo</a></li>
+                <li><a href="#">redo</a></li>
+              </ul>
+            </div>
+        </div>
         
-
-</section>
+      <div id="topMiddleDiv">
+        	<img src="causalLogoWhite200.png"/>
+        </div>
+        <div id="topRightDiv">
+          <div id="collaborators">Active Collaborators:</div>
+            <div id="share">
+              <ul id="MenuBar2" class="MenuBarHorizontal">
+                <li><a href="#">share</a>    </li>
+              </ul>
+            </div>
+        </div>
 </div>
-<div id="sideMenu">
-  <div id="TabbedPanels1" class="TabbedPanels">
-  <ul class="TabbedPanelsTabGroup">
-    <li id="variable-tab" class="TabbedPanelsTab" tabindex="0">Variable</li>
-    <li id="connection-tab" class="TabbedPanelsTab" tabindex="0">Connection</li>
-    <li id="notation-tab" class="TabbedPanelsTab" tabindex="0">Notation</li>
-    <li id="markup-tab" class="TabbedPanelsTab" tabindex="0">Mark Up</li>
-  </ul>
-  <div class="TabbedPanelsContentGroup">
-    <div class="TabbedPanelsContent">
-     <div class="panelHeading">Shape</div>
-      <ul id="MenuBarShape" class="MenuBarHorizontal">
-        <li><a id="rectShape" href="#">rectangle</a></li>
-        <li id="ellipseShape"><a href="#">oval</a></li>
-        <li id="noShape"><a href="#">no shape</a></li>
-      </ul>
-      <p>&nbsp;</p>
-      <br>
-      <br>
-      <ul id="MenuBar6" class="MenuBarHorizontal">
-      <div class="panelHeading">Color</div>
-        <li><a href="#">fill color</a></li>
-        <p>&nbsp;</p>
-        <li><a href="#">line color</a></li>
-      </ul>
-      <p>&nbsp;</p>
-      <br>
-      <div class="panelHeading">Label</div>
-      <br>
-      <form name="labelText" method="post" action="">
-    <label for="varTitle">Text</label>
-    <input type="text" name="varTitle" id="varTitle">
-  	</form>
-    </div>
-    <div class="TabbedPanelsContent">
-    	<div class="panelHeading">Line</div>
-          <ul id="MenuBar5" class="MenuBarHorizontal">
-            <li><a href="#">solid</a></li>
-            <li><a href="#">dashed</a></li>
+  
+  
+	<!--DRAWING WINDOW-->
+	<div id="drawingWindow">
+            <section class="demos_container fsa">	
+                <div class="example">
+                    <div id="paper" class="paper"></div>
+                </div>
+            </section>
+	</div>
+  
+  <!--SIDE BAR-->
+  <div id="sideBar">
+      <div id="TabbedPanels1" class="TabbedPanels">
+          <ul class="TabbedPanelsTabGroup">
+            <li id="variable-tab" class="TabbedPanelsTab" tabindex="0">Variable</li>
+            <li id="connection-tab" class="TabbedPanelsTab" tabindex="0">Connection</li>
+            <li id="notation-tab" class="TabbedPanelsTab" tabindex="0">Notation</li>
+            <li id="markup-tab" class="TabbedPanelsTab" tabindex="0">Mark Up</li>
           </ul>
-          <br>
-          <br>
-          <br>
-          <div class="panelHeading">Line Thickness</div>
-          <br>
-		  <input type="range" min="0" max="50" value="25"/>
-          <br><br>
-          <div class="panelHeading">Line Color</div>
-          <ul id="MenuBar6" class="MenuBarHorizontal">
-            <li><a href="#">color</a></li>
-          </ul>
-          <p>&nbsp;</p>
-          <br>
-          <div class="panelHeading">Label</div>
-          <br>
-        <form name="connectionText" method="post" action="">
-            <label for="Title">Text</label>
-            <input type="text" name="conTitle" id="conTitle">
-        </form>
-</div>
-    <div class="TabbedPanelsContent">
-    	<div class="panelHeading">Notation</div>
-            <ul id="MenuBar5" class="MenuBarHorizontal">
-                <li><a href="#">loop</a></li>
-                <li><a href="#">polarity</a></li>
-                <li><a href="#">perpendicular delay marks</a></li>
-                <li><a href="#">ghost variable</a></li>
-      </ul>
-         <p>&nbsp;</p>
-         <br><br><br>
-         <div class="panelHeading">Label</div>
-         <br>
-            <form name="notationText" method="post" action="">
-                <label for="Title">Text</label>
-                <input type="text" name="notationTitle" id="notationTitle">
-            </form>
-    </div>
-    <div class="TabbedPanelsContent">
-    <div class="panelHeading">Selection</div>
-            <ul id="MenuBar5" class="MenuBarHorizontal">
-                <li><a href="#">select</a></li>
-              	<br><br>
-            </ul>
-    <div class="panelHeading">Highlight Section</div>
-            <ul id="MenuBar5" class="MenuBarHorizontal">
-                <li><a href="#">rectange</a></li>
-                <li><a href="#">oval</a></li>
-                <br><br>
-                <li><a href="#">color</a></li>
-            </ul>
-         <p>&nbsp;</p>
-         <br>
-         <div class="panelHeading">Comment</div>
-         <br>
-         <ul id="MenuBar5" class="MenuBarHorizontal">
-            <li><a href="#">comment</a></li>
-            <br><br><br>
-        <form name="commentText" method="post" action="">
-          <label for="commentText">text</label>
-          <textarea name="commentText2" id="commentText"></textarea>
-        </form>
+          <div class="TabbedPanelsContentGroup">
+          
+          
+              <!--FIRST PANEL-->
+                <div class="TabbedPanelsContent">
+                    <div class="panelHeading">Shape</div>
+                      <ul id="MenuBarShape" class="MenuBarHorizontal">
+                        <li><a id="rectShape" href="#">rectangle</a></li>
+                        <li id="ellipseShape"><a href="#">oval</a></li>
+                        <li id="noShape"><a href="#">no shape</a></li>
+                      </ul>
+                      <p>&nbsp;</p>
+                      <br>
+                      <br>
+                      <ul id="MenuBar6" class="MenuBarHorizontal">
+                      <div class="panelHeading">Color</div>
+                        <li><a href="#">fill color</a></li>
+                        <p>&nbsp;</p>
+                        <li><a href="#">line color</a></li>
+                      </ul>
+                      <p>&nbsp;</p>
+                      <br>
+                      <div class="panelHeading">Label</div>
+                      <br>
+                        <form name="labelText" method="post" action="">
+                            <label for="varTitle">Text</label>
+                            <input type="text" name="varTitle" id="varTitle">
+                        </form>
+                </div>
+            
+            
+            <!--SECOND PANEL-->
+       	 	<div class="TabbedPanelsContent">
+                <div class="panelHeading">Line</div>
+                  <ul id="MenuBar5" class="MenuBarHorizontal">
+                    <li><a href="#">solid</a></li>
+                    <li><a href="#">dashed</a></li>
+                  </ul>
+                  <br>
+                  <br>
+                  <br>
+                  <div class="panelHeading">Line Thickness</div>
+                  <br>
+                  <input type="range" min="0" max="50" value="25"/>
+                  <br><br>
+                  <div class="panelHeading">Line Color</div>
+                  <ul id="MenuBar6" class="MenuBarHorizontal">
+                    <li><a href="#">color</a></li>
+                  </ul>
+                  <p>&nbsp;</p>
+                  <br>
+                    <div class="panelHeading">Label</div>
+                    <br>
+                        <form name="connectionText" method="post" action="">
+                            <label for="Title">Text</label>
+                            <input type="text" name="conTitle" id="conTitle">
+                        </form>
+            </div>
+            
+            
+            <!--THIRD PANEL-->
+            <div class="TabbedPanelsContent">
+                <div class="panelHeading">Notation</div>
+                    <ul id="MenuBar5" class="MenuBarHorizontal">
+                        <li><a href="#">loop</a></li>
+                        <li><a href="#">polarity</a></li>
+                        <li><a href="#">perpendicular delay marks</a></li>
+                        <li><a href="#">ghost variable</a></li>
+              		</ul>
+                 <p>&nbsp;</p>
+                 <br><br><br>
+                 <div class="panelHeading">Label</div>
+                 <br>
+                    <form name="notationText" method="post" action="">
+                        <label for="Title">Text</label>
+                        <input type="text" name="notationTitle" id="notationTitle">
+                    </form>
+          </div>
+            
+            <!--FOURTH PANEL-->
+            <div class="TabbedPanelsContent">
+                <div class="panelHeading">Selection</div>
+                        <ul id="MenuBar5" class="MenuBarHorizontal">
+                            <li><a href="#">select</a></li>
+                            <br><br>
+                        </ul>
+                <div class="panelHeading">Highlight Section</div>
+                        <ul id="MenuBar5" class="MenuBarHorizontal">
+                            <li><a href="#">rectange</a></li>
+                            <li><a href="#">oval</a></li>
+                            <br><br>
+                            <li><a href="#">color</a></li>
+                        </ul>
+                     <p>&nbsp;</p>
+                     <br>
+                     <div class="panelHeading">Comment</div>
+                     <br>
+                     <ul id="MenuBar5" class="MenuBarHorizontal">
+                        <li><a href="#">comment</a></li>
+                        <br><br><br>
+                    <form name="commentText" method="post" action="">
+                      <label for="commentText">text</label>
+                      <textarea name="commentText2" id="commentText"></textarea>
+                    </form>
+            </div>      
+  		</div>
+	</div>
 </div>
 
+            
 <script type="text/javascript">
-/*var MenuBar1 = new Spry.Widget.MenuBar("MenuBar1", {imgDown:"SpryAssets/SpryMenuBarDownHover.gif", imgRight:"SpryAssets/SpryMenuBarRightHover.gif"});
-var MenuBar2 = new Spry.Widget.MenuBar("MenuBar2", {imgDown:"SpryAssets/SpryMenuBarDownHover.gif", imgRight:"SpryAssets/SpryMenuBarRightHover.gif"});*/
-var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
-var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2");
+    var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
+    var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2");
 </script>
 
 <script type="text/javascript">
