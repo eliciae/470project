@@ -121,8 +121,8 @@ function registerCustomTypes()
 
     redraw();
 
-   var name3 = $("ellipse[value='11111']").length;
-   alert('VALUE:'+name3);
+   //var name3 = $("ellipse[value='11111']").length;
+   //alert('VALUE:'+name3);
    
    
     localModel.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, displayObjectChangedEvent);
@@ -146,16 +146,13 @@ function registerCustomTypes()
 			 	if (localModel.getRoot().get(i.toString()) != null){
 				 
 					 //if the model element does NOT exists in the SVG, then create it 
-					// alert(($("ellipse[value='"+ i.toString() +"']").length));
 					 if (!($("ellipse[value='"+ i.toString() +"']").length)){
-					//	 alert("creating new");
 						 drawShape(localModel.getRoot().get(i.toString()));
 					 }
-	
 				}
 			}
-        }
-      }
+		  }
+		}
     }
 
     // Connects the text boxes to the collaborative string
@@ -204,8 +201,7 @@ function state(x, y, label) {
 }
 
 function ellipse(cVar) {
-	//alert("fn ellipse y: " + cVar.y);
-	var mouseIsDown = true;
+	
     var cell = new joint.shapes.basic.Ellipse({
         position: { x: cVar.x, y: cVar.y},
         size: { width: cVar.width, height: cVar.height },
@@ -220,18 +216,13 @@ function ellipse(cVar) {
         }
     });
 	
+	
 	function updateSvgElement(evt){
-		//alert(evt.isLocal);
 			if (!evt.isLocal){
 				cell.position(cVar.x, cVar.y);
-				//cell.translate(cVar.x - cell.get("position").x, (cVar.y - cell.get("position").y) *-1);
-				//alert("y: " + cVar.y);
-				//alert("listener model Y position: " +cVar.y);
 			}
 	}
 	
-    graph.addCell(cell);
-
 	//if the associated model object is changed, then update the svg element
 	cVar.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateSvgElement);
 	
@@ -240,33 +231,53 @@ function ellipse(cVar) {
 		function(cellView, evt, x, y) { 
 			cVar.x = cell.get("position").x;
 			cVar.y = cell.get("position").y;
-			
-			//alert("model X position: " + x +" cell postion: " + cell.get("position").x);
-			//alert("model Y position: " + y +" cell postion: " + cell.get("position").y);
     	}
 	);
+	
+	graph.addCell(cell);
+	
+	
     return cell;
 }
 
 
-function rect(x, y, width, height, label) {
+function rect(cVar) {
 	
     var cell = new joint.shapes.basic.Rect({
-        position: { x: x, y: y},
-        size: { width: width, height: height },
+        position: { x: cVar.x, y: cVar.y},
+        size: { width: cVar.width, height: cVar.height },
         attrs: {
-            text : { text: label, fill: '#000000', 'font-weight': 'normal' },
+            text : { text: cVar.name, fill: '#000000', 'font-weight': 'normal' },
             'rect': {
                 fill: '#f6f6f6',
                 stroke: '#000000',
-                'stroke-width': 2
+                'stroke-width': 2,
+				value: cVar.idName
             }
         }
     });
-    graph.addCell(cell);
+	
+	function updateSvgElement(evt){
+			if (!evt.isLocal){
+				cell.position(cVar.x, cVar.y);
+			}
+	}
+	
+	//if the associated model object is changed, then update the svg element
+	cVar.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateSvgElement);
+	
+
+	paper.on('cell:pointerup', 
+		function(cellView, evt, x, y) { 
+			cVar.x = cell.get("position").x;
+			cVar.y = cell.get("position").y;
+    	}
+	);
+	
+	graph.addCell(cell);
+	
     return cell;
 }
-
 
 
 function link(source, target, label, vertices) {
@@ -346,25 +357,40 @@ function createNewCausalVar(x, y, width, height, label, shape)
 
 function drawShape(cVar)
 {
-  if (cVar.shape == "ellipse")
+	var cell;
+  if (cVar.shape == "ellipse" || cVar.shape == "noShape")
   {
-    var ell = ellipse(cVar);
+    cell = ellipse(cVar);
   }
-  else if (selectedShape == "rect")
+  else if (cVar.shape == "rect")
   {
-    var rectangle = rect(x, y, 75, 50, selectedShape);
+    cell = rect(cVar);
   }
-  else if (selectedShape == "noShape")
-  {
-    var noShape = ellipse(x, y, 0, 0, selectedShape);
-  }
+  
+	/*function updateSvgElement(evt){
+			if (!evt.isLocal){
+				cell.position(cVar.x, cVar.y);
+			}
+	}
+	
+	//if the associated model object is changed, then update the svg element
+	cVar.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateSvgElement);
+	
+
+	paper.on('cell:pointerup', 
+		function(cellView, evt, x, y) { 
+			cVar.x = cell.get("position").x;
+			cVar.y = cell.get("position").y;
+    	}
+	);
+	
+	graph.addCell(cell);*/
 }
+
 
 function redraw()
 {
   for (var i = 1; i <= localModel.getRoot().size; i++){
-      //alert("HERE!!! I am: " + i);
-      
       if (localModel.getRoot().get(i.toString()) != null){  
         drawShape(localModel.getRoot().get(i.toString()));
       }
@@ -374,11 +400,8 @@ function redraw()
 
 function updateShape(id)
 {
- // alert("the id: " + id);
-  var modelObj = localModel.getRoot().get(id);
-  var htmlObj = $('.' + id);
- // alert("update shape");
-
+	var modelObj = localModel.getRoot().get(id);
+	var htmlObj = $('.' + id);
 	htmlObj.position(modelObj.x, modelObj.y);
 }
 
@@ -398,10 +421,16 @@ $('#noShape').on('click', function(){
 $('svg').on('click', function(e){
     if($('.TabbedPanelsTabSelected').attr('id') == "variable-tab")
     {
+		var standardWidth = 75;
+		var standardHeight = 50;
         var x = (e.pageX - $('svg').offset().left) + $(window).scrollLeft();
         var y = (e.pageY - $('svg').offset().top) + $(window).scrollTop();
 
-        var newCausalVar = createNewCausalVar(x, y, 75, 50, selectedShape, selectedShape);
+		if (selectedShape == "noShape"){
+			var standardWidth = 0;
+			var standardHeight = 0;
+		}
+        var newCausalVar = createNewCausalVar(x, y, standardWidth, standardHeight, selectedShape, selectedShape);
 		
         drawShape(newCausalVar);
        
