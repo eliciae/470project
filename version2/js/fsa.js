@@ -32,7 +32,6 @@ function registerCustomTypes()
       this.shape = "ellipse"
 	  this.idName = "";
   }
-      
 
   gapi.drive.realtime.custom.registerType(causalVar, 'causalVar');
 
@@ -46,6 +45,26 @@ function registerCustomTypes()
   causalVar.prototype.idName = gapi.drive.realtime.custom.collaborativeField('idName');
 
   gapi.drive.realtime.custom.setInitializer(causalVar, initializeCausalVar);
+
+
+  var causalConn = function() {};
+
+  function initializeCausalConn()
+  {
+    this.vertices = [];
+    this.source = null;
+    this.target = null;
+    this.label = "";
+  }
+
+  gapi.drive.realtime.custom.registerType(causalConn, 'causalConn');
+
+  causalConn.prototype.vertices = gapi.drive.realtime.custom.collaborativeField('vertices');
+  causalConn.prototype.source = gapi.drive.realtime.custom.collaborativeField('source');
+  causalConn.prototype.target = gapi.drive.realtime.custom.collaborativeField('target');
+  causalConn.prototype.label = gapi.drive.realtime.custom.collaborativeField('label');
+
+  gapi.drive.realtime.custom.setInitializer(causalConn, initializeCausalConn);
   
   //CONNECTION REGISTRATION
 }
@@ -289,22 +308,22 @@ function link(source, target, label, vertices) {
 }
 
 
-function connection(source, target, label, vertices) {
+function connection(cConn) {
     
     var cell = new joint.shapes.fsa.Arrow({
-        source: { id: source.id },
-        target: { id: target.id },
-        labels: [{ position: 0.5, attrs: { text: { text: label || '', 'font-weight': 'bold' } } }],
-        vertices: vertices || []
+        source: cConn.source,
+        target: cConn.target,
+        labels: [{ position: 0.5, attrs: { text: { text: cConn.label || '', 'font-weight': 'bold' } } }],
+        vertices: cConn.vertices || []
     });
     graph.addCell(cell);
     return cell;
 }
 
-var start = new joint.shapes.fsa.StartState({ position: { x: 50, y: 530 } });
-graph.addCell(start);
+//var start = new joint.shapes.fsa.StartState({ position: { x: 50, y: 530 } });
+//graph.addCell(start);
 
-var code  = state(180, 390, 'code');
+//var code  = state(180, 390, 'code');
 
 // var slash = state(340, 220, 'slash');
 // var star  = state(600, 400, 'star');
@@ -312,7 +331,7 @@ var code  = state(180, 390, 'code');
 // var block = state(560, 140, 'block');
 
 
-link(start, code,  'start');
+// link(start, code,  'start');
 // link(code,  slash, '/');
 // link(slash, code,  'other', [{x: 270, y: 300}]);
 // link(slash, line,  '/');
@@ -351,6 +370,22 @@ function createNewCausalVar(x, y, width, height, label, shape)
   return causalVarShape;
 }
 
+function createNewCausalConn(source, target, label, vertices)
+{
+  var causalConn = localModel.create('causalConn');
+  causalConn.vertices = vertices;
+  causalConn.source = source;
+  causalConn.target = target;
+  causalConn.label = label;
+
+  localModel.getRoot().set(countString, causalConn);
+  count++;
+  countString = count.toString();
+
+  return causalConn;
+}
+
+
 function drawShape(cVar)
 {
 	var cell;
@@ -384,6 +419,12 @@ function drawShape(cVar)
 }
 
 
+function drawConnection(causalConn)
+{
+  connection(causalConn);
+}
+
+
 function redraw()
 {
   for (var i = 1; i <= localModel.getRoot().size; i++){
@@ -414,18 +455,21 @@ $('#noShape').on('click', function(){
 
 
 $('svg').on('click', function(e){
+
+    var mousex = (e.pageX - $('svg').offset().left) + $(window).scrollLeft();
+    var mousey = (e.pageY - $('svg').offset().top) + $(window).scrollTop();
+
     if($('.TabbedPanelsTabSelected').attr('id') == "variable-tab")
     {
 		var standardWidth = 75;
 		var standardHeight = 50;
-        var x = (e.pageX - $('svg').offset().left) + $(window).scrollLeft();
-        var y = (e.pageY - $('svg').offset().top) + $(window).scrollTop();
+        
 
 		if (selectedShape == "noShape"){
 			var standardWidth = 0;
 			var standardHeight = 0;
 		}
-        var newCausalVar = createNewCausalVar(x, y, standardWidth, standardHeight, selectedShape, selectedShape);
+        var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, selectedShape, selectedShape);
 		
         drawShape(newCausalVar);
        
@@ -433,7 +477,13 @@ $('svg').on('click', function(e){
     }
     if($('.TabbedPanelsTabSelected').attr('id') == "connection-tab")
     {
-        var conn = connection(source, target, "/");
+      var source = { x:mousex, y:mousey };
+      var target = { x:mousex+100, y:mousey+100 };
+      var label = "connection";
+      var vertices = [];
+
+      var newCausalConn = createNewCausalConn(source, target, label, vertices);
+      drawConnection(newCausalConn);
         $('#markup-tab').click();
     }
 });
