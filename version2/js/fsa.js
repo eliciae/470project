@@ -285,8 +285,8 @@ function link(source, target, label, vertices) {
 function connection(source, target, label, vertices) {
     
     var cell = new joint.shapes.fsa.Arrow({
-        source: { id: source.id },
-        target: { id: target.id },
+        source: { x: 100, y: 100 },
+        target: { x: 200, y: 300 },
         labels: [{ position: 0.5, attrs: { text: { text: label || '', 'font-weight': 'bold' } } }],
         vertices: vertices || []
     });
@@ -294,10 +294,10 @@ function connection(source, target, label, vertices) {
     return cell;
 }
 
-var start = new joint.shapes.fsa.StartState({ position: { x: 50, y: 530 } });
-graph.addCell(start);
+//var start = new joint.shapes.fsa.StartState({ position: { x: 50, y: 530 } });
+//graph.addCell(start);
 
-var code  = state(180, 390, 'code');
+//var code  = state(180, 390, 'code');
 
 // var slash = state(340, 220, 'slash');
 // var star  = state(600, 400, 'star');
@@ -305,7 +305,7 @@ var code  = state(180, 390, 'code');
 // var block = state(560, 140, 'block');
 
 
-link(start, code,  'start');
+// link(start, code,  'start');
 // link(code,  slash, '/');
 // link(slash, code,  'other', [{x: 270, y: 300}]);
 // link(slash, line,  '/');
@@ -409,7 +409,7 @@ $('svg').on('click', function(e){
     }
     if($('.TabbedPanelsTabSelected').attr('id') == "connection-tab")
     {
-        var conn = connection(source, target, "/");
+        var conn = connection(0,0, "/");
         $('#markup-tab').click();
     }
 });
