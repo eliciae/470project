@@ -120,6 +120,19 @@ function registerCustomTypes()
     wireTextBoxes(collaborativeString);
 
     redraw();
+
+//$( "input[name='first_name']" );
+   // var name = $('ellipse:first').attr('id');
+  // var name = $('#v-31').length;
+	
+  // alert('ID:'+name);
+     // var name2 = $('#v-999').length;
+	//alert('ID:'+name2);
+//$("ul").find("[data-slide='" + current + "']");
+   var name3 = $("ellipse[value='11111']").length;
+   alert('VALUE:'+name3);
+   
+   
     localModel.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, displayObjectChangedEvent);
   }
 
@@ -136,23 +149,47 @@ function registerCustomTypes()
 			//only draw and add to the model if it wasn't local
 			//check if there is an item with id count-1 in the svg
 			//if there is NOT then create it
-			var lastItemCreatedID = count -1;
 			
-			//if (document.getElementById(lastItemCreatedID.toString()) == null){
-			//alert ("new item added: " + $("." + lastItemCreatedID.toString()).first());
-			for (var i = 1; i <= localModel.getRoot().size+10; i++){
-			  if (localModel.getRoot().get(i.toString()) != null){ 
-			  alert(($("body").data("cID")).length);
-			   //if the element does not exist then create it in the SVG
-				if (!($("body").data("cID"))){
-					alert("draw new SVG elements");
-					drawShape(localModel.getRoot().get(i.toString()));
-				}
-			  }
+			for (var i = 1; i <= localModel.getRoot().size; i++){
+			 if (localModel.getRoot().get(i.toString()) != null){
+				 
+				 //if the model element does NOT exists in the SVG, then create it 
+				 alert(($("ellipse[value='"+ i.toString() +"']").length));
+				 if (!($("ellipse[value='"+ i.toString() +"']").length)){
+					 alert("creating new");
+					 drawShape(localModel.getRoot().get(i.toString()));
+				 }
+
+//var item1 = $( "li.item-1" )[ 0 ];
+//$( "li.item-ii" ).find( item1 ).css( "background-color", "red" );
+				 
+				//  alert($('#text_area_1').id);
+				//var findme = $(ellipse[dataBOOOOOOOOOO='1']);
+				//alert('IH:'+findme.id);
+				//   alert($("ellipse[dataBOOOOOOOOOO = '" + i.toString() + "']").text("'"+i.toString()+"'"));
+				  // alert($("ellipse").find([dataBOOOOOOOOOO = i.toString()]));
+				 // alert($("ellipse[dataBOOOOOOOOOO = '" + i.toString() + "']")); 
+				  // var name = $('#v-31').prop('modelID');
+				  
+				//search within all ellipses for this property
+				   // var name = $('ellipse #v-31').prop('id');
+				  // var name = $("ellipse['#v-31']").attr('id');
+				  // var name = $('#v-31').attr('modelID');
+
+   				//alert('NAME:'+name);
+					
+				/*  if($("ellipse[value='" + i.toString() + "']").length){
+				 // alert($([dataBOOOOOOOOOO = i.toString()]).get[0].tagName);
+				   //if the element does not exist then create it in the SVG
+					//if (($("svg").find([dataBOOOOOOOOOO = i.toString()]))){
+						alert("adding new SVG element");
+						drawShape(localModel.getRoot().get(i.toString()));
+				}*/
+				  
 			}
-			
-			
-			
+		}
+		//}			
+						
 			/*if ($("." + lastItemCreatedID.toString()).first().toString() != "[Object object]" ){
 				alert("new object added");
             	drawShape(localModel.getRoot().get(lastItemCreatedID.toString()));
@@ -210,7 +247,7 @@ function state(x, y, label) {
 }
 
 function ellipse(cVar) {
-	alert("id: " + cVar.idName);
+	//alert("id: " + cVar.idName);
 	var mouseIsDown = true;
     var cell = new joint.shapes.basic.Ellipse({
         position: { x: cVar.x, y: cVar.y},
@@ -221,14 +258,14 @@ function ellipse(cVar) {
                 fill: '#f6f6f6',
                 stroke: '#000000',
                 'stroke-width': 2,
-				'data-cID': cVar.idName	
+				value: cVar.idName	
             }		
         }
     });
 	
 	function updateSvgElement(){
 		//alert("GAHH Mouse is still down!");
-		//cell.position(cVar.x, cVar.y);
+		cell.position(cVar.x, cVar.y);
 		//alert("updateSVG up: " + cVar.y + " " + cell.get("position").y);	
 	}
 	
