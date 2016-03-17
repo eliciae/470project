@@ -120,11 +120,7 @@ function registerCustomTypes()
     wireTextBoxes(collaborativeString);
 
     redraw();
-
-   //var name3 = $("ellipse[value='11111']").length;
-   //alert('VALUE:'+name3);
-   
-   
+  
     localModel.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, displayObjectChangedEvent);
   }
 
@@ -394,8 +390,7 @@ function redraw()
       if (localModel.getRoot().get(i.toString()) != null){  
         drawShape(localModel.getRoot().get(i.toString()));
       }
-    }
-  
+   }
 }
 
 function updateShape(id)
