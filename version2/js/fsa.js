@@ -121,14 +121,6 @@ function registerCustomTypes()
 
     redraw();
 
-//$( "input[name='first_name']" );
-   // var name = $('ellipse:first').attr('id');
-  // var name = $('#v-31').length;
-	
-  // alert('ID:'+name);
-     // var name2 = $('#v-999').length;
-	//alert('ID:'+name2);
-//$("ul").find("[data-slide='" + current + "']");
    var name3 = $("ellipse[value='11111']").length;
    alert('VALUE:'+name3);
    
@@ -151,52 +143,17 @@ function registerCustomTypes()
 			//if there is NOT then create it
 			
 			for (var i = 1; i <= localModel.getRoot().size; i++){
-			 if (localModel.getRoot().get(i.toString()) != null){
+			 	if (localModel.getRoot().get(i.toString()) != null){
 				 
-				 //if the model element does NOT exists in the SVG, then create it 
-				 alert(($("ellipse[value='"+ i.toString() +"']").length));
-				 if (!($("ellipse[value='"+ i.toString() +"']").length)){
-					 alert("creating new");
-					 drawShape(localModel.getRoot().get(i.toString()));
-				 }
-
-//var item1 = $( "li.item-1" )[ 0 ];
-//$( "li.item-ii" ).find( item1 ).css( "background-color", "red" );
-				 
-				//  alert($('#text_area_1').id);
-				//var findme = $(ellipse[dataBOOOOOOOOOO='1']);
-				//alert('IH:'+findme.id);
-				//   alert($("ellipse[dataBOOOOOOOOOO = '" + i.toString() + "']").text("'"+i.toString()+"'"));
-				  // alert($("ellipse").find([dataBOOOOOOOOOO = i.toString()]));
-				 // alert($("ellipse[dataBOOOOOOOOOO = '" + i.toString() + "']")); 
-				  // var name = $('#v-31').prop('modelID');
-				  
-				//search within all ellipses for this property
-				   // var name = $('ellipse #v-31').prop('id');
-				  // var name = $("ellipse['#v-31']").attr('id');
-				  // var name = $('#v-31').attr('modelID');
-
-   				//alert('NAME:'+name);
-					
-				/*  if($("ellipse[value='" + i.toString() + "']").length){
-				 // alert($([dataBOOOOOOOOOO = i.toString()]).get[0].tagName);
-				   //if the element does not exist then create it in the SVG
-					//if (($("svg").find([dataBOOOOOOOOOO = i.toString()]))){
-						alert("adding new SVG element");
-						drawShape(localModel.getRoot().get(i.toString()));
-				}*/
-				  
+					 //if the model element does NOT exists in the SVG, then create it 
+					// alert(($("ellipse[value='"+ i.toString() +"']").length));
+					 if (!($("ellipse[value='"+ i.toString() +"']").length)){
+					//	 alert("creating new");
+						 drawShape(localModel.getRoot().get(i.toString()));
+					 }
+	
+				}
 			}
-		}
-		//}			
-						
-			/*if ($("." + lastItemCreatedID.toString()).first().toString() != "[Object object]" ){
-				alert("new object added");
-            	drawShape(localModel.getRoot().get(lastItemCreatedID.toString()));
-			}*/
-		//	else{
-		//		alert("moved");
-		//	}
         }
       }
     }
@@ -247,7 +204,7 @@ function state(x, y, label) {
 }
 
 function ellipse(cVar) {
-	//alert("id: " + cVar.idName);
+	//alert("fn ellipse y: " + cVar.y);
 	var mouseIsDown = true;
     var cell = new joint.shapes.basic.Ellipse({
         position: { x: cVar.x, y: cVar.y},
@@ -263,10 +220,14 @@ function ellipse(cVar) {
         }
     });
 	
-	function updateSvgElement(){
-		//alert("GAHH Mouse is still down!");
-		cell.position(cVar.x, cVar.y);
-		//alert("updateSVG up: " + cVar.y + " " + cell.get("position").y);	
+	function updateSvgElement(evt){
+		//alert(evt.isLocal);
+			if (!evt.isLocal){
+				cell.position(cVar.x, cVar.y);
+				//cell.translate(cVar.x - cell.get("position").x, (cVar.y - cell.get("position").y) *-1);
+				//alert("y: " + cVar.y);
+				//alert("listener model Y position: " +cVar.y);
+			}
 	}
 	
     graph.addCell(cell);
@@ -277,17 +238,13 @@ function ellipse(cVar) {
 
 	paper.on('cell:pointerup', 
 		function(cellView, evt, x, y) { 
-			//alert("UP!");
 			cVar.x = cell.get("position").x;
 			cVar.y = cell.get("position").y;
-			//cVar.x = x;
-			//cVar.y = y;
-			//cell.position(x, y);
+			
+			//alert("model X position: " + x +" cell postion: " + cell.get("position").x);
+			//alert("model Y position: " + y +" cell postion: " + cell.get("position").y);
     	}
 	);
-	
-	//alert("ellipse fn: " + cVar.y);
-	
     return cell;
 }
 
