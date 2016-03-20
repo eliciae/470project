@@ -323,8 +323,7 @@ function connection(cConn) {
     var cell = new joint.shapes.fsa.Arrow({
         source: cConn.source,
         target: cConn.target,
-
-      	 labels: [{ position: 0.5, attrs: { text: { text: cConn.label || '', 'font-weight': 'bold' } } }],
+        labels: [{ position: 0.5, attrs: { text: { text: cConn.label || '', 'font-weight': 'bold' } } }],
         vertices: cConn.vertices || [],
         attrs: {
           'path': {
@@ -335,9 +334,24 @@ function connection(cConn) {
 
     function updateSvgElement(evt){
       if (!evt.isLocal){
+        var s = cConn.source;
+        var t = cConn.target;
+
         cell.set('vertices', cConn.vertices);
-        cell.set('source', cConn.source);
-        cell.set('target', cConn.target);
+        if (s.x)
+          cell.set('source', cConn.source);
+        else
+        {
+          var source = getModelIDFromVarID(s);
+          cell.set('source', source);
+        }
+        if (t.x)
+          cell.set('target', cConn.target);
+        else
+        {
+          var target = getModelIDFromVarID(t);
+          cell.set('target', target)
+        }
       }
   }
   
@@ -346,16 +360,59 @@ function connection(cConn) {
   
 
   paper.on('cell:pointerup', 
-    function(cellView, evt, x, y) { 
-      alert("SOURCE: " + cell.get('source'));
+    function(cellView, evt, x, y) 
+    { 
+      var s = cell.get('source');
+      var t = cell.get('target');
+
       cConn.vertices = cell.get('vertices');
-      cConn.source = cell.get('source');
-      cConn.target = cell.get('target');
+
+      //if there is an id, it is pointing to a variable, so set the id as the collaborative id
+      if (s.id)
+        cConn.source = getVarIDFromSVG(s);
+      else
+        cConn.source = s;
+      if (t.id)
+        cConn.target = getVarIDFromSVG(t);
+      else
+        cConn.target = t;
       }
   );
 
     graph.addCell(cell);
     return cell;
+}
+
+function getVarIDFromSVG(node)
+{
+  //check if the thing you are connecting is an ellipse
+  var child = $('g[model-id="' + node.id + '"]').find('ellipse');
+  //if there is no value, then there is no ellipse there, try rect
+  if (child.attr("value") == undefined)
+  {
+    child = $('g[model-id="' + node.id + '"]').find('rect');
+  }
+  //return the value attribute value of the thing you are pointing to
+  return child.attr('value');
+}
+
+function getModelIDFromVarID(varID)
+{
+  //find the element with the matching id from the model
+  var el = $("ellipse[value='" + varID + "']");
+  //if nothing found
+  if (!el.length)
+  {
+    el = $("rect[value='" + varID + "']");
+  }
+
+  //get the parent g element so we can get the model id
+  var parent = el.first().parents("g[model-id]");
+  //the model-id is assigned by joint js
+  var modelId = parent.first().attr("model-id");
+
+  //return the id in the structure that joint js expects
+  return { id: modelId };
 }
 
 var start = new joint.shapes.fsa.StartState({ position: { x: 50, y: 530 } });
