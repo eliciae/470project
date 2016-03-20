@@ -161,7 +161,7 @@ function registerCustomTypes()
 			 	if (localModel.getRoot().get(i.toString()) != null){
 				 
 					 //if the model element does NOT exists in the SVG, then create it 
-					 if (!($("ellipse[value='"+ i.toString() +"']").length)){
+					 if ((!($("ellipse[value='"+ i.toString() +"']").length) && !($("rect[value='"+ i.toString() +"']").length))){
 						 drawShape(localModel.getRoot().get(i.toString()));
 					 }
 				}
@@ -301,7 +301,7 @@ function link(source, target, label, vertices) {
         source: { id: source.id },
         target: { id: target.id },
         labels: [{ position: 0.5, attrs: { text: { text: label || '', 'font-weight': 'bold' } } }],
-        vertices: vertices || []
+        vertices: vertices || []		
     });
     graph.addCell(cell);
     return cell;
@@ -309,12 +309,17 @@ function link(source, target, label, vertices) {
 
 
 function connection(cConn) {
-    
+    alert(cConn);
     var cell = new joint.shapes.fsa.Arrow({
         source: cConn.source,
         target: cConn.target,
-        labels: [{ position: 0.5, attrs: { text: { text: cConn.label || '', 'font-weight': 'bold' } } }],
-        vertices: cConn.vertices || []
+       labels: [{ position: 0.5, attrs: { text: { text: cConn.label || '', 'font-weight': 'bold' } } }],
+        vertices: cConn.vertices || [],
+		attrs: {
+            'path': {
+				value: cConn.idName
+            }
+        }
     });
     graph.addCell(cell);
     return cell;
