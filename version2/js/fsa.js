@@ -336,8 +336,9 @@ function connection(cConn) {
     function updateSvgElement(evt){
       if (!evt.isLocal){
         cell.set('vertices', cConn.vertices);
-        cell.set('source', cConn.source);
+        //cell.set('source', cConn.source);
         cell.set('target', cConn.target);
+		link.set('source', { id: cConn.source });
       }
   }
   
@@ -347,9 +348,9 @@ function connection(cConn) {
 
   paper.on('cell:pointerup', 
     function(cellView, evt, x, y) { 
-      alert("SOURCE: " + cell.get('source'));
+      alert("SOURCE: " + cell.get('source').id);
       cConn.vertices = cell.get('vertices');
-      cConn.source = cell.get('source');
+      cConn.source = cell.get('source').id;
       cConn.target = cell.get('target');
       }
   );
