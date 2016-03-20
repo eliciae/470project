@@ -55,6 +55,8 @@ function registerCustomTypes()
     this.source = null;
     this.target = null;
     this.label = "";
+    this.idName = "";
+    this.shape = "connection";
   }
 
   gapi.drive.realtime.custom.registerType(causalConn, 'causalConn');
@@ -63,6 +65,8 @@ function registerCustomTypes()
   causalConn.prototype.source = gapi.drive.realtime.custom.collaborativeField('source');
   causalConn.prototype.target = gapi.drive.realtime.custom.collaborativeField('target');
   causalConn.prototype.label = gapi.drive.realtime.custom.collaborativeField('label');
+  causalConn.prototype.idName = gapi.drive.realtime.custom.collaborativeField('idName');
+  causalConn.prototype.shape = gapi.drive.realtime.custom.collaborativeField('shape');
 
   gapi.drive.realtime.custom.setInitializer(causalConn, initializeCausalConn);
   
@@ -151,25 +155,31 @@ function registerCustomTypes()
   {
       var events = evt.events;
       var eventCount = evt.events.length;
-      for (var i = 0; i < eventCount; i++) {
+      for (var i = 0; i < eventCount; i++) 
+      {
         console.log('Event type: '  + events[i].type);
         console.log('Local event: ' + events[i].isLocal);
         console.log('User ID: '     + events[i].userId);
         console.log('Session ID: '  + events[i].sessionId);
-        if (!events[i].isLocal){
+        if (!events[i].isLocal)
+        {
 			//only draw and add to the model if it wasn't local
 			//check if there is an item with id count-1 in the svg
 			//if there is NOT then create it
 			
-			for (var i = 1; i <= localModel.getRoot().size; i++){
-			 	if (localModel.getRoot().get(i.toString()) != null){
-				 
-					 //if the model element does NOT exists in the SVG, then create it 
-					 if (!($("ellipse[value='"+ i.toString() +"']").length)){
-						 drawShape(localModel.getRoot().get(i.toString()));
-					 }
-				}
-			}
+    			for (var i = 1; i <= localModel.getRoot().size; i++)
+          {
+    			 	if (localModel.getRoot().get(i.toString()) != null)
+            {
+    					 //if the model element does NOT exists in the SVG, then create it 
+    					 if (!($("ellipse[value='"+ i.toString() +"']").length)
+                          && !($("rect[value='"+ i.toString() +"']").length)
+                          && !($("path[value='"+ i.toString() +"']").length))
+               {
+    						 drawShape(localModel.getRoot().get(i.toString()));
+    					 }
+				    }
+			   }
 		  }
 		}
     }
@@ -230,8 +240,8 @@ function ellipse(cVar) {
                 fill: '#f6f6f6',
                 stroke: '#000000',
                 'stroke-width': 2,
-				value: cVar.idName	
-            }		
+				        value: cVar.idName	
+            }	
         }
     });
 	
@@ -271,7 +281,7 @@ function rect(cVar) {
                 fill: '#f6f6f6',
                 stroke: '#000000',
                 'stroke-width': 2,
-				value: cVar.idName
+				        value: cVar.idName
             }
         }
     });
@@ -318,16 +328,43 @@ function connection(cConn) {
         source: cConn.source,
         target: cConn.target,
         labels: [{ position: 0.5, attrs: { text: { text: cConn.label || '', 'font-weight': 'bold' } } }],
-        vertices: cConn.vertices || []
+        vertices: cConn.vertices || [],
+        attrs: {
+          'path': {
+            value: cConn.idName
+          }
+        }
     });
+
+    function updateSvgElement(evt){
+      if (!evt.isLocal){
+        cell.set('vertices', cConn.vertices);
+        cell.set('source', cConn.source);
+        cell.set('target', cConn.target);
+      }
+  }
+  
+  //if the associated model object is changed, then update the svg element
+  cConn.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateSvgElement);
+  
+
+  paper.on('cell:pointerup', 
+    function(cellView, evt, x, y) { 
+      alert("SOURCE: " + cell.get('source'));
+      cConn.vertices = cell.get('vertices');
+      cConn.source = cell.get('source');
+      cConn.target = cell.get('target');
+      }
+  );
+
     graph.addCell(cell);
     return cell;
 }
 
-//var start = new joint.shapes.fsa.StartState({ position: { x: 50, y: 530 } });
-//graph.addCell(start);
+var start = new joint.shapes.fsa.StartState({ position: { x: 50, y: 530 } });
+graph.addCell(start);
 
-//var code  = state(180, 390, 'code');
+var code  = state(180, 390, 'code');
 
 // var slash = state(340, 220, 'slash');
 // var star  = state(600, 400, 'star');
@@ -335,7 +372,7 @@ function connection(cConn) {
 // var block = state(560, 140, 'block');
 
 
-// link(start, code,  'start');
+ link(start, code,  'start');
 // link(code,  slash, '/');
 // link(slash, code,  'other', [{x: 270, y: 300}]);
 // link(slash, line,  '/');
@@ -381,6 +418,7 @@ function createNewCausalConn(source, target, label, vertices)
   causalConn.source = source;
   causalConn.target = target;
   causalConn.label = label;
+  causalConn.idName = countString;
 
   localModel.getRoot().set(countString, causalConn);
   count++;
@@ -400,6 +438,11 @@ function drawShape(cVar)
   else if (cVar.shape == "rect")
   {
     cell = rect(cVar);
+  }
+  //not really a cVar, cConn
+  else if (cVar.shape == "connection")
+  {
+    cell = connection(cVar);
   }
   
 	/*function updateSvgElement(evt){
