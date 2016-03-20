@@ -323,21 +323,13 @@ function connection(cConn) {
     var cell = new joint.shapes.fsa.Arrow({
         source: cConn.source,
         target: cConn.target,
-<<<<<<< HEAD
-       labels: [{ position: 0.5, attrs: { text: { text: cConn.label || '', 'font-weight': 'bold' } } }],
-        vertices: cConn.vertices || [],
-		attrs: {
-            'path': {
-				value: cConn.idName
-            }
-=======
-        labels: [{ position: 0.5, attrs: { text: { text: cConn.label || '', 'font-weight': 'bold' } } }],
+
+      	 labels: [{ position: 0.5, attrs: { text: { text: cConn.label || '', 'font-weight': 'bold' } } }],
         vertices: cConn.vertices || [],
         attrs: {
           'path': {
             value: cConn.idName
           }
->>>>>>> 9f0b368a9bb307c9d744c08ad1627181a16fbf15
         }
     });
 
