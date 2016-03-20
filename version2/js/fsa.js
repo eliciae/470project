@@ -157,27 +157,29 @@ function registerCustomTypes()
         console.log('Local event: ' + events[i].isLocal);
         console.log('User ID: '     + events[i].userId);
         console.log('Session ID: '  + events[i].sessionId);
+        //only draw and add to the model if it wasn't local
         if (!events[i].isLocal)
         {
-			//only draw and add to the model if it wasn't local
-			//check if there is an item with id count-1 in the svg
-			//if there is NOT then create it
-			
-    			for (var i = 1; i <= localModel.getRoot().size; i++)
+          //a list of all the item names in the model
+          var modelList = localModel.getRoot().keys();
+
+          modelList.forEach(function(key)
           {
-    			 	if (localModel.getRoot().get(i.toString()) != null)
-            {
-    					 //if the model element does NOT exists in the SVG, then create it 
-    					 if (!($("ellipse[value='"+ i.toString() +"']").length)
-                          && !($("rect[value='"+ i.toString() +"']").length)
-                          && !($("path[value='"+ i.toString() +"']").length))
-               {
-    						 drawShape(localModel.getRoot().get(i.toString()));
-    					 }
-				    }
+             //if the model element does NOT exists in the SVG, then create it 
+             if (keyInSVG(key))
+             {
+               drawShape(localModel.getRoot().get(key));
+             }
+          });
 			   }
 		  }
 		}
+
+    function keyInSVG(key)
+    {
+      return !($("ellipse[value='"+ key +"']").length)
+            && !($("rect[value='"+ key +"']").length)
+            && !($("path[value='"+ key +"']").length);
     }
 
     // Connects the text boxes to the collaborative string
@@ -383,6 +385,7 @@ function connection(cConn) {
     return cell;
 }
 
+
 function getVarIDFromSVG(node)
 {
   //check if the thing you are connecting is an ellipse
@@ -395,6 +398,7 @@ function getVarIDFromSVG(node)
   //return the value attribute value of the thing you are pointing to
   return child.attr('value');
 }
+
 
 function getModelIDFromVarID(varID)
 {
@@ -414,6 +418,7 @@ function getModelIDFromVarID(varID)
   //return the id in the structure that joint js expects
   return { id: modelId };
 }
+
 
 var start = new joint.shapes.fsa.StartState({ position: { x: 50, y: 530 } });
 graph.addCell(start);
@@ -454,13 +459,8 @@ function createNewCausalVar(x, y, width, height, label, shape)
   causalVarShape.shape = shape;
   causalVarShape.idName = countString;
 
-  //alert("shape: " + shape);
-
   localModel.getRoot().set(countString, causalVarShape);
-
-  //localModel.getRoot().get(countString).addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateShape(countString));
-  count++;
-  countString = count.toString();
+  incrementCount();
 
   return causalVarShape;
 }
@@ -475,8 +475,7 @@ function createNewCausalConn(source, target, label, vertices)
   causalConn.idName = countString;
 
   localModel.getRoot().set(countString, causalConn);
-  count++;
-  countString = count.toString();
+  incrementCount();
 
   return causalConn;
 }
@@ -517,6 +516,12 @@ function drawShape(cVar)
 	);
 	
 	graph.addCell(cell);*/
+}
+
+function incrementCount()
+{
+  count++;
+  countString = count.toString();
 }
 
 
