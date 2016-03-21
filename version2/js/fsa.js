@@ -321,7 +321,6 @@ function link(source, target, label, vertices) {
 
 
 function connection(cConn) {
-    alert(cConn);
     var cell = new joint.shapes.fsa.Arrow({
         source: cConn.source,
         target: cConn.target,
@@ -403,6 +402,7 @@ function getVarIDFromSVG(node)
 
 function getModelIDFromVarID(varID)
 {
+	alert("getting Model ID: " + varID);
   //find the element with the matching id from the model
   var el = $("ellipse[value='" + varID + "']");
   //if nothing found
@@ -417,6 +417,7 @@ function getModelIDFromVarID(varID)
   var modelId = parent.first().attr("model-id");
 
   //return the id in the structure that joint js expects
+  alert("Model ID: " + modelId);
   return { id: modelId };
 }
 
@@ -494,7 +495,7 @@ function drawShape(cVar)
     cell = rect(cVar);
   }
   //not really a cVar, cConn
-  else if (cVar.shape == "connection")
+  else //if (cVar.shape == "connection")
   {
     cell = connection(cVar);
   }
@@ -534,10 +535,23 @@ function drawConnection(causalConn)
 
 function redraw()
 {
+	var connectionIDs = [];
   for (var i = 1; i <= localModel.getRoot().size; i++){
       if (localModel.getRoot().get(i.toString()) != null){  
-        drawShape(localModel.getRoot().get(i.toString()));
+	  
+	  //put all connections in an array to iterate through later
+	  	if (localModel.getRoot().get(i.toString()).shape == "connection"){
+			connectionIDs.push(localModel.getRoot().get(i.toString()));
+		}
+        else {
+			drawShape(localModel.getRoot().get(i.toString()));
+		}
       }
+   }
+   alert("num connections: " + connectionIDs.length);
+   for (var k = 0; k < connectionIDs.length; k++){
+	   alert(connectionIDs[k].source + " "+ connectionIDs[k].target);
+      	drawShape(connectionIDs[k]);
    }
 }
 
