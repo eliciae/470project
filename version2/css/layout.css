@@ -175,7 +175,7 @@ img, object, embed, video {
 	clear: both;
 	float: left;
 	margin-left: 0;
-	width: 18.3673%;
+	width: 50%;
 	display: block;
 }
 #docTitle {
@@ -190,19 +190,30 @@ img, object, embed, video {
 	float: left;
 	margin-left: 0;
 	width: 98.5%;
-	height: 15vh;
-	display: block;
-	overflow: hidden;
+	height: 80px;
+	/*display: block;
+	overflow: hidden;*/
 	padding: 10px;
 	position: relative;
 }
 #share {
-	clear: none;
-	float: right;
-	margin-left: 2.0408%;
+	/*clear: both;
+	position: absolute;
+	float: right;*/
+	top: 0px;
+	right: 0px;
+	/*margin-left: 2.0408%;
 	width: 8.1632%;
-	display: block;
-	vertical-align:bottom;
+	display: block;*/
+	width: 40%;
+	vertical-align:top;
+	
+	
+	/*clear:both;
+	padding: 0px;
+	position:absolute;
+	bottom: 10px;
+    left: 5px;*/
 }
 
 #sideBar{
@@ -232,20 +243,20 @@ svg{
 }
 
 #topLeftDiv{
-	width: 30%;
+	width: 33%;
 	float: left;
 	height: 100%;
 	clear:both;
 }
 
 #topMiddleDiv{
-	width: 30%;
+	width: 33%;
 	float: left;
 	text-align:center;
 }
 
 #topRightDiv{
-	width: 32%;
+	width: 33%;
 	float: left;
 }
 
@@ -254,7 +265,7 @@ svg{
 	padding: 0px;
 	position:absolute;
 	bottom: 10px;
-    left: 10px;
+    left: 5px;
 	vertical-align:text-bottom;
 }
 

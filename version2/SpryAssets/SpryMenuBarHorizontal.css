@@ -33,9 +33,9 @@ ul.MenuBarHorizontal li
 	list-style-type: none;
 	font-size: 100%;
 	position: relative;
-	text-align: left;
+	text-align: center;
 	cursor: pointer;
-	width: 8em;
+	width: 6em;
 	float: left;
 }
 /* Submenus should appear below their parent (top: 0) with a higher z-index, but they are initially off the left side of the screen (-1000em) */
