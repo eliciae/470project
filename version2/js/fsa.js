@@ -324,22 +324,23 @@ function connection(cConn)
 {
     //if the id is set, it is pointing to a variable, not a point.
     // this means we have to get the model id, rather than the one we created.
-    alert("trying to draw a connection");
-    alert("source x: " + cConn.source.x + " y: " + cConn.source.y+" id: "+cConn.source);
+    var setSource = cConn.source;
+    var setTarget = cConn.target;
+    
     if (!cConn.source.x)
     {
       alert("pointing to something source: " + cConn.source);
-      cConn.source = getModelIDFromVarID(cConn.source)
+      setSource = getModelIDFromVarID(cConn.source)
     }
     if (!cConn.target.x)
     {
       alert("pointing to something target: " + cConn.target);
-      cConn.target = getModelIDFromVarID(cConn.target)
+      setTarget = getModelIDFromVarID(cConn.target)
     }
 
     var cell = new joint.shapes.fsa.Arrow({
-        source: cConn.source,
-        target: cConn.target,
+        source: setSource,
+        target: setTarget,
         labels: [{ position: 0.5, attrs: { text: { text: cConn.label || '', 'font-weight': 'bold' } } }],
         vertices: cConn.vertices || [],
         attrs: {
@@ -418,18 +419,12 @@ function getVarIDFromSVG(node)
 
 function getModelIDFromVarID(varID)
 {
-	alert("getting Model ID: " + varID);
   //find the element with the matching id from the model
   var el = $("ellipse[value='" + varID + "']");
   //if nothing found
   if (!el.length)
   {
-    alert("this is a rect");
     el = $("rect[value='" + varID + "']");
-  }
-  else
-  {
-    alert("the selector doesn't work");
   }
 
   //get the parent g element so we can get the model id
