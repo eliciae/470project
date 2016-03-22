@@ -174,8 +174,8 @@ img, object, embed, video {
 #collaborators {
 	clear: both;
 	float: left;
-	margin-left: 0;
-	width: 50%;
+	margin:0;
+	width: 60%;
 	display: block;
 }
 #docTitle {
@@ -199,9 +199,12 @@ img, object, embed, video {
 #share {
 	/*clear: both;
 	position: absolute;
-	float: right;*/
+	float: right;
 	top: 0px;
-	right: 0px;
+	right: 0px;*/
+	margin-left: auto;
+	margin-right: 0;
+	float: right;
 	/*margin-left: 2.0408%;
 	width: 8.1632%;
 	display: block;*/
@@ -214,6 +217,12 @@ img, object, embed, video {
 	position:absolute;
 	bottom: 10px;
     left: 5px;*/
+}
+
+#shareBtn{
+	margin-left: auto;
+	margin-right: 0;
+	float: right;
 }
 
 #sideBar{
@@ -268,8 +277,6 @@ svg{
     left: 5px;
 	vertical-align:text-bottom;
 }
-
-
 
 
 #TabbedPanels1{
