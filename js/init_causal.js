@@ -9,8 +9,9 @@ var count = 0;
 var countString = "0";
 
 
-if (!/^([0-9])$/.test(clientId[0])) {
-alert('Invalid Client ID - did you forget to insert your application Client ID?');
+if (!/^([0-9])$/.test(clientId[0])) 
+{
+  alert('Invalid Client ID - did you forget to insert your application Client ID?');
 }
 // Create a new instance of the realtime utility with your client ID.
 var realtimeUtils = new utils.RealtimeUtils({ clientId: clientId });
@@ -101,13 +102,17 @@ function registerCustomTypes()
     // With auth taken care of, load a file, or create one if there
     // is not an id in the URL.
     var id = realtimeUtils.getParam('id');
-    if (id) {
-      //allows for custom types (needs to be done before load)
-      registerCustomTypes();
 
+    //allows for custom types (needs to be done before load)
+    registerCustomTypes();
+      
+    if (id) 
+    {
       // Load the document id from the URL
       realtimeUtils.load(id.replace('/', ''), onFileLoaded, onFileInitialize);
-    } else {
+    } 
+    else 
+    {
         // Create a new document, add it to the URL
         realtimeUtils.createRealtimeFile('New Quickstart File', function(createResponse) {
         window.history.pushState(null, null, '?id=' + createResponse.id);
