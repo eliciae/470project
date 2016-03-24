@@ -39,21 +39,28 @@ function keyInSVG(key)
 function redraw()
 {
   var connectionIDs = [];
-  for (var i = 1; i <= localModel.getRoot().size; i++){
-      if (localModel.getRoot().get(i.toString()) != null){  
-    
-    //put all connections in an array to iterate through later
-      if (localModel.getRoot().get(i.toString()).shape == "connection"){
-      connectionIDs.push(localModel.getRoot().get(i.toString()));
-    }
-        else {
-      drawShape(localModel.getRoot().get(i.toString()));
-    }
+  var modelList = localModel.getRoot().keys();
+
+  modelList.forEach(function(key)
+  {
+    var modelItem = localModel.getRoot().get(key);
+    if (modelItem != null)
+    {  
+      //put all connections in an array to iterate through later
+      if (modelItem.shape == "connection")
+      {
+        connectionIDs.push(modelItem);
       }
-   }
-   for (var k = 0; k < connectionIDs.length; k++){
-        drawShape(connectionIDs[k]);
-   }
+      else 
+      {
+        drawShape(modelItem);
+      }
+    }
+  });
+
+  for (var k = 0; k < connectionIDs.length; k++){
+    drawShape(connectionIDs[k]);
+  }
 }
 
 
@@ -66,6 +73,26 @@ $('#ellipseShape').on('click', function(){
 });
 $('#noShape').on('click', function(){
     selectedShape = "noShape";
+});
+
+$('#undo').on('click', function(){
+  localModel.undo();
+  clearDiagram();
+  redraw();
+});
+$('#redo').on('click', function(){
+  localModel.redo();
+  clearDiagram();
+  redraw();
+});
+
+$('rect').on('click', function(){
+  $('.selectObject').removeClass('.selectObject');
+  this.addClass("selectObject");
+});
+$('ellipse').on('click', function(){
+  $('.selectObject').removeClass('.selectObject');
+  this.addClass("selectObject");
 });
 
 

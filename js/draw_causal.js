@@ -99,6 +99,9 @@ function connection(cConn)
     var setSource = cConn.source;
     var setTarget = cConn.target;
     
+    /*
+    ** TODO: change this so that the id is part of the source, not the source itself
+    */
     if (!cConn.source.x)
     {
       setSource = getModelIDFromVarID(cConn.source)
@@ -255,4 +258,9 @@ function incrementCount()
 function drawConnection(causalConn)
 {
   connection(causalConn);
+}
+
+function clearDiagram()
+{
+  graph.clear();
 }
