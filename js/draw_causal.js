@@ -19,9 +19,9 @@ function ellipse(cVar) {
         attrs: {
             text : { text: cVar.name, fill: '#000000', 'font-weight': 'normal' },
             'ellipse': {
-                fill: '#f6f6f6',
-                stroke: '#000000',
-                'stroke-width': 2,
+                fill: '#8a86cc',
+                stroke: '#d7d7d7',
+                'stroke-width': 0,
 				        value: cVar.idName	
             }	
         }

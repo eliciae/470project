@@ -9147,7 +9147,6 @@ joint.dia.Paper = joint.mvc.View.extend({
     },
 
     cellMouseover: function(evt) {
-
         evt = joint.util.normalizeEvent(evt);
         var view = this.findView(evt.target);
         if (view) {

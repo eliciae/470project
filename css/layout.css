@@ -281,6 +281,18 @@ svg{
 
 #TabbedPanels1{
 	width:90%;
-	margin:auto;
 	padding: 10px;
+}
+
+#notation-tab{
+	margin-right: 0px;
+	right:0;
+}
+
+.TabbedPanelsTab{
+	width: calc(30% - 10x);
+}
+
+#hiddenPanel, #markup-tab{
+	display:none;
 }
