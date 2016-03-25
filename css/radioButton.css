@@ -1,0 +1,46 @@
+.shapeOptions {
+     list-style-type:none;
+     margin:0 0 0 0;
+     padding:0;
+}
+
+.shapeOptions li {
+     float:left;
+     margin:0 0px 0 0;
+    width:50px;
+    height:40px;
+    position:relative;
+}
+
+.shapeOptions label, .shapeOptions input {
+    display:block;
+    position:inherit;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+}
+
+.shapeOptions input[type="radio"] {
+    opacity:0.01;
+    z-index:100;
+	display: none;
+}
+
+.shapeOptions input[type="radio"]:checked + label,
+.Checked + label {
+    background:#d8c220;
+}
+
+.shapeOptions label {
+     padding:5px;
+     cursor:pointer;
+    z-index:90;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.shapeOptions label:hover {
+     background:#62b1bd;
+}
+

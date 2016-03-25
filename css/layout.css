@@ -197,26 +197,11 @@ img, object, embed, video {
 	position: relative;
 }
 #share {
-	/*clear: both;
-	position: absolute;
-	float: right;
-	top: 0px;
-	right: 0px;*/
 	margin-left: auto;
 	margin-right: 0;
 	float: right;
-	/*margin-left: 2.0408%;
-	width: 8.1632%;
-	display: block;*/
 	width: 40%;
 	vertical-align:top;
-	
-	
-	/*clear:both;
-	padding: 0px;
-	position:absolute;
-	bottom: 10px;
-    left: 5px;*/
 }
 
 #shareBtn{
@@ -290,9 +275,12 @@ svg{
 }
 
 .TabbedPanelsTab{
-	width: calc(30% - 10x);
+	width: calc(30% - 20px);
 }
 
 #hiddenPanel, #markup-tab{
 	display:none;
+}
+
+#save, #undo, #redo{
 }
