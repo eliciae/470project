@@ -166,65 +166,61 @@ Do the following if you're using your customized build of modernizr (http://www.
             
             <!--SECOND PANEL-->
        	 	<div class="TabbedPanelsContent">
-            	<div class="panelHeading">Label</div>
+            	<div class="panelHeading"><img src="../graphics/label.png"/>Label</div>
                         <form name="connectionText" method="post" action="">
                             <input type="text" name="conTitle" id="conTitle">
                         </form>
                         <br>
-                <div class="panelHeading">Arrow Head</div>
+                <div class="panelHeading"><img src="../graphics/arrowSmall.png"/>Connection Options</div>
                  <ul class="radioOptions">
                         <li>
                             <input type="radio" id="regular" name="arrow" checked="checked"/>
-                            <label for="regular">regular</label>
+                            <label for="regular"><img src="../graphics/regularArrow.png"/></label>
                         </li>
                         <li>
                             <input type="radio" id="position" name="arrow" />
-                            <label for="position">position</label>
+                            <label for="position"><img src="../graphics/positionArrow.png"/></label>
                         </li>
                         <li>
                             <input type="radio" id="negative" name="arrow" />
-                            <label for="negative">negative</label>
+                            <label for="negative"><img src="../graphics/negativeArrow.png"/></label>
                         </li>
                      </ul>
-                    <p>&nbsp;</p><br> 
-
-                  <div class="panelHeading">Perpendicular Delay Marks</div>
-                  <ul class="radioOptions">
-                        <li>
-                            <input type="radio" id="perpNo" name="perp" checked="checked"/>
-                            <label for="perpNo">none</label>
-                        </li>
-                        <li>
-                            <input type="radio" id="perpYes" name="perp" />
-                            <label for="perpYes">perpendicular delay marks</label>
-                        </li>
-                     </ul>
-                    <p>&nbsp;</p><br> 
-                  <br>
-   
-                <div class="panelHeading">Line</div>               
+                     <br><p>&nbsp;</p>          
                    <ul class="radioOptions">
                         <li>
                             <input type="radio" id="solid" name="lineStyle" checked="checked"/>
-                            <label for="solid">solid</label>
+                            <label for="solid"><img src="../graphics/solid.png"/></label>
                         </li>
                         <li>
                             <input type="radio" id="dashed" name="lineStyle" />
-                            <label for="dashed">dashed</label>
+                            <label for="dashed"><img src="../graphics/dashed.png"/></label>
                         </li>
                  </ul>
-                 <p>&nbsp;</p><br>
+                 <br><p>&nbsp;</p>  
                  <ul class="radioOptions">
                         <li>
                             <input type="radio" id="straight" name="lineBend" checked="checked"/>
-                            <label for="straight">straight</label>
+                            <label for="straight"><img src="../graphics/straight.png"/></label>
                         </li>
                         <li>
                             <input type="radio" id="curved" name="lineBend" />
-                            <label for="curved">curved</label>
+                            <label for="curved"><img src="../graphics/curved.png"/></label>
                         </li>
                    </ul>
-                   <p>&nbsp;</p><br>
+                   <br><p>&nbsp;</p> 
+                   <div class="panelHeading"><img src="../graphics/perpSmall.png"/>Perpendicular Delay Marks</div>
+                    <ul class="radioOptions">
+                        <li>
+                            <input type="radio" id="perpNo" name="perp" checked="checked"/>
+                            <label for="perpNo"><img src="../graphics/noPerp.png"/></label>
+                        </li>
+                        <li>
+                            <input type="radio" id="perpYes" name="perp" />
+                            <label for="perpYes"><img src="../graphics/perpDelay.png"/></label>
+                        </li>
+                     </ul>
+                   <br><p>&nbsp;</p>  
                   <div class="panelHeading"><img src="../graphics/roller.png"/>Line Color</div>
                     <input type="text" name="lineColor" class="full" style="display: none;">
                     <br><br>
@@ -233,12 +229,19 @@ Do the following if you're using your customized build of modernizr (http://www.
             
             <!--THIRD PANEL-->
             <div class="TabbedPanelsContent">
-                <div class="panelHeading">Loops</div>
-                    <ul id="MenuBar5" class="MenuBarHorizontal">
-                        <li><a href="#">B</a></li>
-                        <li><a href="#">R</a></li>
-
-              		</ul><p>&nbsp;</p>
+                <div class="panelHeading"><img src="../graphics/loopWsmall.png"/>Loops</div>
+                    <ul class="radioOptions">
+                        <li>
+                            <input type="radio" id="balancing" name="loop" checked="checked"/>
+                            <label for="balancing"><img src="../graphics/balancingLoopW.png"/></label>
+                        </li>
+                        <li>
+                            <input type="radio" id="reinforcing" name="loop" />
+                            <label for="reinforcing"><img src="../graphics/reinforcingLoopW.png"/></label>
+                        </li>
+                   </ul>
+                    
+                    <p>&nbsp;</p>
                     <br>
                 <div class="panelHeading">Section</div>
                         <ul id="MenuBar5" class="MenuBarHorizontal">
@@ -246,9 +249,7 @@ Do the following if you're using your customized build of modernizr (http://www.
                         	 <input type="text" name="sectionFill" class="full" style="display: none;">
                              Line Color
                              <input type="text" name="sectionLine" class="full" style="display: none;">
-                            <br><br>
                         </ul>
-                     <p>&nbsp;</p>
                      <div class="panelHeading">Comment</div>
                     <form name="commentText" method="post" action="">
                       <textarea name="commentText2" id="commentText"></textarea>
