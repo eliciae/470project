@@ -1,10 +1,10 @@
-.shapeOptions {
+.radioOptions {
      list-style-type:none;
      margin:0 0 0 0;
      padding:0;
 }
 
-.shapeOptions li {
+.radioOptions li {
      float:left;
      margin:0 0px 0 0;
     width:50px;
@@ -12,7 +12,7 @@
     position:relative;
 }
 
-.shapeOptions label, .shapeOptions input {
+.radioOptions label, .radioOptions input {
     display:block;
     position:inherit;
     top:0;
@@ -21,18 +21,18 @@
     bottom:0;
 }
 
-.shapeOptions input[type="radio"] {
+.radioOptions input[type="radio"] {
     opacity:0.01;
     z-index:100;
 	display: none;
 }
 
-.shapeOptions input[type="radio"]:checked + label,
+.radioOptions input[type="radio"]:checked + label,
 .Checked + label {
     background:#d8c220;
 }
 
-.shapeOptions label {
+.radioOptions label {
      padding:5px;
      cursor:pointer;
     z-index:90;
@@ -40,7 +40,7 @@
 	vertical-align: middle;
 }
 
-.shapeOptions label:hover {
-     background:#62b1bd;
+.radioOptions label:hover {
+     background:#097f8e;
 }
 

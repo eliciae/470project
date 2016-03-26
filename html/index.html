@@ -130,8 +130,14 @@ Do the following if you're using your customized build of modernizr (http://www.
           
               <!--FIRST PANEL-->
                 <div class="TabbedPanelsContent">
+                
+                     <div class="panelHeading"><img src="../graphics/label.png"/>Label</div>
+                        <form name="labelText" method="post" action="">
+                            <input type="text" name="varTitle" id="varTitle">
+                        </form>
+                    <br>
                     <div class="panelHeading"><img src="../graphics/shapesSmall.png"/>Shape</div>     
-                      <ul class="shapeOptions">
+                      <ul class="radioOptions">
                         <li>
                             <input type="radio" id="shapeR" name="shape" checked="checked"/>
                             <label for="shapeR"><img src="../graphics/rect.png"/></label>
@@ -152,45 +158,76 @@ Do the following if you're using your customized build of modernizr (http://www.
                      <br><br><br>
                       <ul id="MenuBar6" class="MenuBarHorizontal">
                       <div class="panelHeading"><img src="../graphics/roller.png"/>Color</div>
-                      <input type="text" name="showPaletteOnly" id="full" style="display: none;">
+                      <input type="text" name="showPaletteOnly" class="full" style="display: none;">
                       </ul>
                       <br>
-                      <div class="panelHeading"><img src="../graphics/label.png"/>Label</div>
-                        <form name="labelText" method="post" action="">
-                            <input type="text" name="varTitle" id="varTitle">
-                        </form>
-                        <br>
                 </div>
             
             
             <!--SECOND PANEL-->
        	 	<div class="TabbedPanelsContent">
-                <div class="panelHeading">+/-</div>
-                  <ul id="MenuBar5" class="MenuBarHorizontal">
-                  </ul>
-                  <div class="panelHeading">perpendicular delay</div>
-                  </ul>
-                  <br>
-                    <div class="panelHeading">Label</div>
-                    <br>
+            	<div class="panelHeading">Label</div>
                         <form name="connectionText" method="post" action="">
-                            <label for="Title">Text</label>
                             <input type="text" name="conTitle" id="conTitle">
                         </form>
-                        
-                <div class="panelHeading">Line</div>
-                  <ul id="MenuBar5" class="MenuBarHorizontal">
-                    <li><a href="#">solid</a></li>
-                    <li><a href="#">dashed</a></li>
-                  </ul>
-                  <br>
-                  <br>
-                  <br>
+                        <br>
+                <div class="panelHeading">Arrow Head</div>
+                 <ul class="radioOptions">
+                        <li>
+                            <input type="radio" id="regular" name="arrow" checked="checked"/>
+                            <label for="regular">regular</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="position" name="arrow" />
+                            <label for="position">position</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="negative" name="arrow" />
+                            <label for="negative">negative</label>
+                        </li>
+                     </ul>
+                    <p>&nbsp;</p><br> 
 
-                  <div class="panelHeading">Line Color</div>
-                  <ul id="MenuBar6" class="MenuBarHorizontal">
-                    <li><a href="#">color</a></li>
-                  </ul>
+                  <div class="panelHeading">Perpendicular Delay Marks</div>
+                  <ul class="radioOptions">
+                        <li>
+                            <input type="radio" id="perpNo" name="perp" checked="checked"/>
+                            <label for="perpNo">none</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="perpYes" name="perp" />
+                            <label for="perpYes">perpendicular delay marks</label>
+                        </li>
+                     </ul>
+                    <p>&nbsp;</p><br> 
+                  <br>
+   
+                <div class="panelHeading">Line</div>               
+                   <ul class="radioOptions">
+                        <li>
+                            <input type="radio" id="solid" name="lineStyle" checked="checked"/>
+                            <label for="solid">solid</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="dashed" name="lineStyle" />
+                            <label for="dashed">dashed</label>
+                        </li>
+                 </ul>
+                 <p>&nbsp;</p><br>
+                 <ul class="radioOptions">
+                        <li>
+                            <input type="radio" id="straight" name="lineBend" checked="checked"/>
+                            <label for="straight">straight</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="curved" name="lineBend" />
+                            <label for="curved">curved</label>
+                        </li>
+                   </ul>
+                   <p>&nbsp;</p><br>
+                  <div class="panelHeading"><img src="../graphics/roller.png"/>Line Color</div>
+                    <input type="text" name="lineColor" class="full" style="display: none;">
+                    <br><br>
             </div>
             
             
@@ -198,21 +235,22 @@ Do the following if you're using your customized build of modernizr (http://www.
             <div class="TabbedPanelsContent">
                 <div class="panelHeading">Loops</div>
                     <ul id="MenuBar5" class="MenuBarHorizontal">
-                        <li><a href="#">Balancing</a></li>
-                        <li><a href="#">-</a></li>
+                        <li><a href="#">B</a></li>
+                        <li><a href="#">R</a></li>
 
               		</ul><p>&nbsp;</p>
                     <br>
                 <div class="panelHeading">Section</div>
                         <ul id="MenuBar5" class="MenuBarHorizontal">
-                        	 <li><a href="#">Fill Color</a></li>
-                        	<li><a href="#">Line Color</a></li>
+                        	Fill Color
+                        	 <input type="text" name="sectionFill" class="full" style="display: none;">
+                             Line Color
+                             <input type="text" name="sectionLine" class="full" style="display: none;">
                             <br><br>
                         </ul>
                      <p>&nbsp;</p>
                      <div class="panelHeading">Comment</div>
                     <form name="commentText" method="post" action="">
-                      <label for="commentText">text</label>
                       <textarea name="commentText2" id="commentText"></textarea>
                     </form>
           </div>
@@ -243,7 +281,7 @@ Do the following if you're using your customized build of modernizr (http://www.
     })();
 </script>
 <script type="text/javascript">
-	$("#full").spectrum({
+	$(".full").spectrum({
 		color: "#ECC",
 		showInput: true,
 		className: "full-spectrum",
