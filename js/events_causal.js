@@ -86,14 +86,53 @@ $('#redo').on('click', function(){
   redraw();
 });
 
-$('rect').on('click', function(){
-  $('.selectObject').removeClass('.selectObject');
-  this.addClass("selectObject");
-});
-$('ellipse').on('click', function(){
-  $('.selectObject').removeClass('.selectObject');
-  this.addClass("selectObject");
-});
+
+//loops through every instance of Ellipse class and adds a listener for clicks
+//jQuery apparently doesn't like to grab classes on SVGs
+//the following three functions have a lot of duplications that could be solved with variables, but jQuery 
+// was not liking string vars as parameters. TODO: There must be a way to make it work
+function addSelectionListeners(shape)
+{
+  if (shape == "Ellipse")
+  {
+    var els = document.getElementsByClassName("Ellipse");
+    for (var i = 0; i < els.length; i++) 
+    {
+        els[i].addEventListener('click', selectEllipse, false);
+    }
+  }
+  else if (shape == "Rect")
+  {
+    var els = document.getElementsByClassName("Rect");
+    for (var i = 0; i < els.length; i++) 
+    {
+        els[i].addEventListener('click', selectRect, false);
+    }
+  }
+}
+
+
+function selectEllipse()
+{
+  removeOldSelections();
+  $( this ).find('ellipse').attr('class', 'selectObject');
+}
+
+function selectRect()
+{
+  removeOldSelections();
+  $( this ).find('rect').attr('class', 'selectObject');
+}
+
+function removeOldSelections()
+{
+  var els = document.getElementsByClassName("selectObject");
+  for (var i = 0; i < els.length; i++) 
+  {
+    $(els[i]).attr('class', '');
+  }
+}
+
 
 
 $('svg').on('click', function(e){
