@@ -25,6 +25,7 @@ function ellipse(cVar) {
 				        value: cVar.idName	
             }	
         }
+
     });
 	
 	
@@ -47,8 +48,9 @@ function ellipse(cVar) {
 	
 	graph.addCell(cell);
 	
+  addSelectionListeners("Ellipse");
 	
-    return cell;
+  return cell;
 }
 
 
@@ -86,8 +88,10 @@ function rect(cVar) {
 	);
 	
 	graph.addCell(cell);
+
+  addSelectionListeners("Rect");
 	
-    return cell;
+  return cell;
 }
 
 
