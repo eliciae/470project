@@ -1,3 +1,6 @@
+
+
+
 joint.shapes.devs.UnspecifiedProcess = joint.shapes.devs.Model.extend(_.extend({}, joint.plugins.TooledModelInterface, {
 
 markup: ['<g class="rotatable">',
@@ -28,6 +31,7 @@ defaults: joint.util.deepSupplement({
     outPorts: [''],
     moveTool: true,
     resizeTool: true,
+	deleteTool: true,
     size: { width: 100, height: 31},
     attrs: {
         '.inPorts circle': { fill: '#fff' },
