@@ -24,7 +24,7 @@ function ellipse(cVar) {
                 fill: cVar.color,
                 stroke: '#d7d7d7',
                 'stroke-width': 0,
-				        value: cVar.idName	
+				value: cVar.idName	
             }	
         }
 
@@ -48,11 +48,16 @@ function ellipse(cVar) {
     }
 	);
 	
-	graph.addCell(cell);
+	
 	
   addSelectionListeners("Ellipse");
-	
-  return cell;
+  
+  
+//added classes to hopefully delete and resize variables  
+//cell.attr('class', 'scalable inPorts outPorts moveTool resizeTool portsTool deleteTool tooltip');
+  
+	graph.addCell(cell);
+	return cell;
 }
 
 
@@ -92,6 +97,8 @@ function rect(cVar) {
 	graph.addCell(cell);
 
   addSelectionListeners("Rect");
+  
+  //add classes for delete and resizing tools 
 	
   return cell;
 }
