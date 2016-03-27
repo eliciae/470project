@@ -130,7 +130,7 @@ function connection(cConn)
     });
 
     cell.attr({
-      '.connection': { stroke: cConn.color},
+      '.connection': { stroke: cConn.color, 'stroke-dasharray': ''},
       '.marker-source': { stroke: cConn.color, fill: cConn.color },
       '.marker-target': { stroke: cConn.color, fill: cConn.color }
     });
@@ -229,19 +229,22 @@ function getModelIDFromVarID(varID)
 
 function drawShape(cVar)
 {
-  var cell;
-  if (cVar.shape == "ellipse" || cVar.shape == "noShape")
+  if (currentObject == null)
   {
-    cell = ellipse(cVar);
-  }
-  else if (cVar.shape == "rect")
-  {
-    cell = rect(cVar);
-  }
-  //not really a cVar, cConn
-  else //if (cVar.shape == "connection")
-  {
-    cell = connection(cVar);
+    var cell;
+    if (cVar.shape == "ellipse" || cVar.shape == "noShape")
+    {
+      cell = ellipse(cVar);
+    }
+    else if (cVar.shape == "rect")
+    {
+      cell = rect(cVar);
+    }
+    //not really a cVar, cConn
+    else //if (cVar.shape == "connection")
+    {
+      cell = connection(cVar);
+    }
   }
   
   /*function updateSvgElement(evt){

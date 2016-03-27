@@ -148,7 +148,7 @@ function addSelectionListeners(shape)
     var els = document.getElementsByClassName("Ellipse");
     for (var i = 0; i < els.length; i++) 
     {
-        els[i].addEventListener('click', selectEllipse, false);
+      els[i].addEventListener('mousedown', selectEllipse, false);
     }
   }
   else if (shape == "Rect")
@@ -156,7 +156,7 @@ function addSelectionListeners(shape)
     var els = document.getElementsByClassName("Rect");
     for (var i = 0; i < els.length; i++) 
     {
-        els[i].addEventListener('click', selectRect, false);
+      els[i].addEventListener('mousedown', selectRect, false);
     }
   }
   else if (shape == "connection")
@@ -164,13 +164,16 @@ function addSelectionListeners(shape)
     var els = document.getElementsByClassName("link");
     for (var i = 0; i < els.length; i++) 
     {
-        els[i].addEventListener('click', selectLink, false);
+      els[i].addEventListener('mousedown', selectLink, false);
+      $(els[i]).find('circle[class="marker-vertex"]').on('mousedown', selectLink);
+      $(els[i]).find('path[class="marker-arrowhead"]').on('mousedown', selectLink);
     }
   }
 }
 
 //if you click the svg and you aren't in a g tag, everything should unselect
-$('svg').on('click', function(event){
+$('svg').on('mousedown', function(event)
+{
   if(!$(event.target).closest('g').length) 
   {
     removeOldSelections();
@@ -218,20 +221,22 @@ $('svg').on('click', function(e){
 
     if($('.TabbedPanelsTabSelected').attr('id') == "variable-tab")
     {
-		var standardWidth = 75;
-		var standardHeight = 50;
-        
+  		var standardWidth = 75;
+  		var standardHeight = 50;
+          
 
-		if (selectedShape == "noShape"){
-			var standardWidth = 0;
-			var standardHeight = 0;
-		}
-        var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, selectedShape, selectedShape, shapeColor);
-		    alert("the color: " + shapeColor);
-        drawShape(newCausalVar);
-       
-        $('#markup-tab').click();
+  		if (selectedShape == "noShape")
+      {
+  			var standardWidth = 0;
+  			var standardHeight = 0;
+  		}
+
+      var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, selectedShape, selectedShape, shapeColor);
+      drawShape(newCausalVar);
+     
+      $('#markup-tab').click();
     }
+
     if($('.TabbedPanelsTabSelected').attr('id') == "connection-tab")
     {
       var source = { x:mousex, y:mousey };
