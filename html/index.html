@@ -47,6 +47,7 @@
 <link href="../SpryAssets/SpryMenuBarVertical.css" rel="stylesheet" type="text/css">
 <link href="../SpryAssets/SpryTabbedPanels.css" rel="stylesheet" type="text/css">
 <link href="../css/spectrum.css" rel="stylesheet" type="text/css">
+<link href="../css/tooledViewPlugin.css" type="text/css">
 <!-- 
 To learn more about the conditional comments around the html tags at the top of the file:
 paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
@@ -147,11 +148,7 @@ Do the following if you're using your customized build of modernizr (http://www.
                             <label for="shapeE"><img src="../graphics/ellipse.png"/></label>
                         </li>
                         <li>
-                            <input type="radio" id="shapeC" name="shape" value="circle" onclick="handleShapeChange(this);"/>
-                            <label for="shapeC"><img src="../graphics/circle.png"/></label>
-                        </li>
-                        <li>
-                            <input type="radio" id="shapeN" name="shape" value="no shape" onclick="handleShapeChange(this);"/>
+                            <input type="radio" id="shapeN" name="shape" value="noShape" onclick="handleShapeChange(this);"/>
                             <label for="shapeN">no shape</label>
                         </li>
                      </ul>
@@ -284,9 +281,7 @@ Do the following if you're using your customized build of modernizr (http://www.
 <script type="text/javascript">
 	var currentValue = "blank";
 	function handleShapeChange(myRadio) {
-		alert('Old value: ' + currentValue);
-		alert('New value: ' + myRadio.value);
-		currentValue = myRadio.value;
+		selectedShape = myRadio.value;
 	}
 
 	$(".full").spectrum({
@@ -325,5 +320,9 @@ Do the following if you're using your customized build of modernizr (http://www.
         <script src="../js/init_causal.js"></script>
         <script src="../js/draw_causal.js"></script>
         <script src="../js/events_causal.js"></script>
+        <script src="../js/tooledViewPlugin.js"></script>
+        <script src="../js/delete_causal.js"></script>
+        <script src="../js/deleteTest_causal.js"></script>
+
 </body>
 </html>

@@ -66,7 +66,7 @@ body{
 #hiddenPanel{
 }
 
-.radioOptions, .TabbedPanelsTabGroup{
+.shapeOptions, .TabbedPanelsTabGroup{
 	text-align: center;
 	vertical-align: middle;
 	margin:0;
@@ -86,6 +86,6 @@ input[type="color" i] {
     border: 0;
 	margin: 0px;
     margin-left: 10px;
-	padding: 0;*/
+	padding: 0;
 
 }

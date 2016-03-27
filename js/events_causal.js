@@ -49,6 +49,10 @@ function updateValue()
   }
 }
 
+function updateLabel(){
+	
+}
+
 
 function displayObjectChangedEvent(evt) 
 {
