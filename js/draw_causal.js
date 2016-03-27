@@ -1,5 +1,7 @@
 var selectedShape ="ellipse";
 
+var currentObject;
+
 var graph = new joint.dia.Graph();
 
 var paper = new joint.dia.Paper({
@@ -17,9 +19,9 @@ function ellipse(cVar) {
         position: { x: cVar.x, y: cVar.y},
         size: { width: cVar.width, height: cVar.height },
         attrs: {
-            text : { text: cVar.name, fill: '#000000', 'font-weight': 'normal' },
+            text : { text: cVar.label, fill: '#000000', 'font-weight': 'normal' },
             'ellipse': {
-                fill: '#8a86cc',
+                fill: cVar.color,
                 stroke: '#d7d7d7',
                 'stroke-width': 0,
 				        value: cVar.idName	
@@ -43,7 +45,7 @@ function ellipse(cVar) {
 		function(cellView, evt, x, y) { 
 			cVar.x = cell.get("position").x;
 			cVar.y = cell.get("position").y;
-    	}
+    }
 	);
 	
 	graph.addCell(cell);
@@ -60,7 +62,7 @@ function rect(cVar) {
         position: { x: cVar.x, y: cVar.y},
         size: { width: cVar.width, height: cVar.height },
         attrs: {
-            text : { text: cVar.name, fill: '#000000', 'font-weight': 'normal' },
+            text : { text: cVar.label, fill: '#000000', 'font-weight': 'normal' },
             'rect': {
                 fill: '#f6f6f6',
                 stroke: '#000000',
@@ -127,6 +129,13 @@ function connection(cConn)
         }
     });
 
+    cell.attr({
+      '.connection': { stroke: cConn.color},
+      '.marker-source': { stroke: cConn.color, fill: cConn.color },
+      '.marker-target': { stroke: cConn.color, fill: cConn.color }
+    });
+
+
     function updateSvgElement(evt){
       if (!evt.isLocal){
         var s = cConn.source;
@@ -165,29 +174,32 @@ function connection(cConn)
 
       //if there is an id, it is pointing to a variable, so set the id as the collaborative id
       if (s.id)
-        cConn.source = getVarIDFromSVG(s);
+        cConn.source = getVarIDFromSVG(s.id);
       else
         cConn.source = s;
       if (t.id)
-        cConn.target = getVarIDFromSVG(t);
+        cConn.target = getVarIDFromSVG(t.id);
       else
         cConn.target = t;
       }
   );
 
     graph.addCell(cell);
+
+    addSelectionListeners("connection");
+
     return cell;
 }
 
 
-function getVarIDFromSVG(node)
+function getVarIDFromSVG(nodeid)
 {
   //check if the thing you are connecting is an ellipse
-  var child = $('g[model-id="' + node.id + '"]').find('ellipse');
+  var child = $('g[model-id="' + nodeid + '"]').find('ellipse');
   //if there is no value, then there is no ellipse there, try rect
   if (child.attr("value") == undefined)
   {
-    child = $('g[model-id="' + node.id + '"]').find('rect');
+    child = $('g[model-id="' + nodeid + '"]').find('rect');
   }
   //return the value attribute value of the thing you are pointing to
   return child.attr('value');

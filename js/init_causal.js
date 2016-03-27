@@ -30,10 +30,10 @@ function registerCustomTypes()
       this.y = 0;
       this.width = 100;
       this.height = 100;
-      this.name = "name";
-      this.color = "#FFFFFF";
+      this.label = "label";
+      this.color = "red";
       this.shape = "ellipse"
-    this.idName = "";
+      this.idName = "";
   }
 
   gapi.drive.realtime.custom.registerType(causalVar, 'causalVar');
@@ -42,14 +42,14 @@ function registerCustomTypes()
   causalVar.prototype.y = gapi.drive.realtime.custom.collaborativeField('y');
   causalVar.prototype.width = gapi.drive.realtime.custom.collaborativeField('width');
   causalVar.prototype.height = gapi.drive.realtime.custom.collaborativeField('height');
-  causalVar.prototype.name = gapi.drive.realtime.custom.collaborativeField('name');
+  causalVar.prototype.label = gapi.drive.realtime.custom.collaborativeField('label');
   causalVar.prototype.color = gapi.drive.realtime.custom.collaborativeField('color');
   causalVar.prototype.shape = gapi.drive.realtime.custom.collaborativeField('shape');
   causalVar.prototype.idName = gapi.drive.realtime.custom.collaborativeField('idName');
 
   gapi.drive.realtime.custom.setInitializer(causalVar, initializeCausalVar);
 
-
+  //CONNECTION REGISTRATION
   var causalConn = function() {};
 
   function initializeCausalConn()
@@ -59,6 +59,7 @@ function registerCustomTypes()
     this.target = null;
     this.label = "";
     this.idName = "";
+    this.color = "#FFFFFF";
     this.shape = "connection";
   }
 
@@ -69,11 +70,10 @@ function registerCustomTypes()
   causalConn.prototype.target = gapi.drive.realtime.custom.collaborativeField('target');
   causalConn.prototype.label = gapi.drive.realtime.custom.collaborativeField('label');
   causalConn.prototype.idName = gapi.drive.realtime.custom.collaborativeField('idName');
+  causalConn.prototype.color = gapi.drive.realtime.custom.collaborativeField('color');
   causalConn.prototype.shape = gapi.drive.realtime.custom.collaborativeField('shape');
 
   gapi.drive.realtime.custom.setInitializer(causalConn, initializeCausalConn);
-  
-  //CONNECTION REGISTRATION
 }
 
   function authorize() {
@@ -113,8 +113,8 @@ function registerCustomTypes()
     } 
     else 
     {
-        // Create a new document, add it to the URL
-        realtimeUtils.createRealtimeFile('New Quickstart File', function(createResponse) {
+      // Create a new document, add it to the URL
+      realtimeUtils.createRealtimeFile('New Quickstart File', function(createResponse) {
         window.history.pushState(null, null, '?id=' + createResponse.id);
         realtimeUtils.load(createResponse.id, onFileLoaded, onFileInitialize);
       });
@@ -145,15 +145,15 @@ function registerCustomTypes()
   }
 
 
-function createNewCausalVar(x, y, width, height, label, shape)
+function createNewCausalVar(x, y, width, height, label, shape, color)
 {
   var causalVarShape = localModel.create('causalVar');
   causalVarShape.x = x;
   causalVarShape.y = y;
   causalVarShape.width = width;
   causalVarShape.height = height;
-  causalVarShape.name = label;
-  causalVarShape.color = "#000000";
+  causalVarShape.label = label;
+  causalVarShape.color = color;
   causalVarShape.shape = shape;
   causalVarShape.idName = countString;
 
@@ -163,13 +163,14 @@ function createNewCausalVar(x, y, width, height, label, shape)
   return causalVarShape;
 }
 
-function createNewCausalConn(source, target, label, vertices)
+function createNewCausalConn(source, target, label, vertices, color)
 {
   var causalConn = localModel.create('causalConn');
   causalConn.vertices = vertices;
   causalConn.source = source;
   causalConn.target = target;
   causalConn.label = label;
+  causalConn.color = color;
   causalConn.idName = countString;
 
   localModel.getRoot().set(countString, causalConn);

@@ -1,3 +1,53 @@
+var shapeColor = document.getElementById("shapeColor").value;
+var connectionColor = document.getElementById("linkColor").value;
+
+function updateValue() 
+{ 
+  // get the current value of the input fields
+  shapeColor = document.getElementById("shapeColor").value; 
+  connectionColor = document.getElementById("linkColor").value;
+
+  //if there is an object selected, change the color
+  if (currentObject != undefined)
+  {
+    //if the object is a shape
+    if (currentObject.prop("tagName") == "ellipse" || currentObject.prop("tagName") == "rect")
+    {
+      currentObject.attr('fill', shapeColor);
+
+      //get the parent g element so we can get the model id
+      var parent = currentObject.parents("g[model-id]");
+      //the model-id is assigned by joint js
+      var modelId = parent.first().attr("model-id");
+
+      var id = getVarIDFromSVG(modelId);
+
+      var sharedObject = localModel.getRoot().get(id);
+      sharedObject.color = shapeColor;
+    }
+
+    //if the object id a connection
+    if (currentObject.prop("tagName") == "g")   
+    {
+      var modelId = currentObject.attr("model-id");
+
+      //get the joint js cell
+      cell = graph.getCell(modelId);
+
+      cell.attr({
+        '.connection': { stroke: connectionColor },
+        '.marker-source': { stroke: connectionColor, fill: connectionColor },
+        '.marker-target': { stroke: connectionColor, fill: connectionColor }
+      });
+
+      //get the id for the realtime object
+      var id = currentObject.children("path[value]").first().attr('value');
+
+      var sharedObject = localModel.getRoot().get(id);
+      sharedObject.color = connectionColor;
+    } 
+  }
+}
 
 
 function displayObjectChangedEvent(evt) 
@@ -109,27 +159,53 @@ function addSelectionListeners(shape)
         els[i].addEventListener('click', selectRect, false);
     }
   }
+  else if (shape == "connection")
+  {
+    var els = document.getElementsByClassName("link");
+    for (var i = 0; i < els.length; i++) 
+    {
+        els[i].addEventListener('click', selectLink, false);
+    }
+  }
 }
+
+//if you click the svg and you aren't in a g tag, everything should unselect
+$('svg').on('click', function(event){
+  if(!$(event.target).closest('g').length) 
+  {
+    removeOldSelections();
+  }      
+});
 
 
 function selectEllipse()
 {
   removeOldSelections();
-  $( this ).find('ellipse').attr('class', 'selectObject');
+  currentObject = $( this ).find('ellipse');
+  currentObject.attr('class', 'selectObject');
 }
 
 function selectRect()
 {
   removeOldSelections();
-  $( this ).find('rect').attr('class', 'selectObject');
+  currentObject = $( this ).find('rect');
+  currentObject.attr('class', 'selectObject');
+}
+
+function selectLink()
+{
+  removeOldSelections();
+  currentObject = $(this);
+  this.classList.add('selectObject');
 }
 
 function removeOldSelections()
 {
+  currentObject = null;
   var els = document.getElementsByClassName("selectObject");
   for (var i = 0; i < els.length; i++) 
   {
-    $(els[i]).attr('class', '');
+    els[i].classList.remove('selectObject');
   }
 }
 
@@ -150,8 +226,8 @@ $('svg').on('click', function(e){
 			var standardWidth = 0;
 			var standardHeight = 0;
 		}
-        var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, selectedShape, selectedShape);
-		
+        var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, selectedShape, selectedShape, shapeColor);
+		    alert("the color: " + shapeColor);
         drawShape(newCausalVar);
        
         $('#markup-tab').click();
@@ -163,8 +239,8 @@ $('svg').on('click', function(e){
       var label = "connection";
       var vertices = [];
 
-      var newCausalConn = createNewCausalConn(source, target, label, vertices);
+      var newCausalConn = createNewCausalConn(source, target, label, vertices, connectionColor);
       drawConnection(newCausalConn);
-        $('#markup-tab').click();
+      $('#markup-tab').click();
     }
 });
