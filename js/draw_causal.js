@@ -145,9 +145,9 @@ function connection(cConn)
     });
 
     cell.attr({
-      '.connection': { stroke: cConn.color, 'stroke-dasharray': ''},
-      '.marker-source': { stroke: cConn.color, fill: cConn.color },
-      '.marker-target': { stroke: cConn.color, fill: cConn.color }
+     // '.connection': { stroke: cConn.color, 'stroke-dasharray': ''},
+    //  '.marker-source': { stroke: cConn.color, fill: cConn.color },
+     // '.marker-target': { stroke: cConn.color, fill: cConn.color }
     });
 
 
