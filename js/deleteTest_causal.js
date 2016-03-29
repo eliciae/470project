@@ -9,6 +9,7 @@ joint.shapes.devs.TooledModel = joint.shapes.devs.Model.extend( _.extend({}, joi
 }));
 
 joint.shapes.devs.TooledModelView = joint.shapes.devs.ModelView.extend(joint.plugins.TooledViewInterface);
+//joint.shapes.basic.Ellipse = joint.shapes.basic.Ellipse.extend(joint.shapes.devs.TooledModelView);
 
 var elem = new joint.shapes.devs.TooledModel({
     attrs: {

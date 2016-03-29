@@ -53,8 +53,9 @@ function ellipse(cVar) {
   addSelectionListeners("Ellipse");
   
   
-//added classes to hopefully delete and resize variables  
-//cell.attr('class', 'scalable inPorts outPorts moveTool resizeTool portsTool deleteTool tooltip');
+	//added classes to hopefully delete and resize variables  
+	//cell.attr('class', 'scalable inPorts outPorts moveTool resizeTool portsTool deleteTool tooltip');
+	//cell.attr('class', 'deleteTool');
   
 	graph.addCell(cell);
 	return cell;
@@ -86,7 +87,6 @@ function rect(cVar) {
 	//if the associated model object is changed, then update the svg element
 	cVar.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateSvgElement);
 	
-
 	paper.on('cell:pointerup', 
 		function(cellView, evt, x, y) { 
 			cVar.x = cell.get("position").x;
@@ -98,7 +98,15 @@ function rect(cVar) {
 
   addSelectionListeners("Rect");
   
-  //add classes for delete and resizing tools 
+  //resizing
+	/*paper.on('cell:pointerdown', 
+		function(cellView, evt, x, y) {
+
+			//alert(cell.get('size').width);
+			cell.resize(cell.get('size').width + 100, cell.get('size').height + 100); 
+			//alert(cell.get('size').width);
+		}
+	);*/
 	
   return cell;
 }
@@ -254,6 +262,9 @@ function drawShape(cVar)
     }
   }
   
+  
+  
+  
   /*function updateSvgElement(evt){
       if (!evt.isLocal){
         cell.position(cVar.x, cVar.y);
@@ -274,6 +285,9 @@ function drawShape(cVar)
   graph.addCell(cell);*/
 }
 
+
+
+
 function incrementCount()
 {
   count++;
@@ -290,3 +304,4 @@ function clearDiagram()
 {
   graph.clear();
 }
+

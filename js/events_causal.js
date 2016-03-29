@@ -1,11 +1,17 @@
 var shapeColor = document.getElementById("shapeColor").value;
 var connectionColor = document.getElementById("linkColor").value;
+var shapeWidth = document.getElementById("shapeWidth").value;
+var shapeHeight = document.getElementById("shapeHeight").value;
 
 function updateValue() 
 { 
   // get the current value of the input fields
   shapeColor = document.getElementById("shapeColor").value; 
   connectionColor = document.getElementById("linkColor").value;
+ /* shapeWidth = document.getElementById("shapeWidth").value;
+  shapeHeight = document.getElementById("shapeHeight").value;
+  alert("width: " + shapeWidth +" height: " + shapeHeight);*/
+  
 
   //if there is an object selected, change the color
   if (currentObject != undefined)
@@ -14,8 +20,8 @@ function updateValue()
     if (currentObject.prop("tagName") == "ellipse" || currentObject.prop("tagName") == "rect")
     {
       currentObject.attr('fill', shapeColor);
-
-      //get the parent g element so we can get the model id
+	  
+     //get the parent g element so we can get the model id
       var parent = currentObject.parents("g[model-id]");
       //the model-id is assigned by joint js
       var modelId = parent.first().attr("model-id");
@@ -24,6 +30,12 @@ function updateValue()
 
       var sharedObject = localModel.getRoot().get(id);
       sharedObject.color = shapeColor;
+	  //sharedObject.width = shapeWidth;
+	 // sharedObject.height = shapeHeight;
+	  
+	   //get the joint js cell
+     // cell = graph.getCell(modelId);
+	 // cell.resize(shapeWidth, shapeHeight); 
     }
 
     //if the object id a connection
@@ -39,6 +51,7 @@ function updateValue()
         '.marker-source': { stroke: connectionColor, fill: connectionColor },
         '.marker-target': { stroke: connectionColor, fill: connectionColor }
       });
+	  
 
       //get the id for the realtime object
       var id = currentObject.children("path[value]").first().attr('value');
@@ -226,8 +239,8 @@ $('svg').on('mousedown', function(e){
 
     if($('.TabbedPanelsTabSelected').attr('id') == "variable-tab")
     {
-  		var standardWidth = 75;
-  		var standardHeight = 50;
+  		var standardWidth = document.getElementById("shapeWidth").value;;
+  		var standardHeight = document.getElementById("shapeHeight").value;;
           
 
   		if (selectedShape == "noShape")
@@ -254,3 +267,53 @@ $('svg').on('mousedown', function(e){
       $('#markup-tab').click();
     }
 });
+
+function deleteShape(){
+	 if (currentObject.prop("tagName") == "ellipse" || currentObject.prop("tagName") == "rect"){
+	      //get the parent g element so we can get the model id
+      var parent = currentObject.parents("g[model-id]");
+      //the model-id is assigned by joint js
+      var modelId = parent.first().attr("model-id");
+      var id = getVarIDFromSVG(modelId);
+	  
+	   //get the joint js cell
+      cell = graph.getCell(modelId);
+		cell.remove();
+	 }
+}
+
+function deleteConn(){
+	if (currentObject.prop("tagName") == "g") 
+		currentObject.remove();
+}
+
+var widthRng = document.getElementById("shapeWidth");
+var heightRng = document.getElementById("shapeHeight");
+
+read("mousedown");
+read("mousemove");
+
+function read(evtType) {
+  widthRng.addEventListener(evtType, function() {
+    resize();
+  })
+  heightRng.addEventListener(evtType, function() {
+		resize();
+	})
+}
+
+
+function resize(){
+	window.requestAnimationFrame(function () {
+        //get the joint js cell
+		//get the parent g element so we can get the model id
+      var parent = currentObject.parents("g[model-id]");
+      //the model-id is assigned by joint js
+      var modelId = parent.first().attr("model-id");
+		var shapeWidth = document.getElementById("shapeWidth").value;
+		var shapeHeight = document.getElementById("shapeHeight").value;
+      cell = graph.getCell(modelId);
+	  cell.resize(shapeWidth, shapeHeight); 
+	  
+    });
+}

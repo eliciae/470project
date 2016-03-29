@@ -131,7 +131,8 @@ Do the following if you're using your customized build of modernizr (http://www.
           
               <!--FIRST PANEL-->
                 <div class="TabbedPanelsContent">
-                
+                	<div class="panelHeading"><button class="visible" id="deleteShape" type="button" onclick="deleteShape()">DELETE</button></div>
+                     
                      <div class="panelHeading"><img src="../graphics/label.png"/>Label</div>
                         <form name="labelText" method="post" action="">
                             <input type="text" name="varTitle" id="varTitle">
@@ -153,16 +154,21 @@ Do the following if you're using your customized build of modernizr (http://www.
                         </li>
                      </ul>
                      <br><br><br>
-                      <ul id="MenuBar6" class="MenuBarHorizontal">
+                      <div class="panelHeading">Size</div>
+                     Width<input type="range" min="20" max="1000" value="25" id="shapeWidth"/>
+                     <br>
+                     Height<input type="range" min="20" max="1000" value="25" id="shapeHeight"/>
+                     <br><br><br>
                       <div class="panelHeading"><img src="../graphics/roller.png"/>Color</div>
                       <input type="text" name="showPaletteOnly" class="full" id="shapeColor" style="display: none;" value="#C9DAF8">
-                      </ul>
                       <br>
                 </div>
             
             
             <!--SECOND PANEL-->
+            
        	 	<div class="TabbedPanelsContent">
+            	<div class="panelHeading"><button class="visible" id="deleteShape" type="button" onclick="deleteConn()">DELETE</button></div>
             	<div class="panelHeading"><img src="../graphics/label.png"/>Label</div>
                         <form name="connectionText" method="post" action="">
                             <input type="text" name="conTitle" id="conTitle">
@@ -283,6 +289,7 @@ Do the following if you're using your customized build of modernizr (http://www.
 	function handleShapeChange(myRadio) {
 		selectedShape = myRadio.value;
 	}
+	
 
 	$(".full").spectrum({
 		showPaletteOnly: true,
@@ -322,6 +329,7 @@ Do the following if you're using your customized build of modernizr (http://www.
         <script src="../js/events_causal.js"></script>
         <script src="../js/tooledViewPlugin.js"></script>
         <script src="../js/deleteTest_causal.js"></script>
+        <script src="../js/delete_causal.js"></script>
 
 </body>
 </html>
