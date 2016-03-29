@@ -152,6 +152,7 @@ function addSelectionListeners(shape)
     var els = document.getElementsByClassName("Ellipse");
     for (var i = 0; i < els.length; i++) 
     {
+      $('#shapeColor').attr('value', $(els[i]).attr('fill'));
       els[i].addEventListener('mousedown', selectEllipse, false);
     }
   }
@@ -176,7 +177,7 @@ function addSelectionListeners(shape)
 }
 
 //if you click the svg and you aren't in a g tag, everything should unselect
-$('svg').on('mousedown', function(event)
+$('svg').on('click', function(event)
 {
   if(!$(event.target).closest('g').length) 
   {
@@ -218,7 +219,7 @@ function removeOldSelections()
 
 
 
-$('svg').on('click', function(e){
+$('svg').on('mousedown', function(e){
 
     var mousex = (e.pageX - $('svg').offset().left) + $(window).scrollLeft();
     var mousey = (e.pageY - $('svg').offset().top) + $(window).scrollTop();

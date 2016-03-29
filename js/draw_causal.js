@@ -69,7 +69,7 @@ function rect(cVar) {
         attrs: {
             text : { text: cVar.label, fill: '#000000', 'font-weight': 'normal' },
             'rect': {
-                fill: '#f6f6f6',
+                fill: cVar.color,
                 stroke: '#000000',
                 'stroke-width': 2,
 				        value: cVar.idName
