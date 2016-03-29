@@ -47,9 +47,9 @@ function updateValue()
       cell = graph.getCell(modelId);
 
       cell.attr({
-        '.connection': { stroke: connectionColor },
-        '.marker-source': { stroke: connectionColor, fill: connectionColor },
-        '.marker-target': { stroke: connectionColor, fill: connectionColor }
+       // '.connection': { stroke: connectionColor },
+       // '.marker-source': { stroke: connectionColor, fill: connectionColor },
+       // '.marker-target': { stroke: connectionColor, fill: connectionColor }
       });
 	  
 
