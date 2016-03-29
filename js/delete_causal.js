@@ -3,6 +3,7 @@
 
 joint.shapes.devs.UnspecifiedProcess = joint.shapes.devs.Model.extend(_.extend({}, joint.plugins.TooledModelInterface, {
 
+
 markup: ['<g class="rotatable">',
             '<g class="scalable">',
                 '<rect class="body"/>',
@@ -11,6 +12,7 @@ markup: ['<g class="rotatable">',
                       '<g transform="scale(0.98976,3.0047)" id="g3555">',
                         '<g clip-path="url(#clipPath3559)" id="g3557">',
                           '<path d="m 57.805,0.90155 -57.805,0 0,23.06045 57.805,0 L 72.244,12.432 57.805,0.90155 z" id="path3563" style="fill:#b8cde8;fill-opacity:1;fill-rule:evenodd;stroke:none"/>',
+						 // '<ellipse id="v-140" fill="#C9DAF8" stroke="#d7d7d7" rx="30" ry="20" cx="30" cy="20" stroke-width="0" value="0"></ellipse>',
                         '</g>',
                       '</g>',
                     '</g>',
