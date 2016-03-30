@@ -196,6 +196,7 @@ function selectEllipse()
   
   //open variable tab & set tab values to be the selected item's values 
   $('#variable-tab').click();
+  updateValuesSelectedInVaraiableTab();
 }
 
 function selectRect()
@@ -203,6 +204,10 @@ function selectRect()
   removeOldSelections();
   currentObject = $( this ).find('rect');
   currentObject.attr('class', 'selectObject');
+  
+  //open variable tab & set tab values to be the selected item's values 
+  $('#variable-tab').click();
+  updateValuesSelectedInVaraiableTab();
 }
 
 function selectConnection()
@@ -211,8 +216,19 @@ function selectConnection()
   currentObject = $(this);
   this.classList.add('selectObject');
   
-  //select connections tab
+  //open connection tab & set tab values to be the selected item's values 
   $('#connection-tab').click();
+}
+
+function updateValuesSelectedInVaraiableTab(){
+	alert("updating");
+	//alert(currentObject.get('attrs').text);
+  //document.getElementById('#varLabel').value = currentObject.get('attrs').text.text;
+ // document.getElementById('input:radio[name="shape"]').filter('[value=' + selectedShape +']').attr('checked', true);
+  document.getElementById(selectedShape).checked = "checked";
+ // document.getElementById('#shapeWidth').value = currentObject.get('size').width;
+//  document.getElementById('#shapeHeight').value = currentObject.get('size').height;
+ // document.getElementById('#shapeColor').value = currentObject.get('attrs').fill;
 }
 
 function removeOldSelections()
