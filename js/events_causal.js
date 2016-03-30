@@ -1,13 +1,34 @@
-var shapeColor = document.getElementById("shapeColor").value;
-var connectionColor = document.getElementById("linkColor").value;
+var shapeColor = getShapeColor();
+var connectionColor = getConnectionColor;
 var shapeWidth = document.getElementById("shapeWidth").value;
 var shapeHeight = document.getElementById("shapeHeight").value;
+
+function getShapeColor()
+{
+  return document.getElementById("shapeColor").value;
+}
+
+function getConnectionColor()
+{
+  return document.getElementById("linkColor").value;
+}
+
+function selectionIsShape()
+{
+  return (currentObject.prop("tagName") == "ellipse" 
+    || currentObject.prop("tagName") == "rect");
+}
+
+function selectionIsConnection()
+{
+  return (currentObject.prop("tagName") == "g");
+}
 
 function updateValue() 
 { 
   // get the current value of the input fields
-  shapeColor = document.getElementById("shapeColor").value; 
-  connectionColor = document.getElementById("linkColor").value;
+  shapeColor = getShapeColor(); 
+  connectionColor = getConnectionColor();
  /* shapeWidth = document.getElementById("shapeWidth").value;
   shapeHeight = document.getElementById("shapeHeight").value;
   alert("width: " + shapeWidth +" height: " + shapeHeight);*/
@@ -17,7 +38,7 @@ function updateValue()
   if (currentObject != undefined)
   {
     //if the object is a shape
-    if (currentObject.prop("tagName") == "ellipse" || currentObject.prop("tagName") == "rect")
+    if (selectionIsShape())
     {
       currentObject.attr('fill', shapeColor);
 	  
@@ -38,8 +59,8 @@ function updateValue()
 	 // cell.resize(shapeWidth, shapeHeight); 
     }
 
-    //if the object id a connection
-    if (currentObject.prop("tagName") == "g")   
+    //if the object is a connection
+    if (selectionIsConnection())   
     {
       var modelId = currentObject.attr("model-id");
 
@@ -47,9 +68,9 @@ function updateValue()
       cell = graph.getCell(modelId);
 
       cell.attr({
-       // '.connection': { stroke: connectionColor },
-       // '.marker-source': { stroke: connectionColor, fill: connectionColor },
-       // '.marker-target': { stroke: connectionColor, fill: connectionColor }
+        '.connection': { stroke: connectionColor },
+        '.marker-source': { stroke: connectionColor, fill: connectionColor },
+        '.marker-target': { stroke: connectionColor, fill: connectionColor }
       });
 	  
 
@@ -307,18 +328,22 @@ function read(evtType) {
 
 
 function resize(){
-	window.requestAnimationFrame(function () {
-        //get the joint js cell
-		//get the parent g element so we can get the model id
+	window.requestAnimationFrame(function () 
+  {
+    if (currentObject != null)
+    {
+      //get the joint js cell
+      //get the parent g element so we can get the model id
       var parent = currentObject.parents("g[model-id]");
       //the model-id is assigned by joint js
       var modelId = parent.first().attr("model-id");
-		var shapeWidth = document.getElementById("shapeWidth").value;
-		var shapeHeight = document.getElementById("shapeHeight").value;
+      var shapeWidth = document.getElementById("shapeWidth").value;
+      var shapeHeight = document.getElementById("shapeHeight").value;
       cell = graph.getCell(modelId);
 	  cell.resize(shapeWidth, shapeHeight); 
-	  
-    });
+	}
+   });
+  
 }
 
 //label at realtime
@@ -335,7 +360,5 @@ label.addEventListener(evtType, function() {
 		var shapeHeight = document.getElementById("shapeHeight").value;
       cell = graph.getCell(modelId);
 	  alert(label.value);
-	  
     });
-  })
-
+})

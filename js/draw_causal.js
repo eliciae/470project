@@ -53,9 +53,8 @@ function ellipse(cVar) {
   addSelectionListeners("Ellipse");
   
   
-	//added classes to hopefully delete and resize variables  
-	//cell.attr('class', 'scalable inPorts outPorts moveTool resizeTool portsTool deleteTool tooltip');
-	//cell.attr('class', 'deleteTool');
+//added classes to hopefully delete and resize variables  
+//cell.attr('class', 'scalable inPorts outPorts moveTool resizeTool portsTool deleteTool tooltip');
   
 	graph.addCell(cell);
 	return cell;
@@ -87,26 +86,24 @@ function rect(cVar) {
 	//if the associated model object is changed, then update the svg element
 	cVar.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateSvgElement);
 	
+
 	paper.on('cell:pointerup', 
 		function(cellView, evt, x, y) { 
 			cVar.x = cell.get("position").x;
 			cVar.y = cell.get("position").y;
     	}
 	);
+
+  paper.on('cell:change', function()
+  {
+    alert("changed rect attr");
+  })
 	
 	graph.addCell(cell);
 
   addSelectionListeners("Rect");
   
-  //resizing
-	/*paper.on('cell:pointerdown', 
-		function(cellView, evt, x, y) {
-
-			//alert(cell.get('size').width);
-			cell.resize(cell.get('size').width + 100, cell.get('size').height + 100); 
-			//alert(cell.get('size').width);
-		}
-	);*/
+  //add classes for delete and resizing tools 
 	
   return cell;
 }
@@ -145,9 +142,9 @@ function connection(cConn)
     });
 
     cell.attr({
-     // '.connection': { stroke: cConn.color, 'stroke-dasharray': ''},
-    //  '.marker-source': { stroke: cConn.color, fill: cConn.color },
-     // '.marker-target': { stroke: cConn.color, fill: cConn.color }
+      '.connection': { stroke: cConn.color, 'stroke-dasharray': ''},
+      '.marker-source': { stroke: cConn.color, fill: cConn.color },
+      '.marker-target': { stroke: cConn.color, fill: cConn.color }
     });
 
 
@@ -262,9 +259,6 @@ function drawShape(cVar)
     }
   }
   
-  
-  
-  
   /*function updateSvgElement(evt){
       if (!evt.isLocal){
         cell.position(cVar.x, cVar.y);
@@ -285,9 +279,6 @@ function drawShape(cVar)
   graph.addCell(cell);*/
 }
 
-
-
-
 function incrementCount()
 {
   count++;
@@ -304,4 +295,3 @@ function clearDiagram()
 {
   graph.clear();
 }
-
