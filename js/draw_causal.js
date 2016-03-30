@@ -24,7 +24,7 @@ function ellipse(cVar) {
                 fill: cVar.color,
                 stroke: '#d7d7d7',
                 'stroke-width': 0,
-				value: cVar.idName	
+				        value: cVar.idName	
             }	
         }
 
@@ -94,7 +94,7 @@ function rect(cVar) {
     	}
 	);
 
-  paper.on('cell:change', function()
+  cell.on('cell:change', function()
   {
     alert("changed rect attr");
   })
@@ -193,7 +193,7 @@ function connection(cConn)
         cConn.target = getVarIDFromSVG(t.id);
       else
         cConn.target = t;
-      }
+    }
   );
 
     graph.addCell(cell);

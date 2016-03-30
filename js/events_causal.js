@@ -260,9 +260,9 @@ $('svg').on('mousedown', function(e){
 
     if($('.TabbedPanelsTabSelected').attr('id') == "variable-tab")
     {
-  		var standardWidth = document.getElementById("shapeWidth").value;;
-  		var standardHeight = document.getElementById("shapeHeight").value;;
-          
+  		var standardWidth = document.getElementById("shapeWidth").value;
+  		var standardHeight = document.getElementById("shapeHeight").value;
+        
 
   		if (selectedShape == "noShape")
       {
@@ -290,7 +290,7 @@ $('svg').on('mousedown', function(e){
 });
 
 function deleteShape(){
-	 if (currentObject.prop("tagName") == "ellipse" || currentObject.prop("tagName") == "rect"){
+	 if (selectionIsShape()){
 	      //get the parent g element so we can get the model id
       var parent = currentObject.parents("g[model-id]");
       //the model-id is assigned by joint js
@@ -316,14 +316,17 @@ read("mousedown");
 read("mousemove");
 
 function read(evtType) {
-  widthRng.addEventListener(evtType, function() {
-	if (currentObject.prop("tagName") == "ellipse" || currentObject.prop("tagName") == "rect")
-    	resize();
-  })
-  heightRng.addEventListener(evtType, function() {
-	   if (currentObject.prop("tagName") == "ellipse" || currentObject.prop("tagName") == "rect")
-			resize();
-	})
+  if (currentObject != null)
+  {
+    widthRng.addEventListener(evtType, function() {
+  	 if (selectionIsShape())
+      	resize();
+    });
+    heightRng.addEventListener(evtType, function() {
+	   if (selectionIsShape())
+	     resize();
+  	});
+  }
 }
 
 
