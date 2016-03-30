@@ -93,6 +93,11 @@ function rect(cVar) {
 			cVar.y = cell.get("position").y;
     	}
 	);
+
+  paper.on('cell:change', function()
+  {
+    alert("changed rect attr");
+  })
 	
 	graph.addCell(cell);
 
@@ -137,9 +142,9 @@ function connection(cConn)
     });
 
     cell.attr({
-     // '.connection': { stroke: cConn.color, 'stroke-dasharray': ''},
-    //  '.marker-source': { stroke: cConn.color, fill: cConn.color },
-     // '.marker-target': { stroke: cConn.color, fill: cConn.color }
+      '.connection': { stroke: cConn.color, 'stroke-dasharray': ''},
+      '.marker-source': { stroke: cConn.color, fill: cConn.color },
+      '.marker-target': { stroke: cConn.color, fill: cConn.color }
     });
 
 
