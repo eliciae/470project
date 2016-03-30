@@ -38,7 +38,7 @@ function ellipse(cVar) {
 	//if the associated model object is changed, then update the svg element
 	cVar.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateSvgElement);
 	
-	
+	//alert(cell.get('size').width);
 
 	paper.on('cell:pointerup', 
 		function(cellView, evt, x, y) { 

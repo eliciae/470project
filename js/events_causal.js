@@ -259,12 +259,16 @@ function selectLink()
 function updateValuesSelectedInVaraiableTab(){
 	alert("updating");
 	//alert(currentObject.get('attrs').text);
-  //document.getElementById('#varLabel').value = currentObject.get('attrs').text.text;
+ // document.getElementById('#varLabel').value = getCurrentCell.get('attrs').text.text;
  // document.getElementById('input:radio[name="shape"]').filter('[value=' + selectedShape +']').attr('checked', true);
   document.getElementById(selectedShape).checked = "checked";
- // document.getElementById('#shapeWidth').value = currentObject.get('size').width;
-//  document.getElementById('#shapeHeight').value = currentObject.get('size').height;
- // document.getElementById('#shapeColor').value = currentObject.get('attrs').fill;
+  var cell = getCurrentCell();
+ // document.getElementById(shapeWidth).value = getCurrentCell().get('size').width;
+ // document.getElementById(shapeHeight).value = getCurrentCell().get('size').height;
+//  document.getElementById(shapeColor).value = getCurrentCell().get('attrs').fill;
+  
+  alert(cell.attr('fill'));
+ //currentObject.attr("model-id")
 }
 
 function removeOldSelections()
@@ -320,15 +324,7 @@ $('svg').on('mousedown', function(e){
 
 function deleteShape(){
 	 if (selectionIsShape()){
-	      //get the parent g element so we can get the model id
-      var parent = currentObject.parents("g[model-id]");
-      //the model-id is assigned by joint js
-      var modelId = parent.first().attr("model-id");
-      var id = getVarIDFromSVG(modelId);
-	  
-	   //get the joint js cell
-      cell = graph.getCell(modelId);
-		cell.remove();
+	  getCurrentCell().remove();
 	 }
 }
 
@@ -364,15 +360,7 @@ function resize(){
   {
     if (currentObject != null)
     {
-      //get the joint js cell
-      //get the parent g element so we can get the model id
-      var parent = currentObject.parents("g[model-id]");
-      //the model-id is assigned by joint js
-      var modelId = parent.first().attr("model-id");
-      var shapeWidth = document.getElementById("shapeWidth").value;
-      var shapeHeight = document.getElementById("shapeHeight").value;
-      cell = graph.getCell(modelId);
-	  cell.resize(shapeWidth, shapeHeight); 
+      getCurrentCell().resize(shapeWidth, shapeHeight); 
 	}
    });
   
@@ -382,8 +370,15 @@ function resize(){
 document.getElementById('varLabel').addEventListener("keyup", function(){
 	if (currentObject != null)
 		if(selectionIsShape())
-		{
-			  //get the joint js cell
+		{ 
+			  getCurrentCell().attr({text:{text: document.getElementById('varLabel').value}});
+		}
+
+	}, false);
+
+
+function getCurrentCell(){
+	//get the joint js cell
 			  //get the parent g element so we can get the model id
 			  var parent = currentObject.parents("g[model-id]");
 			  //the model-id is assigned by joint js
@@ -391,10 +386,5 @@ document.getElementById('varLabel').addEventListener("keyup", function(){
 			  var shapeWidth = document.getElementById("shapeWidth").value;
 			  var shapeHeight = document.getElementById("shapeHeight").value;
 			  cell = graph.getCell(modelId);
-			 // alert(cell.previousAttributes().attrs.text.text  + " " + document.getElementById('varLabel').value);
-			//  cell.previousAttributes().attrs.text.text = document.getElementById('varLabel').value;
-			//  alert(cell.previousAttributes().attrs.text.text);  
-			  cell.attr({text:{text: document.getElementById('varLabel').value}});
-		}
-
-	}, false);
+			return cell; 
+}
