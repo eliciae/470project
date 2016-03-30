@@ -225,6 +225,9 @@ function selectEllipse()
   removeOldSelections();
   currentObject = $( this ).find('ellipse');
   currentObject.attr('class', 'selectObject');
+  
+  //open variable tab & set tab values to be the selected item's values 
+  $('#variable-tab').click();
 }
 
 function selectRect()
@@ -239,11 +242,17 @@ function selectLink()
   removeOldSelections();
   currentObject = $(this);
   this.classList.add('selectObject');
+  
+  //select connections tab
+  $('#connection-tab').click();
 }
 
 function removeOldSelections()
 {
   currentObject = null;
+  //deselect tab
+   $('#markup-tab').click();
+  
   var els = document.getElementsByClassName("selectObject");
   for (var i = 0; i < els.length; i++) 
   {
@@ -273,7 +282,7 @@ $('svg').on('mousedown', function(e){
       var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, selectedShape, selectedShape, shapeColor);
       drawShape(newCausalVar);
      
-      $('#markup-tab').click();
+      //$('#markup-tab').click();
     }
 
     if($('.TabbedPanelsTabSelected').attr('id') == "connection-tab")
@@ -285,7 +294,7 @@ $('svg').on('mousedown', function(e){
 
       var newCausalConn = createNewCausalConn(source, target, label, vertices, connectionColor);
       drawConnection(newCausalConn);
-      $('#markup-tab').click();
+     // $('#markup-tab').click();
     }
 });
 
