@@ -1,5 +1,8 @@
+var currentObject;
+
 var shapeColor = getShapeColor();
-var connectionColor = getConnectionColor;
+var connectionColor = getConnectionColor();
+
 var shapeWidth = document.getElementById("shapeWidth").value;
 var shapeHeight = document.getElementById("shapeHeight").value;
 
@@ -186,6 +189,7 @@ function addSelectionListeners(shape)
     var els = document.getElementsByClassName("Ellipse");
     for (var i = 0; i < els.length; i++) 
     {
+      alert("adding event listener");
       $('#shapeColor').attr('value', $(els[i]).attr('fill'));
       els[i].addEventListener('mousedown', selectEllipse, false);
     }

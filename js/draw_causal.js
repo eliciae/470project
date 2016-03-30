@@ -1,7 +1,5 @@
 var selectedShape ="ellipse";
 
-var currentObject;
-
 var graph = new joint.dia.Graph();
 
 var paper = new joint.dia.Paper({
@@ -87,17 +85,10 @@ function rect(cVar) {
 	cVar.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateSvgElement);
 	
 
-	paper.on('cell:pointerup', 
-		function(cellView, evt, x, y) { 
+	paper.on('cell:pointerup', function(cellView, evt, x, y) { 
 			cVar.x = cell.get("position").x;
 			cVar.y = cell.get("position").y;
-    	}
-	);
-
-  cell.on('cell:change', function()
-  {
-    alert("changed rect attr");
-  })
+	});
 	
 	graph.addCell(cell);
 
@@ -149,7 +140,8 @@ function connection(cConn)
 
 
     function updateSvgElement(evt){
-      if (!evt.isLocal){
+      if (!evt.isLocal)
+      {
         var s = cConn.source;
         var t = cConn.target;
 
@@ -241,22 +233,19 @@ function getModelIDFromVarID(varID)
 
 function drawShape(cVar)
 {
-  if (currentObject == null)
+  var cell;
+  if (cVar.shape == "ellipse" || cVar.shape == "noShape")
   {
-    var cell;
-    if (cVar.shape == "ellipse" || cVar.shape == "noShape")
-    {
-      cell = ellipse(cVar);
-    }
-    else if (cVar.shape == "rect")
-    {
-      cell = rect(cVar);
-    }
-    //not really a cVar, cConn
-    else //if (cVar.shape == "connection")
-    {
-      cell = connection(cVar);
-    }
+    cell = ellipse(cVar);
+  }
+  else if (cVar.shape == "rect")
+  {
+    cell = rect(cVar);
+  }
+  //not really a cVar, cConn
+  else //if (cVar.shape == "connection")
+  {
+    cell = connection(cVar);
   }
   
   /*function updateSvgElement(evt){
