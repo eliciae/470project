@@ -350,18 +350,20 @@ function resize(){
 }
 
 //label at realtime
-var label = document.getElementById("shapeLabel");
+document.getElementById('varLabel').addEventListener("keyup", function(){
+	alert(document.getElementById('varLabel').value);
+	if (currentObject != null)
+		if(selectionIsShape())
+		{
+			  //get the joint js cell
+			  //get the parent g element so we can get the model id
+			  var parent = currentObject.parents("g[model-id]");
+			  //the model-id is assigned by joint js
+			  var modelId = parent.first().attr("model-id");
+			  var shapeWidth = document.getElementById("shapeWidth").value;
+			  var shapeHeight = document.getElementById("shapeHeight").value;
+			  cell = graph.getCell(modelId);
+			  cell.text = document.getElementById('varLabel').value; 
+		}
 
-label.addEventListener(evtType, function() {
-	window.requestAnimationFrame(function () {
-        //get the joint js cell
-		//get the parent g element so we can get the model id
-      var parent = currentObject.parents("g[model-id]");
-      //the model-id is assigned by joint js
-      var modelId = parent.first().attr("model-id");
-		var shapeWidth = document.getElementById("shapeWidth").value;
-		var shapeHeight = document.getElementById("shapeHeight").value;
-      cell = graph.getCell(modelId);
-	  alert(label.value);
-    });
-})
+	}, false);
