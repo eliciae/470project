@@ -351,7 +351,6 @@ function resize(){
 
 //label at realtime
 document.getElementById('varLabel').addEventListener("keyup", function(){
-	alert(document.getElementById('varLabel').value);
 	if (currentObject != null)
 		if(selectionIsShape())
 		{
@@ -363,7 +362,10 @@ document.getElementById('varLabel').addEventListener("keyup", function(){
 			  var shapeWidth = document.getElementById("shapeWidth").value;
 			  var shapeHeight = document.getElementById("shapeHeight").value;
 			  cell = graph.getCell(modelId);
-			  cell.text = document.getElementById('varLabel').value; 
+			 // alert(cell.previousAttributes().attrs.text.text  + " " + document.getElementById('varLabel').value);
+			//  cell.previousAttributes().attrs.text.text = document.getElementById('varLabel').value;
+			//  alert(cell.previousAttributes().attrs.text.text);  
+			  cell.attr({text:{text: document.getElementById('varLabel').value}});
 		}
 
 	}, false);
