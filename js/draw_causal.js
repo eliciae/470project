@@ -46,10 +46,6 @@ function ellipse(cVar) {
 			cVar.y = cell.get("position").y;
     }
 	);
-	
-	
-	
-  addSelectionListeners("Ellipse");
   
   
 //added classes to hopefully delete and resize variables  
@@ -57,6 +53,12 @@ function ellipse(cVar) {
   
 	graph.addCell(cell);
 	//cell.attr({text:{text: "booger"}});
+
+  var modelId = cell.id;
+  el = $('g[model-id="'+modelId+'"]');
+  el.on('mousedown', selectEllipse);
+
+
 	return cell;
 }
 
@@ -94,7 +96,9 @@ function rect(cVar) {
 	
 	graph.addCell(cell);
 
-  addSelectionListeners("Rect");
+  var modelId = cell.id;
+  el = $('g[model-id="'+modelId+'"]');
+  el.on('mousedown', selectRect);
   
   //add classes for delete and resizing tools 
 	
@@ -192,7 +196,11 @@ function connection(cConn)
 
     graph.addCell(cell);
 
-    addSelectionListeners("connection");
+    var modelId = cell.id;
+    el = $('g[model-id="'+modelId+'"]');
+    el.find('circle[class="marker-vertex"]').on('mousedown', selectConnection);
+    el.find('path[class="marker-arrowhead"]').on('mousedown', selectConnection);
+    el.on('mousedown', selectConnection);
 
     return cell;
 }

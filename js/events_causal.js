@@ -1,4 +1,4 @@
-var currentObject;
+var currentObject = null;
 
 var shapeColor = getShapeColor();
 var connectionColor = getConnectionColor();
@@ -178,42 +178,6 @@ $('#redo').on('click', function(){
 });
 
 
-//loops through every instance of Ellipse class and adds a listener for clicks
-//jQuery apparently doesn't like to grab classes on SVGs
-//the following three functions have a lot of duplications that could be solved with variables, but jQuery 
-// was not liking string vars as parameters. TODO: There must be a way to make it work
-function addSelectionListeners(shape)
-{
-  if (shape == "Ellipse")
-  {
-    var els = document.getElementsByClassName("Ellipse");
-    for (var i = 0; i < els.length; i++) 
-    {
-      alert("adding event listener");
-      $('#shapeColor').attr('value', $(els[i]).attr('fill'));
-      els[i].addEventListener('mousedown', selectEllipse, false);
-    }
-  }
-  else if (shape == "Rect")
-  {
-    var els = document.getElementsByClassName("Rect");
-    for (var i = 0; i < els.length; i++) 
-    {
-      els[i].addEventListener('mousedown', selectRect, false);
-    }
-  }
-  else if (shape == "connection")
-  {
-    var els = document.getElementsByClassName("link");
-    for (var i = 0; i < els.length; i++) 
-    {
-      els[i].addEventListener('mousedown', selectLink, false);
-      $(els[i]).find('circle[class="marker-vertex"]').on('mousedown', selectLink);
-      $(els[i]).find('path[class="marker-arrowhead"]').on('mousedown', selectLink);
-    }
-  }
-}
-
 //if you click the svg and you aren't in a g tag, everything should unselect
 $('svg').on('click', function(event)
 {
@@ -241,7 +205,7 @@ function selectRect()
   currentObject.attr('class', 'selectObject');
 }
 
-function selectLink()
+function selectConnection()
 {
   removeOldSelections();
   currentObject = $(this);
@@ -283,8 +247,11 @@ $('svg').on('mousedown', function(e){
   			var standardHeight = 0;
   		}
 
-      var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, selectedShape, selectedShape, shapeColor);
-      drawShape(newCausalVar);
+      if (currentObject == null)
+      {
+        var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, selectedShape, selectedShape, shapeColor);
+        drawShape(newCausalVar);
+      }
      
       //$('#markup-tab').click();
     }
@@ -296,8 +263,11 @@ $('svg').on('mousedown', function(e){
       var label = "connection";
       var vertices = [];
 
-      var newCausalConn = createNewCausalConn(source, target, label, vertices, connectionColor);
-      drawConnection(newCausalConn);
+      if (currentObject == null)
+      {
+        var newCausalConn = createNewCausalConn(source, target, label, vertices, connectionColor);
+        drawConnection(newCausalConn);
+      }
      // $('#markup-tab').click();
     }
 });
