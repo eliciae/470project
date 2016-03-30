@@ -287,6 +287,7 @@ function deleteConn(){
 		currentObject.remove();
 }
 
+//resizing at realtime
 var widthRng = document.getElementById("shapeWidth");
 var heightRng = document.getElementById("shapeHeight");
 
@@ -295,10 +296,12 @@ read("mousemove");
 
 function read(evtType) {
   widthRng.addEventListener(evtType, function() {
-    resize();
+	if (currentObject.prop("tagName") == "ellipse" || currentObject.prop("tagName") == "rect")
+    	resize();
   })
   heightRng.addEventListener(evtType, function() {
-		resize();
+	   if (currentObject.prop("tagName") == "ellipse" || currentObject.prop("tagName") == "rect")
+			resize();
 	})
 }
 
@@ -317,3 +320,22 @@ function resize(){
 	  
     });
 }
+
+//label at realtime
+var label = document.getElementById("shapeLabel");
+
+label.addEventListener(evtType, function() {
+	window.requestAnimationFrame(function () {
+        //get the joint js cell
+		//get the parent g element so we can get the model id
+      var parent = currentObject.parents("g[model-id]");
+      //the model-id is assigned by joint js
+      var modelId = parent.first().attr("model-id");
+		var shapeWidth = document.getElementById("shapeWidth").value;
+		var shapeHeight = document.getElementById("shapeHeight").value;
+      cell = graph.getCell(modelId);
+	  alert(label.value);
+	  
+    });
+  })
+
