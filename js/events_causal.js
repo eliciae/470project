@@ -199,4 +199,6 @@ function getModelElBySvgSelectedID(){
 		return localModel.getRoot().get(getCurrentCell().get("attrs").rect.value);
 	else if (currentObject.prop("tagName") == "ellipse")
 		return localModel.getRoot().get(getCurrentCell().get("attrs").ellipse.value);
+  else if (currentObject.prop("tagName") == "g")
+    return localModel.getRoot().get(getCurrentConnCell().get("attrs").path.value);
 }
