@@ -41,6 +41,16 @@ function displayObjectChangedEvent(evt)
     //only draw and add to the model if it wasn't local
     if (!events[i].isLocal)
     {
+		//if the model is smaller than the number of svg elements then something has been deleted
+		if (localModel.getRoot().size < count){
+			//remove all elements in svg
+			//var svg = $('svg'); 
+			//while (svg.lastChild) {
+			//	svg.removeChild(svg.lastChild);
+			//}
+			clearDiagram();
+		}
+		
       //a list of all the item names in the model
       var modelList = localModel.getRoot().keys();
 
@@ -175,12 +185,12 @@ function deleteShape(){
 }
 
 function deleteConn(){
-	if (currentObject.prop("tagName") == "g") 
+	if (currentObject.prop("tagName") == "g"){ 
 	 //find selected item in model and delete it 
 	  localModel.getRoot().delete(getModelElBySvgSelectedID().idName); 
 	  //delete it in the svg
-		getCurrentCell().remove();
-		//currentObject.remove();
+		getCurrentConnCell().remove();
+	}
 }
 
 
