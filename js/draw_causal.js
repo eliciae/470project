@@ -32,6 +32,9 @@ function ellipse(cVar) {
 	function updateSvgElement(evt){
 			if (!evt.isLocal){
 				cell.position(cVar.x, cVar.y);
+        cell.resize(cVar.width, cVar.height);
+        cell.attr({text: {text: cVar.label}});
+        cell.attr({'ellipse': {fill: cVar.color}});
 			}
 	}
 	
@@ -80,6 +83,9 @@ function rect(cVar) {
 	function updateSvgElement(evt){
 			if (!evt.isLocal){
 				cell.position(cVar.x, cVar.y);
+        cell.resize(cVar.width, cVar.height);
+        cell.attr({text: {text: cVar.label}});
+        cell.attr({'rect': {fill: cVar.color}});
 			}
 	}
 	
@@ -165,6 +171,15 @@ function connection(cConn)
           var target = getModelIDFromVarID(t);
           cell.set('target', target)
         }
+
+        cell.attr({
+          '.connection': { stroke: cConn.color, 'stroke-dasharray': ''},
+          '.marker-source': { stroke: cConn.color, fill: cConn.color },
+          '.marker-target': { stroke: cConn.color, fill: cConn.color }
+        });
+
+        
+
       }
   }
   

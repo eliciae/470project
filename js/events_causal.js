@@ -177,13 +177,20 @@ function deleteConn(){
 
 
 function getCurrentCell(){
-	//get the joint js cell
-			  //get the parent g element so we can get the model id
-			  var parent = currentObject.parents("g[model-id]");
-			  //the model-id is assigned by joint js
-			  var modelId = parent.first().attr("model-id");
-			  cell = graph.getCell(modelId);
-			return cell; 
+  //get the joint js cell
+  //get the parent g element so we can get the model id
+  var parent = currentObject.parents("g[model-id]");
+  //the model-id is assigned by joint js
+  var modelId = parent.first().attr("model-id");
+  cell = graph.getCell(modelId);
+  return cell; 
+}
+
+function getCurrentConnCell()
+{
+  var modelId = currentObject.attr("model-id");
+  cell = graph.getCell(modelId);
+  return cell; 
 }
 
 //returns the model el that has the corresponding id to currentCell

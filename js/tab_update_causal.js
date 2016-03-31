@@ -116,13 +116,24 @@ function resize(){
    });
 }
 
-//label at realtime
+//label at realtime for the variables
 document.getElementById('varLabel').addEventListener("keyup", function(){
   if (currentObject != null)
     if(selectionIsShape())
     { 
         getCurrentCell().attr({text:{text: document.getElementById('varLabel').value}});
         getModelElBySvgSelectedID().label = document.getElementById('varLabel').value;
+    }
+
+  }, false);
+
+//label at realtime for the variables
+document.getElementById('connLabel').addEventListener("keyup", function(){
+  if (currentObject != null)
+    if(selectionIsConnection())
+    { 
+        getCurrentConnCell().label(0, {attrs: {text: {text: document.getElementById('connLabel').value}}});
+        getModelElBySvgSelectedID().label = document.getElementById('connLabel').value;
     }
 
   }, false);
