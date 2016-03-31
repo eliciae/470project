@@ -292,3 +292,47 @@ function clearDiagram()
 {
   graph.clear();
 }
+
+
+
+$('svg').on('mousedown', function(e){
+
+    var mousex = (e.pageX - $('svg').offset().left) + $(window).scrollLeft();
+    var mousey = (e.pageY - $('svg').offset().top) + $(window).scrollTop();
+
+    if($('.TabbedPanelsTabSelected').attr('id') == "variable-tab")
+    {
+      var standardWidth = document.getElementById("shapeWidth").value;
+      var standardHeight = document.getElementById("shapeHeight").value;
+        
+
+      if (selectedShape == "noShape")
+      {
+        var standardWidth = 0;
+        var standardHeight = 0;
+      }
+
+      if (currentObject == null)
+      {
+        var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, selectedShape, selectedShape, shapeColor);
+        drawShape(newCausalVar);
+      }
+     
+      //$('#markup-tab').click();
+    }
+
+    if($('.TabbedPanelsTabSelected').attr('id') == "connection-tab")
+    {
+      var source = { x:mousex, y:mousey };
+      var target = { x:mousex+100, y:mousey+100 };
+      var label = "connection";
+      var vertices = [];
+
+      if (currentObject == null)
+      {
+        var newCausalConn = createNewCausalConn(source, target, label, vertices, connectionColor);
+        drawConnection(newCausalConn);
+      }
+     // $('#markup-tab').click();
+    }
+});
