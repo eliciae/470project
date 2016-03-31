@@ -221,7 +221,7 @@ function selectConnection()
 }
 
 function updateValuesSelectedInVaraiableTab(){
-	alert("updating");
+	//alert("updating");
 	//alert(currentObject.get('attrs').text);
   //document.getElementById('#varLabel').value = currentObject.get('attrs').text.text;
  // document.getElementById('input:radio[name="shape"]').filter('[value=' + selectedShape +']').attr('checked', true);
