@@ -40,6 +40,7 @@ function updateValue()
     if (selectionIsShape())
     {
       currentObject.attr('fill', shapeColor);
+	  getModelElBySvgSelectedID().color = shapeColor;
 	  
      //get the parent g element so we can get the model id
       var parent = currentObject.parents("g[model-id]");
@@ -49,16 +50,6 @@ function updateValue()
       var id = getVarIDFromSVG(modelId);
 
       var sharedObject = localModel.getRoot().get(id);
-      //sharedObject.color = shapeColor;
-	 // $(".full").spectrum({
-	//	color: '#FFFFFF'
-	//  })
-	  //sharedObject.width = shapeWidth;
-	 // sharedObject.height = shapeHeight;
-	  
-	   //get the joint js cell
-     // cell = graph.getCell(modelId);
-	 // cell.resize(shapeWidth, shapeHeight); 
     }
 
     //if the object is a connection
@@ -247,10 +238,8 @@ function updateValuesSelectedInVaraiableTab(){
 		
 	
   document.getElementById("varLabel").value = getModelElBySvgSelectedID().label;
-  var cell = getCurrentCell();
   document.getElementById("shapeWidth").value = getModelElBySvgSelectedID().width;
   document.getElementById("shapeHeight").value = getModelElBySvgSelectedID().height;
-  alert(getModelElBySvgSelectedID().color);
   $(".full").spectrum("set", getModelElBySvgSelectedID().color);
 }
 
@@ -349,7 +338,7 @@ function resize(){
     shapeHeight = document.getElementById("shapeHeight").value;	
     getCurrentCell().resize(shapeWidth, shapeHeight); 
     getModelElBySvgSelectedID().width = document.getElementById("shapeWidth").value;
-    getModelElBySvgSelectedID().height = document.getElementById("shapeWidth").height;
+    getModelElBySvgSelectedID().height = document.getElementById("shapeHeight").value;
    });
 }
 
