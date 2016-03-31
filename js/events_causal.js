@@ -156,7 +156,7 @@ function redraw()
 
 
 
-$('#rectShape').on('click', function(){
+/*$('#rectShape').on('click', function(){
     selectedShape = "rect";
 });
 $('#ellipseShape').on('click', function(){
@@ -164,7 +164,7 @@ $('#ellipseShape').on('click', function(){
 });
 $('#noShape').on('click', function(){
     selectedShape = "noShape";
-});
+});*/
 
 $('#undo').on('click', function(){
   localModel.undo();
@@ -193,9 +193,12 @@ function selectEllipse()
   removeOldSelections();
   currentObject = $( this ).find('ellipse');
   currentObject.attr('class', 'selectObject');
+  alert("select ellipse");
   
   //open variable tab & set tab values to be the selected item's values 
   $('#variable-tab').click();
+  alert(getModelElBySvgSelectedID().shape);
+  selectedShape = getModelElBySvgSelectedID().shape;
   updateValuesSelectedInVaraiableTab();
 }
 
@@ -207,6 +210,8 @@ function selectRect()
   
   //open variable tab & set tab values to be the selected item's values 
   $('#variable-tab').click();
+   alert(getModelElBySvgSelectedID().shape);
+  selectedShape = getModelElBySvgSelectedID().shape;
   updateValuesSelectedInVaraiableTab();
 }
 
@@ -223,12 +228,35 @@ function selectConnection()
 function updateValuesSelectedInVaraiableTab(){
 	//alert("updating");
 	//alert(currentObject.get('attrs').text);
-  //document.getElementById('#varLabel').value = currentObject.get('attrs').text.text;
- // document.getElementById('input:radio[name="shape"]').filter('[value=' + selectedShape +']').attr('checked', true);
-  document.getElementById(selectedShape).checked = "checked";
- // document.getElementById('#shapeWidth').value = currentObject.get('size').width;
-//  document.getElementById('#shapeHeight').value = currentObject.get('size').height;
- // document.getElementById('#shapeColor').value = currentObject.get('attrs').fill;
+ // document.getElementById('#varLabel').value = getCurrentCell.get('attrs').text.text;
+  
+  	//select correct shape attribute
+  	document.getElementById('shapeR').checked = false;
+	document.getElementById('shapeE').checked = false;
+	document.getElementById('shapeN').checked = false;
+	
+	if (selectedShape == "rect"){
+		document.getElementById('shapeR').checked = true;
+		//alert("rect");
+	}
+	else if (selectedShape == "ellipse"){
+		//alert("ellipse");
+		document.getElementById('shapeE').checked = true;
+	}
+	else{
+		//alert("no shape");
+		document.getElementById('shapeN').checked = true;
+	}
+		
+	
+ // document.getElementById(selectedShape).checked = true;
+  var cell = getCurrentCell();
+ // document.getElementById(shapeWidth).value = getCurrentCell().get('size').width;
+ // document.getElementById(shapeHeight).value = getCurrentCell().get('size').height;
+//  document.getElementById(shapeColor).value = getCurrentCell().get('attrs').fill;
+  //radioObj.checked = (radioObj.value == newValue.toString());
+ // alert(cell.attr('fill'));
+ //currentObject.attr("model-id")
 }
 
 function removeOldSelections()
@@ -290,15 +318,7 @@ $('svg').on('mousedown', function(e){
 
 function deleteShape(){
 	 if (selectionIsShape()){
-	      //get the parent g element so we can get the model id
-      var parent = currentObject.parents("g[model-id]");
-      //the model-id is assigned by joint js
-      var modelId = parent.first().attr("model-id");
-      var id = getVarIDFromSVG(modelId);
-	  
-	   //get the joint js cell
-      cell = graph.getCell(modelId);
-		cell.remove();
+	  getCurrentCell().remove();
 	 }
 }
 
@@ -334,15 +354,7 @@ function resize(){
   {
     if (currentObject != null)
     {
-      //get the joint js cell
-      //get the parent g element so we can get the model id
-      var parent = currentObject.parents("g[model-id]");
-      //the model-id is assigned by joint js
-      var modelId = parent.first().attr("model-id");
-      var shapeWidth = document.getElementById("shapeWidth").value;
-      var shapeHeight = document.getElementById("shapeHeight").value;
-      cell = graph.getCell(modelId);
-	  cell.resize(shapeWidth, shapeHeight); 
+      getCurrentCell().resize(shapeWidth, shapeHeight); 
 	}
    });
   
@@ -352,19 +364,27 @@ function resize(){
 document.getElementById('varLabel').addEventListener("keyup", function(){
 	if (currentObject != null)
 		if(selectionIsShape())
-		{
-			  //get the joint js cell
+		{ 
+			  getCurrentCell().attr({text:{text: document.getElementById('varLabel').value}});
+		}
+
+	}, false);
+
+
+function getCurrentCell(){
+	//get the joint js cell
 			  //get the parent g element so we can get the model id
 			  var parent = currentObject.parents("g[model-id]");
 			  //the model-id is assigned by joint js
 			  var modelId = parent.first().attr("model-id");
-			  var shapeWidth = document.getElementById("shapeWidth").value;
-			  var shapeHeight = document.getElementById("shapeHeight").value;
 			  cell = graph.getCell(modelId);
-			 // alert(cell.previousAttributes().attrs.text.text  + " " + document.getElementById('varLabel').value);
-			//  cell.previousAttributes().attrs.text.text = document.getElementById('varLabel').value;
-			//  alert(cell.previousAttributes().attrs.text.text);  
-			  cell.attr({text:{text: document.getElementById('varLabel').value}});
-		}
+			return cell; 
+}
 
-	}, false);
+//returns the model el that has the corresponding id to currentCell
+function getModelElBySvgSelectedID(){
+	if (currentObject.prop("tagName") == "rect")
+		return localModel.getRoot().get(getCurrentCell().get("attrs").rect.value);
+	else if (currentObject.prop("tagName") == "ellipse")
+		return localModel.getRoot().get(getCurrentCell().get("attrs").ellipse.value);
+}

@@ -91,7 +91,7 @@ function rect(cVar) {
 	//if the associated model object is changed, then update the svg element
 	cVar.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateSvgElement);
 	
-
+	
 	paper.on('cell:pointerup', function(cellView, evt, x, y) { 
 			cVar.x = cell.get("position").x;
 			cVar.y = cell.get("position").y;
