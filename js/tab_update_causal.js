@@ -56,12 +56,8 @@ function updateLabel(){
 }
 
 function updateValuesSelectedInVaraiableTab(){
-  //alert("updating");
-  //alert(currentObject.get('attrs').text);
- // document.getElementById('#varLabel').value = getCurrentCell.get('attrs').text.text;
-  
-    //select correct shape attribute
-    document.getElementById('shapeR').checked = false;
+  //select correct shape attribute
+  document.getElementById('shapeR').checked = false;
   document.getElementById('shapeE').checked = false;
   document.getElementById('shapeN').checked = false;
   
@@ -82,6 +78,30 @@ function updateValuesSelectedInVaraiableTab(){
   document.getElementById("varLabel").value = getModelElBySvgSelectedID().label;
   document.getElementById("shapeWidth").value = getModelElBySvgSelectedID().width;
   document.getElementById("shapeHeight").value = getModelElBySvgSelectedID().height;
+  $(".full").spectrum("set", getModelElBySvgSelectedID().color);
+}
+
+function updateValuesSelectedInConnectionTab(){
+  //select correct arrow head
+ /* document.getElementById('shapeR').checked = false;
+  document.getElementById('shapeE').checked = false;
+  document.getElementById('shapeN').checked = false;
+  
+  if (selectedShape == "rect"){
+    document.getElementById('shapeR').checked = true;
+    //alert("rect");
+  }
+  else if (selectedShape == "ellipse"){
+    //alert("ellipse");
+    document.getElementById('shapeE').checked = true;
+  }
+  else{
+    //alert("no shape");
+    document.getElementById('shapeN').checked = true;
+  }*/
+    
+  
+  document.getElementById("connLabel").value = getModelElBySvgSelectedID().label;
   $(".full").spectrum("set", getModelElBySvgSelectedID().color);
 }
 

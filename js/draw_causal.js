@@ -74,7 +74,7 @@ function rect(cVar) {
             'rect': {
                 fill: cVar.color,
                 stroke: '#000000',
-                'stroke-width': 2,
+                'stroke-width': 0,
 				        value: cVar.idName
             }
         }
