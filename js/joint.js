@@ -6485,7 +6485,8 @@ joint.dia.Link = joint.dia.Cell.extend({
 
     arrowheadMarkup: [
         '<g class="marker-arrowhead-group marker-arrowhead-group-<%= end %>">',
-        '<path class="marker-arrowhead" end="<%= end %>" d="M 26 0 L 0 13 L 26 26 z" />',
+      //  '<path class="marker-arrowhead" end="<%= end %>" d="M 26 0 L 0 13 L 26 26 z" />',
+		'<path class="marker-arrowhead" end="<%= end %>" d="M30,50a20,20 0 1,0 40,0a20,20 0 1,0 -40,0"/>',
         '</g>'
     ].join(''),
 

@@ -91,3 +91,15 @@ input[type="color" i] {
 }
 
 .link-tools .tool-remove { display: none }
+
+.marker-arrowhead, .marker-vertex{
+	opacity: 0.3;
+}
+
+.marker-vertex {
+    fill: black !important;
+}
+
+.marker-vertex-remove-area{
+	
+}

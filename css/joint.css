@@ -190,11 +190,12 @@ Vertex markers are `<circle>` elements that appear at connection vertex position
 }
 
 .marker-vertex-remove-area {
-   opacity: .1;
+   opacity: .0;
    cursor: pointer;
 }
 .marker-vertex-group:hover .marker-vertex-remove-area {
    opacity: 1;
+   fill: red;
 }
 
 /* Cell highlighting - e.g a cell underneath the dragged link get highlighted.

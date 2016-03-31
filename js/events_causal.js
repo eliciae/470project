@@ -167,13 +167,20 @@ function removeOldSelections()
 
 function deleteShape(){
 	 if (selectionIsShape()){
-	  getCurrentCell().remove();
+	  //find selected item in model and delete it 
+	  localModel.getRoot().delete(getModelElBySvgSelectedID().idName); 
+	  //delete it in the svg
+		getCurrentCell().remove();
 	 }
 }
 
 function deleteConn(){
 	if (currentObject.prop("tagName") == "g") 
-		currentObject.remove();
+	 //find selected item in model and delete it 
+	  localModel.getRoot().delete(getModelElBySvgSelectedID().idName); 
+	  //delete it in the svg
+		getCurrentCell().remove();
+		//currentObject.remove();
 }
 
 
