@@ -32,10 +32,6 @@ function updateValue()
   // get the current value of the input fields
   shapeColor = getShapeColor(); 
   connectionColor = getConnectionColor();
- /* shapeWidth = document.getElementById("shapeWidth").value;
-  shapeHeight = document.getElementById("shapeHeight").value;
-  alert("width: " + shapeWidth +" height: " + shapeHeight);*/
-  
 
   //if there is an object selected, change the color
   if (currentObject != undefined)
@@ -53,7 +49,10 @@ function updateValue()
       var id = getVarIDFromSVG(modelId);
 
       var sharedObject = localModel.getRoot().get(id);
-      sharedObject.color = shapeColor;
+      //sharedObject.color = shapeColor;
+	 // $(".full").spectrum({
+	//	color: '#FFFFFF'
+	//  })
 	  //sharedObject.width = shapeWidth;
 	 // sharedObject.height = shapeHeight;
 	  
@@ -193,11 +192,11 @@ function selectEllipse()
   removeOldSelections();
   currentObject = $( this ).find('ellipse');
   currentObject.attr('class', 'selectObject');
-  alert("select ellipse");
+  //alert("select ellipse");
   
   //open variable tab & set tab values to be the selected item's values 
   $('#variable-tab').click();
-  alert(getModelElBySvgSelectedID().shape);
+  //alert(getModelElBySvgSelectedID().shape);
   selectedShape = getModelElBySvgSelectedID().shape;
   updateValuesSelectedInVaraiableTab();
 }
@@ -210,7 +209,7 @@ function selectRect()
   
   //open variable tab & set tab values to be the selected item's values 
   $('#variable-tab').click();
-   alert(getModelElBySvgSelectedID().shape);
+  // alert(getModelElBySvgSelectedID().shape);
   selectedShape = getModelElBySvgSelectedID().shape;
   updateValuesSelectedInVaraiableTab();
 }
@@ -249,15 +248,14 @@ function updateValuesSelectedInVaraiableTab(){
 	}
 		
 	
- // document.getElementById(selectedShape).checked = true;
+  document.getElementById("varLabel").value = getModelElBySvgSelectedID().label;
   var cell = getCurrentCell();
- // document.getElementById(shapeWidth).value = getCurrentCell().get('size').width;
- // document.getElementById(shapeHeight).value = getCurrentCell().get('size').height;
-//  document.getElementById(shapeColor).value = getCurrentCell().get('attrs').fill;
-  //radioObj.checked = (radioObj.value == newValue.toString());
- // alert(cell.attr('fill'));
- //currentObject.attr("model-id")
+  document.getElementById("shapeWidth").value = getModelElBySvgSelectedID().width;
+  document.getElementById("shapeHeight").value = getModelElBySvgSelectedID().height;
+  alert(getModelElBySvgSelectedID().color);
+  $(".full").spectrum("set", getModelElBySvgSelectedID().color);
 }
+
 
 function removeOldSelections()
 {
@@ -335,8 +333,6 @@ read("mousedown");
 read("mousemove");
 
 function read(evtType) {
-  if (currentObject != null)
-  {
     widthRng.addEventListener(evtType, function() {
   	 if (selectionIsShape())
       	resize();
@@ -345,7 +341,6 @@ function read(evtType) {
 	   if (selectionIsShape())
 	     resize();
   	});
-  }
 }
 
 
@@ -354,7 +349,11 @@ function resize(){
   {
     if (currentObject != null)
     {
+		shapeWidth = document.getElementById("shapeWidth").value;
+		shapeHeight = document.getElementById("shapeHeight").value;	
       getCurrentCell().resize(shapeWidth, shapeHeight); 
+	  getModelElBySvgSelectedID().width = document.getElementById("shapeWidth").value;
+	  getModelElBySvgSelectedID().height = document.getElementById("shapeWidth").height;
 	}
    });
   
@@ -366,6 +365,7 @@ document.getElementById('varLabel').addEventListener("keyup", function(){
 		if(selectionIsShape())
 		{ 
 			  getCurrentCell().attr({text:{text: document.getElementById('varLabel').value}});
+			  getModelElBySvgSelectedID().label = document.getElementById('varLabel').value;
 		}
 
 	}, false);
