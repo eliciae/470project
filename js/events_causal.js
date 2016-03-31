@@ -193,11 +193,9 @@ function selectEllipse()
   removeOldSelections();
   currentObject = $( this ).find('ellipse');
   currentObject.attr('class', 'selectObject');
-  alert("select ellipse");
   
   //open variable tab & set tab values to be the selected item's values 
   $('#variable-tab').click();
-  alert(getModelElBySvgSelectedID().shape);
   selectedShape = getModelElBySvgSelectedID().shape;
   updateValuesSelectedInVaraiableTab();
 }
@@ -210,7 +208,6 @@ function selectRect()
   
   //open variable tab & set tab values to be the selected item's values 
   $('#variable-tab').click();
-   alert(getModelElBySvgSelectedID().shape);
   selectedShape = getModelElBySvgSelectedID().shape;
   updateValuesSelectedInVaraiableTab();
 }
@@ -335,29 +332,25 @@ read("mousedown");
 read("mousemove");
 
 function read(evtType) {
-  if (currentObject != null)
-  {
     widthRng.addEventListener(evtType, function() {
-  	 if (selectionIsShape())
+  	 if (currentObject != null && selectionIsShape())
       	resize();
     });
     heightRng.addEventListener(evtType, function() {
-	   if (selectionIsShape())
+	   if (currentObject != null && selectionIsShape())
 	     resize();
   	});
-  }
 }
 
 
 function resize(){
 	window.requestAnimationFrame(function () 
   {
-    if (currentObject != null)
-    {
+      shapeWidth = document.getElementById("shapeWidth").value;
+      shapeHeight = document.getElementById("shapeHeight").value;
+
       getCurrentCell().resize(shapeWidth, shapeHeight); 
-	}
    });
-  
 }
 
 //label at realtime
