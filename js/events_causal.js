@@ -345,21 +345,11 @@ function read(evtType) {
 function resize(){
 	window.requestAnimationFrame(function () 
   {
-<<<<<<< HEAD
-      shapeWidth = document.getElementById("shapeWidth").value;
-      shapeHeight = document.getElementById("shapeHeight").value;
-
-      getCurrentCell().resize(shapeWidth, shapeHeight); 
-=======
-    if (currentObject != null)
-    {
-		shapeWidth = document.getElementById("shapeWidth").value;
-		shapeHeight = document.getElementById("shapeHeight").value;	
-      getCurrentCell().resize(shapeWidth, shapeHeight); 
-	  getModelElBySvgSelectedID().width = document.getElementById("shapeWidth").value;
-	  getModelElBySvgSelectedID().height = document.getElementById("shapeWidth").height;
-	}
->>>>>>> 08c509f228fefd409c84964e3874084b74c23985
+    shapeWidth = document.getElementById("shapeWidth").value;
+    shapeHeight = document.getElementById("shapeHeight").value;	
+    getCurrentCell().resize(shapeWidth, shapeHeight); 
+    getModelElBySvgSelectedID().width = document.getElementById("shapeWidth").value;
+    getModelElBySvgSelectedID().height = document.getElementById("shapeWidth").height;
    });
 }
 
