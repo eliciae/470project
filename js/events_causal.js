@@ -156,7 +156,7 @@ function redraw()
 
 
 
-$('#rectShape').on('click', function(){
+/*$('#rectShape').on('click', function(){
     selectedShape = "rect";
 });
 $('#ellipseShape').on('click', function(){
@@ -164,7 +164,7 @@ $('#ellipseShape').on('click', function(){
 });
 $('#noShape').on('click', function(){
     selectedShape = "noShape";
-});
+});*/
 
 $('#undo').on('click', function(){
   localModel.undo();
@@ -193,9 +193,12 @@ function selectEllipse()
   removeOldSelections();
   currentObject = $( this ).find('ellipse');
   currentObject.attr('class', 'selectObject');
+  alert("select ellipse");
   
   //open variable tab & set tab values to be the selected item's values 
   $('#variable-tab').click();
+  alert(getModelElBySvgSelectedID().shape);
+  selectedShape = getModelElBySvgSelectedID().shape;
   updateValuesSelectedInVaraiableTab();
 }
 
@@ -207,6 +210,8 @@ function selectRect()
   
   //open variable tab & set tab values to be the selected item's values 
   $('#variable-tab').click();
+   alert(getModelElBySvgSelectedID().shape);
+  selectedShape = getModelElBySvgSelectedID().shape;
   updateValuesSelectedInVaraiableTab();
 }
 
@@ -221,17 +226,36 @@ function selectConnection()
 }
 
 function updateValuesSelectedInVaraiableTab(){
-	alert("updating");
+	//alert("updating");
 	//alert(currentObject.get('attrs').text);
  // document.getElementById('#varLabel').value = getCurrentCell.get('attrs').text.text;
- // document.getElementById('input:radio[name="shape"]').filter('[value=' + selectedShape +']').attr('checked', true);
-  document.getElementById(selectedShape).checked = "checked";
+  
+  	//select correct shape attribute
+  	document.getElementById('shapeR').checked = false;
+	document.getElementById('shapeE').checked = false;
+	document.getElementById('shapeN').checked = false;
+	
+	if (selectedShape == "rect"){
+		document.getElementById('shapeR').checked = true;
+		//alert("rect");
+	}
+	else if (selectedShape == "ellipse"){
+		//alert("ellipse");
+		document.getElementById('shapeE').checked = true;
+	}
+	else{
+		//alert("no shape");
+		document.getElementById('shapeN').checked = true;
+	}
+		
+	
+ // document.getElementById(selectedShape).checked = true;
   var cell = getCurrentCell();
  // document.getElementById(shapeWidth).value = getCurrentCell().get('size').width;
  // document.getElementById(shapeHeight).value = getCurrentCell().get('size').height;
 //  document.getElementById(shapeColor).value = getCurrentCell().get('attrs').fill;
-  
-  alert(cell.attr('fill'));
+  //radioObj.checked = (radioObj.value == newValue.toString());
+ // alert(cell.attr('fill'));
  //currentObject.attr("model-id")
 }
 
@@ -353,8 +377,14 @@ function getCurrentCell(){
 			  var parent = currentObject.parents("g[model-id]");
 			  //the model-id is assigned by joint js
 			  var modelId = parent.first().attr("model-id");
-			  var shapeWidth = document.getElementById("shapeWidth").value;
-			  var shapeHeight = document.getElementById("shapeHeight").value;
 			  cell = graph.getCell(modelId);
 			return cell; 
+}
+
+//returns the model el that has the corresponding id to currentCell
+function getModelElBySvgSelectedID(){
+	if (currentObject.prop("tagName") == "rect")
+		return localModel.getRoot().get(getCurrentCell().get("attrs").rect.value);
+	else if (currentObject.prop("tagName") == "ellipse")
+		return localModel.getRoot().get(getCurrentCell().get("attrs").ellipse.value);
 }
