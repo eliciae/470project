@@ -178,7 +178,7 @@ function connection(cConn)
           '.marker-target': { stroke: cConn.color, fill: cConn.color }
         });
 
-        
+        cell.label(0, {attrs: {text: {text: cConn.label}}});
 
       }
   }
