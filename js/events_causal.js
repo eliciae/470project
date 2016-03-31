@@ -27,6 +27,9 @@ function selectionIsConnection()
   return (currentObject.prop("tagName") == "g");
 }
 
+/**
+* This is called from the change listener on the color 
+**/
 function updateValue() 
 { 
   // get the current value of the input fields
@@ -350,7 +353,7 @@ function resize(){
     getCurrentCell().resize(shapeWidth, shapeHeight); 
     getModelElBySvgSelectedID().width = document.getElementById("shapeWidth").value;
     getModelElBySvgSelectedID().height = document.getElementById("shapeWidth").height;
-   });
+  });
 }
 
 //label at realtime
