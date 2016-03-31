@@ -1,5 +1,18 @@
 var selectedShape ="ellipse";
 
+//default values for drawing new shapes and connections
+var defaultEllipseHeight = '25',
+    defaultEllipseWidth = '25',
+    defaultRectHeight = '30',
+    defaultRectWidth = '40',
+    defaultShapeColor = '#C9DAF8',
+    defaultConnectionColor = '#000000',
+    defaultEllipseLabel = 'variable',
+    defaultRectLabel = 'stock',
+    defaultConnectionLabel = '';
+
+
+
 var graph = new joint.dia.Graph();
 
 var paper = new joint.dia.Paper({
@@ -310,44 +323,61 @@ function clearDiagram()
 
 
 
+//when you click somewhere in the draw area
 $('svg').on('mousedown', function(e){
 
+    //get the mouse position on the click
     var mousex = (e.pageX - $('svg').offset().left) + $(window).scrollLeft();
     var mousey = (e.pageY - $('svg').offset().top) + $(window).scrollTop();
 
+    //if you are in the variable tab
     if($('.TabbedPanelsTabSelected').attr('id') == "variable-tab")
     {
-      var standardWidth = document.getElementById("shapeWidth").value;
-      var standardHeight = document.getElementById("shapeHeight").value;
-        
-
-      if (selectedShape == "noShape")
-      {
-        var standardWidth = 0;
-        var standardHeight = 0;
-      }
-
+      //if this is the creation of a new object - ie nothing is selected
       if (currentObject == null)
       {
-        var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, selectedShape, selectedShape, shapeColor);
+        //get the value of height and width from the sliders
+        var standardWidth = document.getElementById("shapeWidth").value;
+        var standardHeight = document.getElementById("shapeHeight").value;
+          
+        //the label to put on the new object
+        var label;
+        //if it doesn't have a shape, make an ellipse with 0 size
+        if (selectedShape == "noShape")
+        {
+          var standardWidth = 0;
+          var standardHeight = 0;
+          label = defaultEllipseLabel;
+        }
+
+        //get the appropriate label for it based on shape
+        if (selectedShape == "ellipse")
+          label = defaultEllipseLabel;
+        else if (selectedShape == "rect")
+          label = defaultRectLabel;
+
+        //add the shape into the real time model
+        var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, label, selectedShape, shapeColor);
+        //use the real time object to draw the shape in the svg
         drawShape(newCausalVar);
       }
-     
-      //$('#markup-tab').click();
     }
 
+    //if you are in the connection tab
     if($('.TabbedPanelsTabSelected').attr('id') == "connection-tab")
     {
-      var source = { x:mousex, y:mousey };
-      var target = { x:mousex+100, y:mousey+100 };
-      var label = "connection";
-      var vertices = [];
-
+      //if nothing is selected and you actually want to draw a new one
       if (currentObject == null)
       {
+        //source and target are the start and end points of the connection
+        //every connection starts at click point, with no vertices, and is the same size
+        var source = { x:mousex, y:mousey };
+        var target = { x:mousex+100, y:mousey+100 };
+        var label = "connection";
+        var vertices = [];
+      
         var newCausalConn = createNewCausalConn(source, target, label, vertices, connectionColor);
         drawConnection(newCausalConn);
       }
-     // $('#markup-tab').click();
     }
 });
