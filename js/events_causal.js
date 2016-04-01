@@ -224,6 +224,17 @@ function getModelElBySvgSelectedID(){
     return localModel.getRoot().get(getCurrentConnCell().get("attrs").path.value);
 }
 
+
+
+document.addEventListener('keyup', function(event)
+{
+  if (event.keyCode === 46)
+  {
+    deleteShape();
+    deleteConn();
+  }
+})
+
 //tab touch events
 $('#variable-tab').on('mousedown', function(event)
 {
@@ -239,3 +250,4 @@ $('#notation-tab').on('mousedown', function(event)
 {
     $('#notation-tab').click(); 
 });
+
