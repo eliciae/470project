@@ -62,6 +62,7 @@ function registerCustomTypes()
     this.color = "#FFFFFF";
     this.dashed = '';
     this.shape = "connection";
+	this.arrow  = "regular";
   }
 
   gapi.drive.realtime.custom.registerType(causalConn, 'causalConn');
@@ -74,6 +75,8 @@ function registerCustomTypes()
   causalConn.prototype.color = gapi.drive.realtime.custom.collaborativeField('color');
   causalConn.prototype.dashed = gapi.drive.realtime.custom.collaborativeField('dashed');
   causalConn.prototype.shape = gapi.drive.realtime.custom.collaborativeField('shape');
+  causalConn.prototype.arrow = gapi.drive.realtime.custom.collaborativeField('arrow');
+  
 
   gapi.drive.realtime.custom.setInitializer(causalConn, initializeCausalConn);
 }
@@ -165,7 +168,7 @@ function createNewCausalVar(x, y, width, height, label, shape, color)
   return causalVarShape;
 }
 
-function createNewCausalConn(source, target, label, vertices, color)
+function createNewCausalConn(source, target, label, vertices, color, arrow)
 {
   var causalConn = localModel.create('causalConn');
   causalConn.vertices = vertices;
@@ -175,6 +178,7 @@ function createNewCausalConn(source, target, label, vertices, color)
   causalConn.color = color;
   causalConn.dashed = '';
   causalConn.idName = countString;
+  causalConn.arrow = arrow;
 
   localModel.getRoot().set(countString, causalConn);
   incrementCount();

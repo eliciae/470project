@@ -157,6 +157,7 @@ function selectConnection()
   
   //open connection tab & set tab values to be the selected item's values 
   $('#connection-tab').click();
+  selectedArrow = getModelElBySvgSelectedID().arrow;
   updateValuesSelectedInConnectionTab();
 }
 

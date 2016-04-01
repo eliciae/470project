@@ -1,4 +1,5 @@
 var selectedShape ="ellipse";
+var selectedArrow = "regular";
 
 //default values for drawing new shapes and connections
 var defaultEllipseHeight = '25',
@@ -183,7 +184,8 @@ function connection(cConn)
     var cell = new joint.shapes.fsa.Arrow({
         source: setSource,
         target: setTarget,
-        labels: [{ position: 0.5, attrs: { text: { text: cConn.label || '', 'font-weight': 'bold' } } }],
+        labels: [{ position: 0.5, attrs: { text: { text: cConn.label || '' } } }, 
+				{ position: 0.9, attrs: { text: { text: cConn.arrow || '', 'font-weight': 'bold', 'font-size':'20px'} } }],
         vertices: cConn.vertices || [],
         attrs: {
           'path': {
@@ -229,6 +231,7 @@ function connection(cConn)
         });
 
         cell.label(0, {attrs: {text: {text: cConn.label}}});
+		cell.label(1, {attrs: {text: {text: cConn.arrow}}});
 
       }
   }
@@ -411,9 +414,10 @@ $('svg').on('mousedown', function(e){
         var source = { x:mousex, y:mousey };
         var target = { x:mousex+100, y:mousey+100 };
         var label = document.getElementById("connLabel").value;
+		    var arrow = "";
         var vertices = [];
       
-        var newCausalConn = createNewCausalConn(source, target, label, vertices, connectionColor);
+        var newCausalConn = createNewCausalConn(source, target, label, vertices, connectionColor, arrow);
         drawConnection(newCausalConn);
       }
     }

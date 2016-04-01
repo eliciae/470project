@@ -83,22 +83,19 @@ function updateValuesSelectedInVaraiableTab(){
 
 function updateValuesSelectedInConnectionTab(){
   //select correct arrow head
- /* document.getElementById('shapeR').checked = false;
-  document.getElementById('shapeE').checked = false;
-  document.getElementById('shapeN').checked = false;
+  document.getElementById('negative').checked = false;
+  document.getElementById('positive').checked = false;
+  document.getElementById('regular').checked = false;
   
-  if (selectedShape == "rect"){
-    document.getElementById('shapeR').checked = true;
-    //alert("rect");
+  if (selectedShape == "negative"){
+    document.getElementById('negative').checked = true;
   }
-  else if (selectedShape == "ellipse"){
-    //alert("ellipse");
-    document.getElementById('shapeE').checked = true;
+  else if (selectedShape == "positive"){
+    document.getElementById('positive').checked = true;
   }
   else{
-    //alert("no shape");
-    document.getElementById('shapeN').checked = true;
-  }*/
+    document.getElementById('regular').checked = true;
+  }
     
   
   document.getElementById("connLabel").value = getModelElBySvgSelectedID().label;
