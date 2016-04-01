@@ -361,9 +361,6 @@ function clearDiagram()
   graph.clear();
 }
 
-/*$("svg").on("touchstart", function(e) {
-	touchClickAction(e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY);
-});*/
 
 //when you click somewhere in the draw area
 $('svg').on('mousedown', function(e){
@@ -419,7 +416,7 @@ function touchClickAction(x,y){
         var source = { x:mousex, y:mousey };
         var target = { x:mousex+100, y:mousey+100 };
         var label = document.getElementById("connLabel").value;
-		    var arrow = "";
+		var arrow = selectedArrow;
         var vertices = [];
       
         var newCausalConn = createNewCausalConn(source, target, label, vertices, connectionColor, arrow);
