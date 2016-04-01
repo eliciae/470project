@@ -102,12 +102,12 @@ function redraw()
 }
 
 
-$('#undo').on('click', function(){
+$('#undo').on('mousedown', function(){
   localModel.undo();
   clearDiagram();
   redraw();
 });
-$('#redo').on('click', function(){
+$('#redo').on('mousedown', function(){
   localModel.redo();
   clearDiagram();
   redraw();
@@ -115,7 +115,7 @@ $('#redo').on('click', function(){
 
 
 //if you click the svg and you aren't in a g tag, everything should unselect
-$('svg').on('click', function(event)
+$('svg').on('mousedown', function(event)
 {
   if(!$(event.target).closest('g').length) 
   {
@@ -225,6 +225,7 @@ function getModelElBySvgSelectedID(){
 }
 
 
+
 document.addEventListener('keyup', function(event)
 {
   if (event.keyCode === 46)
@@ -233,3 +234,20 @@ document.addEventListener('keyup', function(event)
     deleteConn();
   }
 })
+
+//tab touch events
+$('#variable-tab').on('mousedown', function(event)
+{
+    $('#variable-tab').click(); 
+});
+
+$('#connection-tab').on('mousedown', function(event)
+{
+    $('#connection-tab').click(); 
+});
+
+$('#notation-tab').on('mousedown', function(event)
+{
+    $('#notation-tab').click(); 
+});
+

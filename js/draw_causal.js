@@ -361,14 +361,19 @@ function clearDiagram()
   graph.clear();
 }
 
-
+/*$("svg").on("touchstart", function(e) {
+	touchClickAction(e.originalEvent.touches[0].pageX, e.originalEvent.touches[0].pageY);
+});*/
 
 //when you click somewhere in the draw area
 $('svg').on('mousedown', function(e){
+    touchClickAction(e.pageX, e.pageY);
+});
 
-    //get the mouse position on the click
-    var mousex = (e.pageX - $('svg').offset().left) + $(window).scrollLeft();
-    var mousey = (e.pageY - $('svg').offset().top) + $(window).scrollTop();
+function touchClickAction(x,y){
+	//get the mouse position on the click
+    var mousex = (x - $('svg').offset().left) + $(window).scrollLeft();
+    var mousey = (y - $('svg').offset().top) + $(window).scrollTop();
 
     //if you are in the variable tab
     if($('.TabbedPanelsTabSelected').attr('id') == "variable-tab")
@@ -421,4 +426,5 @@ $('svg').on('mousedown', function(e){
         drawConnection(newCausalConn);
       }
     }
-});
+	
+}
