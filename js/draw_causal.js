@@ -33,6 +33,7 @@ function defaultsForRect()
   document.getElementById('shapeWidth').value = defaultRectWidth;
   document.getElementById('shapeHeight').value = defaultRectHeight;
   $(".full").spectrum("set", defaultShapeColor);
+  document.getElementById('shapeColor').value = defaultShapeColor;
   document.getElementById('varLabel').value = defaultRectLabel;
 }
 
@@ -41,12 +42,14 @@ function defaultsForEllipse()
   document.getElementById('shapeWidth').value = defaultEllipseWidth;
   document.getElementById('shapeHeight').value = defaultEllipseHeight;
   $(".full").spectrum("set", defaultShapeColor);
+  document.getElementById('shapeColor').value = defaultShapeColor;
   document.getElementById('varLabel').value = defaultEllipseLabel;
 }
 
 function defaultsForConnection()
 {
   $(".full").spectrum("set", defaultConnectionColor);
+  document.getElementById('linkColor').value = defaultConnectionColor;
   document.getElementById('connLabel').value = defaultConnectionLabel;
 }
 
