@@ -223,3 +223,13 @@ function getModelElBySvgSelectedID(){
   else if (currentObject.prop("tagName") == "g")
     return localModel.getRoot().get(getCurrentConnCell().get("attrs").path.value);
 }
+
+
+document.addEventListener('keyup', function(event)
+{
+  if (event.keyCode === 46)
+  {
+    deleteShape();
+    deleteConn();
+  }
+})
