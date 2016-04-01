@@ -1,5 +1,0 @@
-function updateWidth(){
-}
-
-function updateHeight(){
-}
