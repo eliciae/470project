@@ -89,7 +89,7 @@ function registerCustomTypes()
         // show the authorize button to prompt them to authorize manually.
         var button = document.getElementById('auth_button');
         button.classList.add('visible');
-        button.addEventListener('click', function () {
+        button.addEventListener('mousedown', function () {
           realtimeUtils.authorize(function(response){
             dostart();
           }, true);
