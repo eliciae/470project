@@ -4,14 +4,51 @@ var selectedArrow = "regular";
 //default values for drawing new shapes and connections
 var defaultEllipseHeight = '25',
     defaultEllipseWidth = '25',
-    defaultRectHeight = '30',
-    defaultRectWidth = '40',
+    defaultRectHeight = '50',
+    defaultRectWidth = '100',
     defaultShapeColor = '#C9DAF8',
     defaultConnectionColor = '#000000',
     defaultEllipseLabel = 'variable',
     defaultRectLabel = 'stock',
     defaultConnectionLabel = '';
 
+function restoreDefaults(shape)
+{
+  if (shape == 'ellipse')
+  {
+    defaultsForEllipse();
+  }
+  else if (shape == 'rect')
+  {
+    defaultsForRect();
+  }
+  else if (shape == 'connection')
+  {
+    defaultsForConnection();
+  }
+}
+
+function defaultsForRect()
+{
+  document.getElementById('shapeWidth').value = defaultRectWidth;
+  document.getElementById('shapeHeight').value = defaultRectHeight;
+  $(".full").spectrum("set", defaultShapeColor);
+  document.getElementById('varLabel').value = defaultRectLabel;
+}
+
+function defaultsForEllipse()
+{
+  document.getElementById('shapeWidth').value = defaultEllipseWidth;
+  document.getElementById('shapeHeight').value = defaultEllipseHeight;
+  $(".full").spectrum("set", defaultShapeColor);
+  document.getElementById('varLabel').value = defaultEllipseLabel;
+}
+
+function defaultsForConnection()
+{
+  $(".full").spectrum("set", defaultConnectionColor);
+  document.getElementById('connLabel').value = defaultConnectionLabel;
+}
 
 
 var graph = new joint.dia.Graph();
@@ -381,8 +418,8 @@ function touchClickAction(x,y){
         //every connection starts at click point, with no vertices, and is the same size
         var source = { x:mousex, y:mousey };
         var target = { x:mousex+100, y:mousey+100 };
-        var label = "connection";
-		var arrow = "";
+        var label = document.getElementById("connLabel").value;
+		    var arrow = "";
         var vertices = [];
       
         var newCausalConn = createNewCausalConn(source, target, label, vertices, connectionColor, arrow);

@@ -154,3 +154,12 @@ document.getElementById('connLabel').addEventListener("keyup", function(){
     }
 
   }, false);
+
+
+$('#shapeR, #shapeE, #shapeN').click(function()
+{
+  if (currentObject == null)
+  {
+    restoreDefaults(selectedShape);
+  }
+});

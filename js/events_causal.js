@@ -165,6 +165,8 @@ function selectConnection()
 function removeOldSelections()
 {
   currentObject = null;
+  restoreDefaults(selectedShape);
+  restoreDefaults("connection");
   //deselect tab
    $('#markup-tab').click();
   
