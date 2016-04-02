@@ -13,17 +13,13 @@ function updateColor()
     //if the object is a shape
     if (selectionIsShape())
     {
-      currentObject.attr('fill', shapeColor);
-	  getModelElBySvgSelectedID().color = shapeColor;
-	  
-     //get the parent g element so we can get the model id
-      var parent = currentObject.parents("g[model-id]");
-      //the model-id is assigned by joint js
-      var modelId = parent.first().attr("model-id");
+      //set the color in the graph object
+      //can't set the field as a variable, so just try both...
+      getCurrentCell().attr({'ellipse': {fill: shapeColor}});
+      getCurrentCell().attr({'rect': {fill: shapeColor}});
 
-      var id = getVarIDFromSVG(modelId);
-
-      var sharedObject = localModel.getRoot().get(id);
+      //set the color in the real time model
+      getModelElBySvgSelectedID().color = shapeColor;
     }
 
     //if the object is a connection
@@ -32,9 +28,7 @@ function updateColor()
       var modelId = currentObject.attr("model-id");
 
       //get the joint js cell
-      cell = graph.getCell(modelId);
-
-      cell.attr({
+      getCurrentConnCell().attr({
         '.connection': { stroke: connectionColor },
         '.marker-source': { stroke: connectionColor, fill: connectionColor },
         '.marker-target': { stroke: connectionColor, fill: connectionColor }
@@ -44,16 +38,12 @@ function updateColor()
       //get the id for the realtime object
       var id = currentObject.children("path[value]").first().attr('value');
 
-      var sharedObject = localModel.getRoot().get(id);
-      sharedObject.color = connectionColor;
+      //set the color in the model
+      localModel.getRoot().get(id).color = connectionColor;
     } 
   }
 }
 
-
-function updateLabel(){
-  
-}
 
 function updateValuesSelectedInVaraiableTab(){
   //select correct shape attribute

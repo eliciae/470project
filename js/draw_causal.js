@@ -33,7 +33,6 @@ function defaultsForRect()
   document.getElementById('shapeWidth').value = defaultRectWidth;
   document.getElementById('shapeHeight').value = defaultRectHeight;
   $(".full").spectrum("set", defaultShapeColor);
-  document.getElementById('shapeColor').value = defaultShapeColor;
   document.getElementById('varLabel').value = defaultRectLabel;
 }
 
@@ -42,14 +41,12 @@ function defaultsForEllipse()
   document.getElementById('shapeWidth').value = defaultEllipseWidth;
   document.getElementById('shapeHeight').value = defaultEllipseHeight;
   $(".full").spectrum("set", defaultShapeColor);
-  document.getElementById('shapeColor').value = defaultShapeColor;
   document.getElementById('varLabel').value = defaultEllipseLabel;
 }
 
 function defaultsForConnection()
 {
   $(".full").spectrum("set", defaultConnectionColor);
-  document.getElementById('linkColor').value = defaultConnectionColor;
   document.getElementById('connLabel').value = defaultConnectionLabel;
 }
 
@@ -101,13 +98,8 @@ function ellipse(cVar) {
 			cVar.y = cell.get("position").y;
     }
 	);
-  
-  
-//added classes to hopefully delete and resize variables  
-//cell.attr('class', 'scalable inPorts outPorts moveTool resizeTool portsTool deleteTool tooltip');
-  
+   
 	graph.addCell(cell);
-	//cell.attr({text:{text: "booger"}});
 
   var modelId = cell.id;
   el = $('g[model-id="'+modelId+'"]');
@@ -118,8 +110,8 @@ function ellipse(cVar) {
 }
 
 
-function rect(cVar) {
-	
+function rect(cVar) 
+{	
     var cell = new joint.shapes.basic.Rect({
         position: { x: cVar.x, y: cVar.y},
         size: { width: cVar.width, height: cVar.height },
@@ -158,7 +150,6 @@ function rect(cVar) {
   el = $('g[model-id="'+modelId+'"]');
   el.on('mousedown', selectRect);
   
-  //add classes for delete and resizing tools 
 	
   return cell;
 }
