@@ -314,7 +314,7 @@ function drawShape(cVar)
     cell = rect(cVar);
   }
   //not really a cVar, cConn
-  else //if (cVar.shape == "connection")
+  else if (cVar.shape == "connection")
   {
     cell = connection(cVar);
   }
@@ -337,12 +337,6 @@ function drawShape(cVar)
   );
   
   graph.addCell(cell);*/
-}
-
-function incrementCount()
-{
-  count++;
-  countString = count.toString();
 }
 
 
@@ -412,7 +406,7 @@ function touchClickAction(x,y){
         var source = { x:mousex, y:mousey };
         var target = { x:mousex+100, y:mousey+100 };
         var label = document.getElementById("connLabel").value;
-		var arrow = selectedArrow;
+        var arrow = selectedArrow;
         var vertices = [];
       
         var newCausalConn = createNewCausalConn(source, target, label, vertices, connectionColor, arrow);
