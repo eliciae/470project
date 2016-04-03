@@ -57,7 +57,7 @@ function displayObjectChangedEvent(evt)
       modelList.forEach(function(key)
       {
          //if the model element does NOT exists in the SVG, then create it 
-         if (keyInSVG(key))
+         if (!keyInSVG(key))
          {
            drawShape(localModel.getRoot().get(key));
          }
@@ -68,9 +68,9 @@ function displayObjectChangedEvent(evt)
 
 function keyInSVG(key)
 {
-  return !($("ellipse[value='"+ key +"']").length)
-        && !($("rect[value='"+ key +"']").length)
-        && !($("path[value='"+ key +"']").length);
+  return ($("ellipse[value='"+ key +"']").length)
+         || ($("rect[value='"+ key +"']").length)
+         || ($("path[value='"+ key +"']").length);
 }
 
 
