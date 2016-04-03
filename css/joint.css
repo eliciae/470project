@@ -248,5 +248,5 @@ Do not allow adding new vertices: .connection-wrap { pointer-events: none; }
 
 ellipse.selectObject, rect.selectObject {
   stroke-width: 10px;
-  stroke-opacity: .4;
+  stroke-opacity: .2;
 }

@@ -1,5 +1,5 @@
 var selectedShape ="ellipse";
-var selectedArrow = "regular";
+var selectedArrow = "";
 
 //default values for drawing new shapes and connections
 var defaultEllipseHeight = '25',
@@ -71,7 +71,7 @@ function ellipse(cVar) {
             text : { text: cVar.label, fill: '#000000', 'font-weight': 'normal' },
             'ellipse': {
                 fill: cVar.color,
-                stroke: '#d7d7d7',
+                stroke: '#000000',
                 'stroke-width': 0,
 				        value: cVar.idName	
             }	

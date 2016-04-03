@@ -48,6 +48,7 @@
 <link href="../SpryAssets/SpryTabbedPanels.css" rel="stylesheet" type="text/css">
 <link href="../css/spectrum.css" rel="stylesheet" type="text/css">
 <link href="../css/tooledViewPlugin.css" type="text/css">
+
 <!-- 
 To learn more about the conditional comments around the html tags at the top of the file:
 paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
@@ -90,6 +91,7 @@ Do the following if you're using your customized build of modernizr (http://www.
                 <li><a href="#" id="save"><img src="../graphics/save.png"/></a></li>
                 <li><a href="#" id="undo"><img src="../graphics/undo2.png"/></a></li>
                 <li><a href="#" id="redo"><img src="../graphics/redo2.png"/></a></li>
+                <li><a href="#" id="delete"><img src="../graphics/redo2.png"/></a></li>
               </ul>
             </div>
         </div>
@@ -98,7 +100,6 @@ Do the following if you're using your customized build of modernizr (http://www.
         	<img src="../graphics/causalLogoWhite200.png"/>
         </div>
         <div id="topRightDiv">
-          <div id="collaborators"><img src="../graphics/collaborators.png"/> Active Collaborators:</div>
             <div id="share">
               <ul id="MenuBar2" class="MenuBarHorizontal">
                 <li id="shareBtn"><a href="#"><img src="../graphics/share.png"/>share</a>    </li>
@@ -130,14 +131,11 @@ Do the following if you're using your customized build of modernizr (http://www.
           
           
               <!--FIRST PANEL-->
-                <div class="TabbedPanelsContent">
-                	<div class="panelHeading"><button class="visible" id="deleteShape" type="button" onclick="deleteShape()">DELETE</button></div>
-                     
+                <div class="TabbedPanelsContent">                     
                      <div class="panelHeading"><img src="../graphics/label.png"/>Label</div>
-                            <input type="text" name="varTitle" id="varLabel" value="variable">
-                    <br>
+                            <div class="menuItems"><input type="text" name="varTitle" id="varLabel" value="variable"></div>
                     <div class="panelHeading"><img src="../graphics/shapesSmall.png"/>Shape</div>     
-                      <ul class="radioOptions">
+                      <div class="menuItems"><ul class="radioOptions">
                         <li>
                             <input type="radio" id="shapeR" name="shape" value="rect" onclick="handleShapeChange(this);"/>
                             <label for="shapeR"><img src="../graphics/rect.png"/></label>
@@ -151,26 +149,26 @@ Do the following if you're using your customized build of modernizr (http://www.
                             <label for="shapeN">no shape</label>
                         </li>
                      </ul>
+                     </div>
                      <br><br><br>
                       <div class="panelHeading">Size</div>
-                     Width<input type="range" min="20" max="200" value="25" id="shapeWidth"/>
-                     <br>
-                     Height<input type="range" min="20" max="200" value="25" id="shapeHeight"/>
-                     <br><br><br>
+                     <div class="menuItems">Width<input type="range" min="20" max="200" value="25" id="shapeWidth"/>
+                     <br><br>
+                      Height<input type="range" min="20" max="200" value="25" id="shapeHeight"/>
+                      </div>
                       <div class="panelHeading"><img src="../graphics/roller.png"/>Color</div>
-                      <input type="text" name="showPaletteOnly" class="full" id="shapeColor" style="display: none;" value="#C9DAF8">
-                      <br>
+                      <div class="menuItems bottomEl"><input type="text" name="showPaletteOnly" class="full" id="shapeColor" style="display: none;" value="#C9DAF8">
+                      </div>
                 </div>
             
             
             <!--SECOND PANEL-->
             
        	 	<div class="TabbedPanelsContent">
-            	<div class="panelHeading"><button class="visible" id="deleteShape" type="button" onclick="deleteConn()">DELETE</button></div>
             	<div class="panelHeading"><img src="../graphics/label.png"/>Label</div>
-                <input type="text" name="connLabel" id="connLabel" value="connection">
-                <div class="panelHeading"><img src="../graphics/arrowSmall.png"/>Connection Options</div>
-                 <ul class="radioOptions">
+                <div class="menuItems"><input type="text" name="connLabel" id="connLabel" value="connection"></div>
+                <div class="panelHeading"><img src="../graphics/arrowSmall.png"/>Arrow</div>
+                 <div class="menuItems"><ul class="radioOptions">
                         <li>
                             <input type="radio" id="regular" name="arrow" value="" onclick="handleArrowChange(this);" checked="checked"/>
                             <label for="regular"><img src="../graphics/regularArrow.png"/></label>
@@ -183,29 +181,19 @@ Do the following if you're using your customized build of modernizr (http://www.
                             <input type="radio" id="negative" name="arrow" value=" - " onclick="handleArrowChange(this);"/>
                             <label for="negative"><img src="../graphics/negativeArrow.png"/></label>
                         </li>
-                     </ul>
-                   <br><p>&nbsp;</p> 
-                   <div class="panelHeading"><img src="../graphics/perpSmall.png"/>Delay Marks</div>
-                    <ul class="radioOptions">
-                        <li>
-                            <input type="radio" id="perpNo" name="perp" checked="checked"/>
-                            <label for="perpNo"><img src="../graphics/noPerp.png"/></label>
-                        </li>
-                        <li>
-                            <input type="radio" id="perpYes" name="perp" />
-                            <label for="perpYes"><img src="../graphics/perpDelay.png"/></label>
-                        </li>
-                     </ul>
-                   <br><p>&nbsp;</p>  
+                     </ul></div>
+                  <br><p>&nbsp;</p>  
                   <div class="panelHeading"><img src="../graphics/roller.png"/>Line Color</div>
-                    <input type="text" name="lineColor" id="linkColor" class="full" style="display: none;" value="#C9DAF8">
+                    <div class="menuItems bottomEl"><input type="text" name="lineColor" id="linkColor" class="full" style="display: none;" value="#C9DAF8" >
+                    </div>
             </div>
             
             
             <!--THIRD PANEL-->
             <div class="TabbedPanelsContent">
                 <div class="panelHeading"><img src="../graphics/loopWsmall.png"/>Loops</div>
-                    <ul class="radioOptions">
+
+                    <div class="menuItems bottomEl"><ul class="radioOptions">
                         <li>
                             <input type="radio" id="balancing" name="loop" checked="checked"/>
                             <label for="balancing"><img src="../graphics/balancingLoopW.png"/></label>
@@ -215,20 +203,7 @@ Do the following if you're using your customized build of modernizr (http://www.
                             <label for="reinforcing"><img src="../graphics/reinforcingLoopW.png"/></label>
                         </li>
                    </ul>
-                    
-                    <p>&nbsp;</p>
-                    <br>
-                <div class="panelHeading">Section</div>
-                        <ul id="MenuBar5" class="MenuBarHorizontal">
-                        	Fill Color
-                        	 <input type="text" name="sectionFill" class="full" style="display: none;" value="#C9DAF8">
-                             Line Color
-                             <input type="text" name="sectionLine" class="full" style="display: none;" value="#C9DAF8">
-                        </ul>
-                     <div class="panelHeading">Comment</div>
-                    <form name="commentText" method="post" action="">
-                      <textarea name="commentText2" id="commentText"></textarea>
-                    </form>
+                   </div>  
           </div>
             
             <!--FOURTH PANEL-->

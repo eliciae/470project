@@ -60,7 +60,7 @@ function registerCustomTypes()
     this.color = "#FFFFFF";
     this.dashed = '';
     this.shape = "connection";
-	this.arrow  = "regular";
+	this.arrow  = "";
   }
 
   gapi.drive.realtime.custom.registerType(causalConn, 'causalConn');

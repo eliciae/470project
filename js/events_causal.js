@@ -251,7 +251,7 @@ document.addEventListener('keyup', function(event)
 
 
 
-//tab touch events
+
 $('#variable-tab').on('mousedown', function(event)
 {
     $('#variable-tab').click(); 
@@ -270,8 +270,10 @@ $('#connection-tab').on('mousedown', function(event)
     }
 });
 
-$('#notation-tab').on('mousedown', function(event)
+$('#delete').click(function()
 {
-    $('#notation-tab').click(); 
-});
+    deleteShape();
+    deleteConn();
+})
+
 
