@@ -235,5 +235,10 @@ document.addEventListener('keyup', function(event)
   }
 })
 
+$('#delete').click(function()
+{
+    deleteShape();
+    deleteConn();
+})
 
 
