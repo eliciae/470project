@@ -18,12 +18,20 @@ function getConnectionColor()
 
 function selectionIsShape()
 {
+  if (currentObject == null)
+  {
+    return false;
+  }
   return (currentObject.prop("tagName") == "ellipse" 
     || currentObject.prop("tagName") == "rect");
 }
 
 function selectionIsConnection()
 {
+  if (currentObject == null)
+  {
+    return false;
+  }
   return (currentObject.prop("tagName") == "g");
 }
 
@@ -41,26 +49,27 @@ function displayObjectChangedEvent(evt)
     //only draw and add to the model if it wasn't local
     if (!events[i].isLocal)
     {
-		//if the model is smaller than the number of svg elements then something has been deleted
-		if (localModel.getRoot().size < count){
-			//remove all elements in svg
-			//var svg = $('svg'); 
-			//while (svg.lastChild) {
-			//	svg.removeChild(svg.lastChild);
-			//}
+  		//if the model is smaller than the number of svg elements then something has been deleted
+
+
+      //TODO: COMPARISON - actually check if something is deleted and whether you should do a delete
 			clearDiagram();
-		}
 		
       //a list of all the item names in the model
       var modelList = localModel.getRoot().keys();
 
       modelList.forEach(function(key)
       {
-         //if the model element does NOT exists in the SVG, then create it 
-         if (!keyInSVG(key))
-         {
-           drawShape(localModel.getRoot().get(key));
-         }
+        //the count will always be the key 1, don't try to draw it
+        if (key == 'countObjectID')
+        {
+          return true;
+        }
+        //if the model element does NOT exists in the SVG, then create it 
+        if (!keyInSVG(key))
+        {
+         drawShape(localModel.getRoot().get(key));
+        }
       });
     }
   }
@@ -187,8 +196,10 @@ function deleteShape(){
 	 }
 }
 
-function deleteConn(){
-	if (currentObject.prop("tagName") == "g"){ 
+function deleteConn()
+{
+	if (currentObject.prop("tagName") == "g")
+  { 
 	 //find selected item in model and delete it 
 	  localModel.getRoot().delete(getModelElBySvgSelectedID().idName); 
 	  //delete it in the svg
@@ -197,7 +208,8 @@ function deleteConn(){
 }
 
 
-function getCurrentCell(){
+function getCurrentCell()
+{
   //get the joint js cell
   //get the parent g element so we can get the model id
   var parent = currentObject.parents("g[model-id]");
@@ -215,7 +227,8 @@ function getCurrentConnCell()
 }
 
 //returns the model el that has the corresponding id to currentCell
-function getModelElBySvgSelectedID(){
+function getModelElBySvgSelectedID()
+{
 	if (currentObject.prop("tagName") == "rect")
 		return localModel.getRoot().get(getCurrentCell().get("attrs").rect.value);
 	else if (currentObject.prop("tagName") == "ellipse")
@@ -225,7 +238,8 @@ function getModelElBySvgSelectedID(){
 }
 
 
-
+//a listener for when someone presses the delete key - get rid of the object
+//would be nice if this didn't listen to all key ups...
 document.addEventListener('keyup', function(event)
 {
   if (event.keyCode === 46)
@@ -233,17 +247,27 @@ document.addEventListener('keyup', function(event)
     deleteShape();
     deleteConn();
   }
-})
+});
+
+
 
 //tab touch events
 $('#variable-tab').on('mousedown', function(event)
 {
     $('#variable-tab').click(); 
+    if (selectionIsConnection())
+    {
+      removeOldSelections();
+    }
 });
 
 $('#connection-tab').on('mousedown', function(event)
 {
     $('#connection-tab').click(); 
+    if (selectionIsShape())
+    {
+      removeOldSelections();
+    }
 });
 
 $('#notation-tab').on('mousedown', function(event)

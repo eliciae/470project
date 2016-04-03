@@ -5,8 +5,6 @@ var clientId = '707956241542-t1qe821rk6jkmnmrcth0aafrjcfjg441.apps.googleusercon
 //var clientId = '707956241542-4s76mlqlkm2rol57nneobntvjb6h5sck.apps.googleusercontent.com';
 
 var localModel;
-var count = 0;
-var countString = "0";
 
 
 if (!/^([0-9])$/.test(clientId[0])) 
@@ -129,8 +127,16 @@ function registerCustomTypes()
   // The first time a file is opened, it must be initialized with the
   // document structure. This function will add a collaborative string
   // to our model at the root.
-  function onFileInitialize(model) {
+  function onFileInitialize(model) 
+  {
     localModel = model;
+
+    //the shared count of objects
+    var countObjectID = model.createString();
+    var zero = 0;
+    countObjectID.setText(zero.toString());
+    model.getRoot().set('countObjectID', countObjectID);
+    incrementObjectID();
 
     model.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, displayObjectChangedEvent);
   }
@@ -140,14 +146,24 @@ function registerCustomTypes()
   function onFileLoaded(doc) 
   {
     localModel = doc.getModel();
-    count = localModel.getRoot().size;
     alert("model size: " + localModel.getRoot().size);
-    countString = count.toString();
 
     redraw();
   
     localModel.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, displayObjectChangedEvent);
   }
+
+function getObjectID()
+{
+  return localModel.getRoot().get('countObjectID');
+}
+
+function incrementObjectID()
+{
+  var intId = parseInt(localModel.getRoot().get('countObjectID'));
+  intId++;
+  localModel.getRoot().set('countObjectID', intId.toString());
+}
 
 
 function createNewCausalVar(x, y, width, height, label, shape, color)
@@ -160,10 +176,10 @@ function createNewCausalVar(x, y, width, height, label, shape, color)
   causalVarShape.label = label;
   causalVarShape.color = color;
   causalVarShape.shape = shape;
-  causalVarShape.idName = countString;
+  causalVarShape.idName = getObjectID();
 
-  localModel.getRoot().set(countString, causalVarShape);
-  incrementCount();
+  localModel.getRoot().set(getObjectID(), causalVarShape);
+  incrementObjectID();
 
   return causalVarShape;
 }
@@ -177,11 +193,11 @@ function createNewCausalConn(source, target, label, vertices, color, arrow)
   causalConn.label = label;
   causalConn.color = color;
   causalConn.dashed = '';
-  causalConn.idName = countString;
+  causalConn.idName = getObjectID();
   causalConn.arrow = arrow;
 
-  localModel.getRoot().set(countString, causalConn);
-  incrementCount();
+  localModel.getRoot().set(getObjectID(), causalConn);
+  incrementObjectID();
 
   return causalConn;
 }

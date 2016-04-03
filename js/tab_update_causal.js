@@ -53,14 +53,11 @@ function updateValuesSelectedInVaraiableTab(){
   
   if (selectedShape == "rect"){
     document.getElementById('shapeR').checked = true;
-    //alert("rect");
   }
   else if (selectedShape == "ellipse"){
-    //alert("ellipse");
     document.getElementById('shapeE').checked = true;
   }
   else{
-    //alert("no shape");
     document.getElementById('shapeN').checked = true;
   }
     
