@@ -49,30 +49,33 @@ function displayObjectChangedEvent(evt)
     //only draw and add to the model if it wasn't local
     if (!events[i].isLocal)
     {
-      alert("should i delete stuff??");
   		//if something was deleted, clear the whole diagram and redraw it all
       if (somethingWasDeleted())
       {
         alert("something was deleted");
         clearDiagram();
+        redraw();
 		  }
-
-      //a list of all the item names in the model
-      var modelList = localModel.getRoot().keys();
-
-      modelList.forEach(function(key)
+      //nothing was deleted, but need to check for new stuff
+      else
       {
-        //the count will always be the key 1, don't try to draw it
-        if (key == 'countObjectID')
+        //a list of all the item names in the model
+        var modelList = localModel.getRoot().keys();
+
+        modelList.forEach(function(key)
         {
-          return true;
-        }
-        //if the model element does NOT exists in the SVG, then create it 
-        if (!keyInSVG(key))
-        {
-         drawShape(localModel.getRoot().get(key));
-        }
-      });
+          //the count will always be the key 1, don't try to draw it
+          if (key == 'countObjectID')
+          {
+            return true;
+          }
+          //if the model element does NOT exists in the SVG, then create it 
+          if (!keyInSVG(key))
+          {
+           drawShape(localModel.getRoot().get(key));
+          }
+        });
+      }
     }
   }
 }
@@ -89,12 +92,10 @@ function keyInSVG(key)
 function somethingWasDeleted()
 {
   //get any of these tags with a value - this means they are collaborative
-  numSvgCollabElems = $("ellipse[value], rect[value], path[value]").length;
+  numSvgCollabElems = $(".Ellipse, .Rect, .Arrow").length;
 
   //the number of elements has to be subtracted by one because of the count obj
   var numModelElems = localModel.getRoot().size - 1;
-
-  alert("checking: " + numSvgCollabElems + " > " + numModelElems);
 
   //if there are more svg elements than model elements, something has been deleted
   return (numSvgCollabElems > numModelElems);
