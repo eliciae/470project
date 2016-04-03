@@ -7,8 +7,8 @@ function touchHandler(event)
     {
         case "touchstart": type = "mousedown"; break;
         case "touchmove":  type = "click"; break;        
-        case "touchend":   type = "mousemouse";   break;
-        default:           return;
+        case "touchend":   type = "mousemouse"; break;
+        default: return;
     }
 
     var simulatedEvent = document.createEvent("MouseEvent");
@@ -26,7 +26,7 @@ function init()
     document.addEventListener("touchstart", touchHandler, true);
     document.addEventListener("touchmove", touchHandler, true);
     document.addEventListener("touchend", touchHandler, true);
-    document.addEventListener("touchcancel", touchHandler, true);    
+    //document.addEventListener("touchcancel", touchHandler, true);    
 }
 init();
 

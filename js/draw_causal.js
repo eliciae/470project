@@ -71,7 +71,7 @@ function ellipse(cVar) {
             text : { text: cVar.label, fill: '#000000', 'font-weight': 'normal' },
             'ellipse': {
                 fill: cVar.color,
-                stroke: '#d7d7d7',
+                stroke: '#000000',
                 'stroke-width': 0,
 				        value: cVar.idName	
             }	
