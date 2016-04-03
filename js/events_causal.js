@@ -8,12 +8,12 @@ var shapeHeight = document.getElementById("shapeHeight").value;
 
 function getShapeColor()
 {
-  return document.getElementById("shapeColor").value;
+  return $('#shapeColor').attr('value');
 }
 
 function getConnectionColor()
 {
-  return document.getElementById("linkColor").value;
+  return $('#linkColor').attr('value');
 }
 
 function selectionIsShape()
@@ -49,12 +49,14 @@ function displayObjectChangedEvent(evt)
     //only draw and add to the model if it wasn't local
     if (!events[i].isLocal)
     {
-  		//if the model is smaller than the number of svg elements then something has been deleted
+      alert("should i delete stuff??");
+  		//if something was deleted, clear the whole diagram and redraw it all
+      if (somethingWasDeleted())
+      {
+        alert("something was deleted");
+        clearDiagram();
+		  }
 
-
-      //TODO: COMPARISON - actually check if something is deleted and whether you should do a delete
-			clearDiagram();
-		
       //a list of all the item names in the model
       var modelList = localModel.getRoot().keys();
 
@@ -80,6 +82,21 @@ function keyInSVG(key)
   return ($("ellipse[value='"+ key +"']").length)
          || ($("rect[value='"+ key +"']").length)
          || ($("path[value='"+ key +"']").length);
+}
+
+
+function somethingWasDeleted()
+{
+  //get any of these tags with a value - this means they are collaborative
+  numSvgCollabElems = $("ellipse[value], rect[value], path[value]").length;
+
+  //the number of elements has to be subtracted by one because of the count obj
+  var numModelElems = localModel.getRoot().size - 1;
+
+  alert("checking: " + numSvgCollabElems + " > " + numModelElems);
+
+  //if there are more svg elements than model elements, something has been deleted
+  return (numSvgCollabElems > numModelElems);
 }
 
 
@@ -174,8 +191,6 @@ function selectConnection()
 function removeOldSelections()
 {
   currentObject = null;
-  restoreDefaults(selectedShape);
-  restoreDefaults("connection");
   //deselect tab
    $('#markup-tab').click();
   
@@ -259,6 +274,10 @@ $('#variable-tab').on('mousedown', function(event)
     {
       removeOldSelections();
     }
+    if (currentObject == null)
+    {
+      restoreDefaults(selectedShape);
+    }
 });
 
 $('#connection-tab').on('mousedown', function(event)
@@ -267,6 +286,10 @@ $('#connection-tab').on('mousedown', function(event)
     if (selectionIsShape())
     {
       removeOldSelections();
+    }
+    if (currentObject == null)
+    {
+      restoreDefaults('connection');
     }
 });
 

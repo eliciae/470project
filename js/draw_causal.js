@@ -33,6 +33,7 @@ function defaultsForRect()
   document.getElementById('shapeWidth').value = defaultRectWidth;
   document.getElementById('shapeHeight').value = defaultRectHeight;
   $(".full").spectrum("set", defaultShapeColor);
+  $('#shapeColor').attr('value', defaultShapeColor);
   document.getElementById('varLabel').value = defaultRectLabel;
 }
 
@@ -41,12 +42,14 @@ function defaultsForEllipse()
   document.getElementById('shapeWidth').value = defaultEllipseWidth;
   document.getElementById('shapeHeight').value = defaultEllipseHeight;
   $(".full").spectrum("set", defaultShapeColor);
+  $('#shapeColor').attr('value', defaultShapeColor);
   document.getElementById('varLabel').value = defaultEllipseLabel;
 }
 
 function defaultsForConnection()
 {
   $(".full").spectrum("set", defaultConnectionColor);
+  $('#linkColor').attr('value', defaultConnectionColor);
   document.getElementById('connLabel').value = defaultConnectionLabel;
 }
 
@@ -387,7 +390,7 @@ function touchClickAction(x,y){
           label = defaultRectLabel;
 
         //add the shape into the real time model
-        var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, label, selectedShape, shapeColor);
+        var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, label, selectedShape, getShapeColor());
         //use the real time object to draw the shape in the svg
         drawShape(newCausalVar);
       }
@@ -407,7 +410,7 @@ function touchClickAction(x,y){
         var arrow = selectedArrow;
         var vertices = [];
       
-        var newCausalConn = createNewCausalConn(source, target, label, vertices, connectionColor, arrow);
+        var newCausalConn = createNewCausalConn(source, target, label, vertices, getConnectionColor(), arrow);
         drawConnection(newCausalConn);
       }
     }
