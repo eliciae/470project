@@ -92,7 +92,6 @@ img, object, embed, video {
 	clear: both;
 	float: left;
 	margin-left: 0;
-	width: 100%;
 	display: block;
 }
 
@@ -160,23 +159,17 @@ img, object, embed, video {
 @media only screen and (min-width: 769px) {
 	
 .gridContainer {
-	width: 100%;
-	/*max-width: 1232px;*/
-	padding-left: 0%;
-	padding-right: 0%;
-	margin: auto;
-	margin-top: 0px;
-	margin-left: 0px;
-	margin-right:0px;
-	padding: 0px;
-	/*height: 100vh !important;
-	overflow:hidden;*/
+	padding: 0%;
+	margin: 0px;
+	height: 100vh;
+	width: auto;
 }
 
 #collaborators {
 	clear: both;
 	float: left;
 	margin:0;
+	margin-top: 10px;
 	width: 60%;
 	display: block;
 }
@@ -184,17 +177,17 @@ img, object, embed, video {
 	clear: none;
 	float: left;
 	margin-left: 2.0408%;
-	width: 59.1836%;
+	margin-top: 10px;
+	display:block;
+	width: 100%;
 }
 #topBar {
 	clear: both;
 	float: left;
-	margin-left: 0;
-	width: 98.5%;
-	height: 80px;
-	/*display: block;
-	overflow: hidden;*/
-	padding: 10px;
+	margin: 0;
+	width: 100%;
+	height: 100px;
+	padding: 0px;
 	position: relative;
 }
 #share {
@@ -207,19 +200,22 @@ img, object, embed, video {
 
 #shareBtn{
 	margin-left: auto;
+	margin-top:10px;
 	margin-right: 0;
 	float: right;
+	position: absolute;
+	right: 10px;
+	top: 0px;
 }
 
 #sideBar{
 	clear: none;
 	float: left;
-	margin-left: 0;
-	width: 25%;
-	height: 100%
+	margin:0;
+	width: 330px;
 	display: block;
-	/*overflow-y: scroll;*/
-	height: calc(100vh - 110px);
+	overflow-y: auto;
+	height: calc(100% - 100px);
 }
 
 svg{
@@ -230,14 +226,13 @@ svg{
 #drawingWindow{
 	clear: both;
 	float: left;
-	margin-left: 0;
-	width: 75%;
-	height: 85vh;
+	margin: 0;
+	width: calc(100% - 330px);
 	display: block;
 	overflow-y: scroll;
 	overflow-x:scroll;
 	flex: 1 1 auto;
-	height: calc(100vh - 110px);
+	height: calc(100% - 100px);
 }
 
 #topLeftDiv{
@@ -251,10 +246,11 @@ svg{
 	width: 33%;
 	float: left;
 	text-align:center;
+	padding: 10px;
 }
 
 #topRightDiv{
-	width: 33%;
+	width: 20%;
 	float: left;
 }
 
@@ -269,7 +265,7 @@ svg{
 
 
 #TabbedPanels1{
-	width:90%;
+	width: calc(100% - 20px);
 	padding: 10px;
 }
 
@@ -279,12 +275,23 @@ svg{
 }
 
 .TabbedPanelsTab{
-	width: calc(30% - 20px);
+	width: calc(31% - 20px);
+}
 }
 
+/*for all*/
 #hiddenPanel, #markup-tab{
 	display:none;
 }
 
-#save, #undo, #redo{
+#shapeWidth, #shapeHeight{
+    margin-right: 10px;
+	width: 230px;
+	float: right;
+	
 }
+
+.menuItems{
+	padding-left: 10px;	
+}
+

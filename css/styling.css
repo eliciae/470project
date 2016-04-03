@@ -10,7 +10,9 @@
 	padding-bottom: 10px;*/
 	font-size:20px;
 	text-align: left;
-	margin-bottom:10px;
+	margin-bottom:4px;
+	margin-top:4px;
+	padding-left: 5px;
 }
 
 text{
@@ -80,16 +82,6 @@ body{
 	font: bold 0.7em sans-serif;
 }
 
-input[type="color" i] {
-    /*width: 90%;
-    height: 30px;
-    border: 0;
-	margin: 0px;
-    margin-left: 10px;
-	padding: 0;*/
-
-}
-
 .link-tools .tool-remove { display: none }
 
 .marker-arrowhead, .marker-vertex{
@@ -102,4 +94,53 @@ input[type="color" i] {
 
 .marker-vertex-remove-area{
 	
+}
+
+#delete{
+	background-color: #da0a0a;
+}
+
+.full{
+	width: 100%;
+}
+
+.bottomEl{
+	margin-bottom: 4px;
+}
+
+#varLabel, #connLabel{
+	width: 90%;	
+}
+
+/*SLIDER STUFF*/
+
+
+input[type=range]{
+    -webkit-appearance: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 5px;
+    background: white;
+    border: none;
+    border-radius: 3px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #D8C220;
+    margin-top: -4px;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: white;
 }

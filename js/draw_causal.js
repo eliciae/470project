@@ -1,5 +1,5 @@
 var selectedShape ="ellipse";
-var selectedArrow = "regular";
+var selectedArrow = "";
 
 //default values for drawing new shapes and connections
 var defaultEllipseHeight = '25',

@@ -236,6 +236,12 @@ document.addEventListener('keyup', function(event)
 })
 
 //tab touch events
+$('#delete').on('mousedown', function(event)
+{
+    deleteShape();
+    deleteConn();
+});
+
 $('#variable-tab').on('mousedown', function(event)
 {
     $('#variable-tab').click(); 
