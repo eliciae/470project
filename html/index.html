@@ -176,8 +176,8 @@ Do the following if you're using your customized build of modernizr (http://www.
                             <label for="regular"><img src="../graphics/regularArrow.png"/></label>
                         </li>
                         <li>
-                            <input type="radio" id="position" name="arrow" value=" + " onclick="handleArrowChange(this);"/>
-                            <label for="position"><img src="../graphics/positionArrow.png"/></label>
+                            <input type="radio" id="positive" name="arrow" value=" + " onclick="handleArrowChange(this);"/>
+                            <label for="positive"><img src="../graphics/positionArrow.png"/></label>
                         </li>
                         <li>
                             <input type="radio" id="negative" name="arrow" value=" - " onclick="handleArrowChange(this);"/>
@@ -253,7 +253,6 @@ Do the following if you're using your customized build of modernizr (http://www.
 			{ 
 				getCurrentConnCell().label(1, {attrs: {text: {text: selectedArrow}}});
 				getModelElBySvgSelectedID().arrow = selectedArrow;
-				alert(getModelElBySvgSelectedID().arrow);
 			}
 		}
 	}

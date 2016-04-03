@@ -70,25 +70,31 @@ function updateValuesSelectedInVaraiableTab(){
   $(".full").spectrum("set", getModelElBySvgSelectedID().color);
 }
 
-function updateValuesSelectedInConnectionTab(){
+function updateValuesSelectedInConnectionTab()
+{
   //select correct arrow head
   document.getElementById('negative').checked = false;
   document.getElementById('positive').checked = false;
   document.getElementById('regular').checked = false;
-  
-  if (selectedShape == "negative"){
+
+  if (selectedArrow == " - ")
+  {
     document.getElementById('negative').checked = true;
   }
-  else if (selectedShape == "positive"){
+  else if (selectedArrow == " + ")
+  {
     document.getElementById('positive').checked = true;
   }
-  else{
+  else
+  {
     document.getElementById('regular').checked = true;
   }
-    
   
   document.getElementById("connLabel").value = getModelElBySvgSelectedID().label;
-  $(".full").spectrum("set", getModelElBySvgSelectedID().color);
+
+  selectedShapeColor = getModelElBySvgSelectedID().color;
+  $(".full").spectrum("set", selectedShapeColor);
+  $('#linkColor').attr('value', selectedShapeColor);
 }
 
 
