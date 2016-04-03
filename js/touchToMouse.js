@@ -7,7 +7,6 @@ function touchHandler(event)
     {
         case "touchstart": type = "mousedown"; break;
         case "touchmove":  type = "click"; break;        
-        case "touchend":   type = "mousemouse"; break;
         default: return;
     }
 
@@ -25,32 +24,9 @@ function init()
 {
     document.addEventListener("touchstart", touchHandler, true);
     document.addEventListener("touchmove", touchHandler, true);
-    document.addEventListener("touchend", touchHandler, true);
-    //document.addEventListener("touchcancel", touchHandler, true);    
+    document.addEventListener("touchend", touchHandler, true); 
 }
 init();
-
-//tab touch events
-/*$('#delete').on('mousedown', function(event)
-{
-    deleteShape();
-    deleteConn();
-});
-
-$('#variable-tab').on('mousedown', function(event)
-{
-    $('#variable-tab').click(); 
-});
-
-$('#connection-tab').on('mousedown', function(event)
-{
-    $('#connection-tab').click(); 
-});
-
-$('#notation-tab').on('mousedown', function(event)
-{
-    $('#notation-tab').click(); 
-});*/
 
 
 $('#varLabel').on('touchstart', function(event)

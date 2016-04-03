@@ -91,7 +91,7 @@ Do the following if you're using your customized build of modernizr (http://www.
                 <li><a href="#" id="save"><img src="../graphics/save.png"/></a></li>
                 <li><a href="#" id="undo"><img src="../graphics/undo2.png"/></a></li>
                 <li><a href="#" id="redo"><img src="../graphics/redo2.png"/></a></li>
-                <li><a href="#" id="delete"><img src="../graphics/redo2.png"/></a></li>
+                <li><a href="#" id="delete"><img src="../graphics/x.png"/></a></li>
               </ul>
             </div>
         </div>
@@ -151,6 +151,7 @@ Do the following if you're using your customized build of modernizr (http://www.
                      </ul>
                      </div>
                      <br><br><br>
+                     <div class="visibleOptions">
                       <div class="panelHeading">Size</div>
                      <div class="menuItems">Width<input type="range" min="20" max="200" value="25" id="shapeWidth"/>
                      <br><br>
@@ -159,6 +160,7 @@ Do the following if you're using your customized build of modernizr (http://www.
                       <div class="panelHeading"><img src="../graphics/roller.png"/>Color</div>
                       <div class="menuItems bottomEl"><input type="text" name="showPaletteOnly" class="full" id="shapeColor" style="display: none;" value="#C9DAF8">
                       </div>
+                    </div>
                 </div>
             
             
@@ -233,9 +235,15 @@ Do the following if you're using your customized build of modernizr (http://www.
 </script>
 <script type="text/javascript">
 	var currentValue = "blank";
+	$('#delete').hide();
 	
 	function handleShapeChange(myRadio) {
 		selectedShape = myRadio.value;
+		//disable color and size adjusters when shape selected is "no shape"
+		if (selectedShape == "noShape") 
+			$('.visibleOptions').hide();	
+		else 
+			$('.visibleOptions').show();
 	}
 	
 	function handleArrowChange(myRadio) {
