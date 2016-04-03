@@ -7,6 +7,7 @@ var defaultEllipseHeight = '25',
     defaultRectHeight = '50',
     defaultRectWidth = '100',
     defaultShapeColor = '#C9DAF8',
+	defaultNoShapeColor = '#FFFFFF',
     defaultConnectionColor = '#000000',
     defaultEllipseLabel = 'variable',
     defaultRectLabel = 'stock',
@@ -381,9 +382,10 @@ function touchClickAction(x,y){
         //if it doesn't have a shape, make an ellipse with 0 size
         if (selectedShape == "noShape")
         {
-          var standardWidth = 0;
-          var standardHeight = 0;
+          var standardWidth = 50;
+          var standardHeight = 1;
           label = defaultEllipseLabel;
+		  shapeColor = '#FFFFFF';	
         }
 
         //get the appropriate label for it based on shape

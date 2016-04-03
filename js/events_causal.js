@@ -126,7 +126,10 @@ $('svg').on('mousedown', function(event)
 
 function selectEllipse()
 {
+
   removeOldSelections();
+  //show delete button
+  $('#delete').show();
   currentObject = $( this ).find('ellipse');
   currentObject.attr('class', 'selectObject');
 
@@ -140,6 +143,8 @@ function selectEllipse()
 function selectRect()
 {
   removeOldSelections();
+  //show delete button
+  $('#delete').show();
   currentObject = $( this ).find('rect');
   currentObject.attr('class', 'selectObject');
   
@@ -151,7 +156,10 @@ function selectRect()
 
 function selectConnection()
 {
+	
   removeOldSelections();
+  //show delete button
+  $('#delete').show();
   currentObject = $(this);
   this.classList.add('selectObject');
   
@@ -164,6 +172,8 @@ function selectConnection()
 
 function removeOldSelections()
 {
+	//hide delete button
+  $('#delete').hide();		
   currentObject = null;
   restoreDefaults(selectedShape);
   restoreDefaults("connection");
@@ -175,6 +185,7 @@ function removeOldSelections()
   {
     els[i].classList.remove('selectObject');
   }
+  
 }
 
 
@@ -239,6 +250,8 @@ $('#delete').click(function()
 {
     deleteShape();
     deleteConn();
+	$('#delete').hide();
+	
 })
 
 
