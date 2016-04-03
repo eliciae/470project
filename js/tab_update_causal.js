@@ -27,6 +27,8 @@ function updateColor()
     {
       var modelId = currentObject.attr("model-id");
 
+      connectionColor = getConnectionColor();
+
       //get the joint js cell
       getCurrentConnCell().attr({
         '.connection': { stroke: connectionColor },
