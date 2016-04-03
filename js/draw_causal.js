@@ -1,4 +1,5 @@
 var selectedShape ="ellipse";
+var selectedLoop = "ccb";
 var selectedArrow = "";
 
 //default values for drawing new shapes and connections
@@ -321,25 +322,10 @@ function drawShape(cVar)
   {
     cell = connection(cVar);
   }
-  
-  /*function updateSvgElement(evt){
-      if (!evt.isLocal){
-        cell.position(cVar.x, cVar.y);
-      }
+  else if (cVar.shape == "loop")
+  {
+	  cell = loop(cVar);
   }
-  
-  //if the associated model object is changed, then update the svg element
-  cVar.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateSvgElement);
-  
-
-  paper.on('cell:pointerup', 
-    function(cellView, evt, x, y) { 
-      cVar.x = cell.get("position").x;
-      cVar.y = cell.get("position").y;
-      }
-  );
-  
-  graph.addCell(cell);*/
 }
 
 
@@ -347,6 +333,13 @@ function drawConnection(causalConn)
 {
   connection(causalConn);
 }
+
+function drawLoop(causalConn)
+{
+  loop(causalConn);
+}
+
+
 
 function clearDiagram()
 {
@@ -414,6 +407,19 @@ function touchClickAction(x,y){
       
         var newCausalConn = createNewCausalConn(source, target, label, vertices, getConnectionColor(), arrow);
         drawConnection(newCausalConn);
+      }
+    }
+	
+	//if you are in the connection tab
+    if($('.TabbedPanelsTabSelected').attr('id') == "loop-tab")
+    {
+      //if nothing is selected and you actually want to draw a new one
+      if (currentObject == null)
+      {
+        //add the loop into the real time model
+        var newCausalLoop = createNewCausalLoop(mousex, mousey, selectedLoop);
+        //use the real time object to draw the shape in the svg
+        drawLoop(newCausalLoop);
       }
     }
 	

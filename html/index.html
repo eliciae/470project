@@ -124,7 +124,7 @@ Do the following if you're using your customized build of modernizr (http://www.
           <ul class="TabbedPanelsTabGroup">
             <li id="variable-tab" class="TabbedPanelsTab" tabindex="0"><img src="../graphics/shapes.png"/>Variable</li>
             <li id="connection-tab" class="TabbedPanelsTab" tabindex="0"><img src="../graphics/connection.png"/>Connection</li>
-            <li id="notation-tab" class="TabbedPanelsTab" tabindex="0"><img src="../graphics/highlighter.png"/>Annotation</li>
+            <li id="loop-tab" class="TabbedPanelsTab" tabindex="0"><img src="../graphics/highlighter.png"/>Annotation</li>
             <li id="markup-tab" class="TabbedPanelsTab" tabindex="0">Mark Up</li>
           </ul>
           <div class="TabbedPanelsContentGroup">
@@ -197,11 +197,11 @@ Do the following if you're using your customized build of modernizr (http://www.
 
                     <div class="menuItems bottomEl"><ul class="radioOptions">
                         <li>
-                            <input type="radio" id="balancing" name="loop" checked="checked"/>
+                            <input type="radio" id="balancing" name="loop" checked="checked" value="ccb" onclick="handleLoopChange(this);"/>
                             <label for="balancing"><img src="../graphics/balancingLoopW.png"/></label>
                         </li>
                         <li>
-                            <input type="radio" id="reinforcing" name="loop" />
+                            <input type="radio" id="reinforcing" name="loop" value ="ccr" onclick="handleShapeChange(this);"/>
                             <label for="reinforcing"><img src="../graphics/reinforcingLoopW.png"/></label>
                         </li>
                    </ul>
@@ -244,6 +244,10 @@ Do the following if you're using your customized build of modernizr (http://www.
 			$('.visibleOptions').hide();	
 		else 
 			$('.visibleOptions').show();
+	}
+	
+	function handleLoopChange(myRadio) {
+		selectedLoop = myRadio.value;
 	}
 	
 	function handleArrowChange(myRadio) {

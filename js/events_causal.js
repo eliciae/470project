@@ -81,7 +81,8 @@ function keyInSVG(key)
 {
   return ($("ellipse[value='"+ key +"']").length)
          || ($("rect[value='"+ key +"']").length)
-         || ($("path[value='"+ key +"']").length);
+         || ($("path[value='"+ key +"']").length)
+		 || ($("image[value='"+ key +"']").length);
 }
 
 

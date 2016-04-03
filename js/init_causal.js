@@ -77,6 +77,29 @@ function registerCustomTypes()
   
 
   gapi.drive.realtime.custom.setInitializer(causalConn, initializeCausalConn);
+  
+   //CONNECTION REGISTRATION
+  var causalLoop = function() {};
+  
+  function initializeCausalLoop()
+  {
+      this.x = 0;
+      this.y = 0;
+      this.type = "ccb";
+      this.shape = "loop"
+      this.idName = "";
+  }
+
+  gapi.drive.realtime.custom.registerType(causalLoop, 'causalLoop');
+
+  causalVar.prototype.x = gapi.drive.realtime.custom.collaborativeField('x');
+  causalVar.prototype.y = gapi.drive.realtime.custom.collaborativeField('y');
+  causalVar.prototype.type = gapi.drive.realtime.custom.collaborativeField('type');
+  causalVar.prototype.shape = gapi.drive.realtime.custom.collaborativeField('shape');
+  causalVar.prototype.idName = gapi.drive.realtime.custom.collaborativeField('idName');
+
+  gapi.drive.realtime.custom.setInitializer(causalLoop, initializeCausalLoop);
+
 }
 
   function authorize() {
@@ -200,4 +223,19 @@ function createNewCausalConn(source, target, label, vertices, color, arrow)
   incrementObjectID();
 
   return causalConn;
+}
+
+function createNewCausalLoop(x, y, type)
+{
+  var causalLoop = localModel.create('causalLoop');
+  causalLoop.x = x;
+  causalLoop.y = y;
+  causalLoop.type = type;
+  causalLoop.shape = "loop";
+  causalLoop.idName = getObjectID();
+
+  localModel.getRoot().set(getObjectID(), causalLoop);
+  incrementObjectID();
+
+  return causalLoop;
 }

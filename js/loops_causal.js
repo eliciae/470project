@@ -1,22 +1,53 @@
-//Counter-Clockwise Balancing Loop
-var imgLink = "/graphics/balancingLoop.png";
+function loop(cLoop) {
+	alert("loop!");
+	var imgLink = "";
+	if (cLoop.type == "ccb")
+		imgLink = "/graphics/balancingLoop.png";
+	else
+		imgLink = "/graphics/reinforcingLoop.png";	
+	
+    var cell = new joint.shapes.basic.Image({
+            position : {
+				x : cLoop.x,
+				y : cLoop.y
+			},
+			size : {
+				width : 30,
+				height : 30
+			},
+			attrs : {
+				image : {
+					"xlink:href" : imgLink,
+					width : 30,
+					height : 30,
+					value: cLoop.idName
+				}
+			}
+		});
+	
+	
+	function updateSvgElement(evt){
+			if (!evt.isLocal){
+				cell.position(cLoop.x, cLoop.y);
+			}
+	}
+	
+	//if the associated model object is changed, then update the svg element
+	cLoop.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateSvgElement);
 
-var image = new joint.shapes.basic.Image({
-    position : {
-        x : 100,
-        y : 100
-    },
-    size : {
-        width : 30,
-        height : 30
-    },
-    attrs : {
-        image : {
-            "xlink:href" : imgLink,
-            width : 30,
-            height : 30
-        }
+	paper.on('cell:pointerup', 
+		function(cellView, evt, x, y) { 
+			cLoop.x = cell.get("position").x;
+			cLoop.y = cell.get("position").y;
     }
-});
+	);
+   
+	graph.addCell(cell);
 
-graph.addCell(image);
+  var modelId = cell.id;
+  el = $('g[model-id="'+modelId+'"]');
+  el.on('mousedown', selectLoop);
+
+
+	return cell;
+}
