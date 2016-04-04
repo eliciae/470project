@@ -7,7 +7,7 @@ var defaultEllipseHeight = '25',
     defaultRectHeight = '50',
     defaultRectWidth = '100',
     defaultShapeColor = '#C9DAF8',
-	defaultNoShapeColor = '#FFFFFF',
+    defaultNoShapeColor = '#FFFFFF',
     defaultConnectionColor = '#000000',
     defaultEllipseLabel = 'variable',
     defaultRectLabel = 'stock',
@@ -376,6 +376,7 @@ function touchClickAction(x,y){
           
         //the label to put on the new object
         var label;
+        shapeColor = getShapeColor();
         //if it doesn't have a shape, make an ellipse with 0 size
         if (selectedShape == "noShape")
         {
@@ -392,7 +393,7 @@ function touchClickAction(x,y){
           label = defaultRectLabel;
 
         //add the shape into the real time model
-        var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, label, selectedShape, getShapeColor());
+        var newCausalVar = createNewCausalVar(mousex, mousey, standardWidth, standardHeight, label, selectedShape, shapeColor);
         //use the real time object to draw the shape in the svg
         drawShape(newCausalVar);
       }
