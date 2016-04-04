@@ -264,11 +264,16 @@ Do the following if you're using your customized build of modernizr (http://www.
 	function handleShapeChange(myRadio) {
 		selectedShape = myRadio.value;
 		//disable color and size adjusters when shape selected is "no shape"
-		if (selectedShape == "noShape") 
-			$('.visibleOptions').hide();	
-		else 
-			$('.visibleOptions').show();
+		hideSizeAndColor();
 	}
+
+  function hideSizeAndColor()
+  {
+    if (selectedShape == "noShape") 
+      $('.visibleOptions').hide();  
+    else 
+      $('.visibleOptions').show();
+  }
 	
 	function handleLoopChange(myRadio) {
 		selectedLoop = myRadio.value;

@@ -173,6 +173,7 @@ function selectEllipse()
   $('#variable-tab').click();
 
   selectedShape = getModelElBySvgSelectedID().shape;
+  hideSizeAndColor();
   updateValuesSelectedInVaraiableTab();
 }
 
@@ -187,6 +188,7 @@ function selectRect()
   //open variable tab & set tab values to be the selected item's values 
   $('#variable-tab').click();
   selectedShape = getModelElBySvgSelectedID().shape;
+  hideSizeAndColor();
   updateValuesSelectedInVaraiableTab();
 }
 
@@ -236,8 +238,20 @@ function removeOldSelections()
 }
 
 
-function deleteShape(){
-	 if (selectionIsShape() || selectionIsLoop()){
+function deleteShape()
+{
+	 if (selectionIsShape() || selectionIsLoop())
+   {
+    //get all the links connecnted to the shape that is being deleted
+    links = graph.getConnectedLinks(getCurrentCell());
+    console.log(links[0]);
+    links.forEach(function(link)
+    {
+      var val = link.get("attrs").path.value;
+      //remove the links from the model
+      localModel.getRoot().delete(val);
+    });
+
 	  //find selected item in model and delete it 
 	  localModel.getRoot().delete(getModelElBySvgSelectedID().idName); 
 	  //delete it in the svg
