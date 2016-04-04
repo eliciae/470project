@@ -1,18 +1,52 @@
-//Counter-Clockwise Balancing Loop
+function loop(cLoop) {
+	alert("loop!" + cLoop.shape);
+	var imgLink = "";
+	if (cLoop.type == "ccb")
+		imgLink = "/graphics/balancingLoop.png";
+	else
+		imgLink = "/graphics/reinforcingLoop.png";	
+	
+    var cell = new joint.shapes.basic.Image({
+            position : {
+				x : cLoop.x,
+				y : cLoop.y
+			},
+			size : {
+				width : 30,
+				height : 30
+			},
+			attrs : {
+				image : {
+					"xlink:href" : imgLink,
+					width : 30,
+					height : 30,
+					value: cLoop.idName
+					}
+			}
+			
+		});	
+	function updateSvgElement(evt){
+			if (!evt.isLocal){
+				cell.position(cLoop.x, cLoop.y);
+			}
+	}
+	
+	//if the associated model object is changed, then update the svg element
+	cLoop.addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, updateSvgElement);
 
-/*<g>
-	<path fill-rule="evenodd" clip-rule="evenodd" d="M0,18.3c0.183-0.862,0.342-1.73,0.551-2.587C2.538,7.58,9.603,1.287,17.917,0.236
-		c0.584-0.075,1.168-0.15,1.836-0.236c0,0.538,0,0.993,0,1.182c-2.468,0.756-4.929,1.243-7.158,2.244
-		C5.229,6.731,0.769,14.378,1.604,21.886c0.892,8.018,6.816,14.616,14.778,16.46c10.276,2.38,20.54-3.164,23.6-12.755
-		c1.039-3.26,1.104-6.547,0.232-10.018c-0.923,0.165-1.81,0.323-2.889,0.516c0.299-2.505,0.587-4.926,0.907-7.618
-		c2.188,2.093,4.182,4.001,6.316,6.043c-1.026,0.256-1.869,0.467-2.732,0.682c0.175,1.391,0.456,2.733,0.497,4.082
-		c0.289,9.518-5.69,17.549-15.04,20.278C16.297,42.761,4.58,36.891,1.054,26.379C0.587,24.987,0.346,23.521,0,22.089
-		C0,20.826,0,19.563,0,18.3z"/>
-	<path fill-rule="evenodd" clip-rule="evenodd" d="M16.182,27.603c0-5.297,0-10.472,0-15.611c2.201,0,4.339-0.073,6.47,0.022
-		c1.77,0.08,3.134,0.915,3.62,2.739c0.52,1.944-0.007,3.107-2.013,4.575c1.976,0.845,2.757,2.347,2.536,4.422
-		c-0.24,2.243-1.832,3.69-4.537,3.872c-1.697,0.116-3.409,0.026-5.115,0.024C16.852,27.646,16.56,27.621,16.182,27.603z
-		 M18.212,25.888c1.161,0,2.263,0.003,3.365-0.001c0.295-0.002,0.595,0.004,0.885-0.042c1.461-0.241,2.342-1.299,2.334-2.781
-		c-0.007-1.577-0.805-2.603-2.326-2.719c-1.39-0.107-2.795-0.023-4.259-0.023C18.212,22.19,18.212,23.985,18.212,25.888z
-		 M18.235,13.618c0,1.718,0,3.285,0,4.898c1.308,0,2.531,0.07,3.744-0.018c1.509-0.11,2.397-1.126,2.38-2.541
-		c-0.017-1.426-0.828-2.254-2.397-2.328C20.745,13.573,19.525,13.618,18.235,13.618z"/>
-</g>*/
+	paper.on('cell:pointerup', 
+		function(cellView, evt, x, y) { 
+			cLoop.x = cell.get("position").x;
+			cLoop.y = cell.get("position").y;
+    }
+	);
+   
+	graph.addCell(cell);
+
+  var modelId = cell.id;
+  el = $('g[model-id="'+modelId+'"]');
+  el.on('mousedown', selectLoop);
+
+
+	return cell;
+}

@@ -26,6 +26,15 @@ function selectionIsShape()
     || currentObject.prop("tagName") == "rect");
 }
 
+function selectionIsLoop()
+{
+  if (currentObject == null)
+  {
+    return false;
+  }
+  return (currentObject.prop("tagName") == "image");
+}
+
 function selectionIsConnection()
 {
   if (currentObject == null)
@@ -83,7 +92,8 @@ function keyInSVG(key)
 {
   return ($("ellipse[value='"+ key +"']").length)
          || ($("rect[value='"+ key +"']").length)
-         || ($("path[value='"+ key +"']").length);
+         || ($("path[value='"+ key +"']").length)
+		 || ($("image[value='"+ key +"']").length);
 }
 
 
@@ -197,6 +207,19 @@ function selectConnection()
   updateValuesSelectedInConnectionTab();
 }
 
+function selectLoop()
+{
+  removeOldSelections();
+  //show delete button
+  $('#delete').show();
+  currentObject = $( this ).find('image');
+  currentObject.attr('class', 'selectObject');
+  
+  //open variable tab & set tab values to be the selected item's values 
+  $('#notation-tab').click();
+  selectedShape = getModelElBySvgSelectedID().shape;
+}
+
 
 function removeOldSelections()
 {
@@ -217,7 +240,7 @@ function removeOldSelections()
 
 function deleteShape()
 {
-	 if (selectionIsShape())
+	 if (selectionIsShape() || selectionIsLoop())
    {
     //get all the links connecnted to the shape that is being deleted
     links = graph.getConnectedLinks(getCurrentCell());
@@ -227,7 +250,7 @@ function deleteShape()
       var val = link.get("attrs").path.value;
       //remove the links from the model
       localModel.getRoot().delete(val);
-    })
+    });
 
 	  //find selected item in model and delete it 
 	  localModel.getRoot().delete(getModelElBySvgSelectedID().idName); 
@@ -275,6 +298,8 @@ function getModelElBySvgSelectedID()
 		return localModel.getRoot().get(getCurrentCell().get("attrs").ellipse.value);
   else if (currentObject.prop("tagName") == "g")
     return localModel.getRoot().get(getCurrentConnCell().get("attrs").path.value);
+  else if (currentObject.prop("tagName") == "image")
+    return localModel.getRoot().get(getCurrentCell().get("attrs").image.value);
 }
 
 
@@ -295,7 +320,7 @@ document.addEventListener('keyup', function(event)
 $('#variable-tab').on('mousedown', function(event)
 {
     $('#variable-tab').click(); 
-    if (selectionIsConnection())
+    if (selectionIsConnection() || selectionIsLoop())
     {
       removeOldSelections();
     }
@@ -308,13 +333,22 @@ $('#variable-tab').on('mousedown', function(event)
 $('#connection-tab').on('mousedown', function(event)
 {
     $('#connection-tab').click(); 
-    if (selectionIsShape())
+    if (selectionIsShape() || selectionIsLoop())
     {
       removeOldSelections();
     }
     if (currentObject == null)
     {
       restoreDefaults('connection');
+    }
+});
+
+$('#notation-tab').on('mousedown', function(event)
+{
+    $('#notation-tab').click(); 
+    if (selectionIsConnection() || selectionIsShape())
+    {
+      removeOldSelections();
     }
 });
 
