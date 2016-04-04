@@ -61,7 +61,6 @@ function displayObjectChangedEvent(evt)
   		//if something was deleted, clear the whole diagram and redraw it all
       if (somethingWasDeleted())
       {
-        alert("something was deleted");
         clearDiagram();
         redraw();
 		  }

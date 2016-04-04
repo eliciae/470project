@@ -169,7 +169,6 @@ function registerCustomTypes()
   function onFileLoaded(doc) 
   {
     localModel = doc.getModel();
-    alert("model size: " + localModel.getRoot().size);
 
     redraw();
   

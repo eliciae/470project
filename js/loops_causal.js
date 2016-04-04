@@ -1,11 +1,5 @@
 function loop(cLoop) {
-	alert("loop!" + cLoop.shape);
-	var imgLink = "";
-	if (cLoop.type == "ccb")
-		imgLink = "/graphics/balancingLoop.png";
-	else
-		imgLink = "/graphics/reinforcingLoop.png";	
-	
+	var imgLink = "/graphics/" + selectedLoop +".png";
     var cell = new joint.shapes.basic.Image({
             position : {
 				x : cLoop.x,
