@@ -134,7 +134,7 @@ Do the following if you're using your customized build of modernizr (http://www.
           <ul class="TabbedPanelsTabGroup">
             <li id="variable-tab" class="TabbedPanelsTab" tabindex="0"><img src="../graphics/shapes.png"/>Variable</li>
             <li id="connection-tab" class="TabbedPanelsTab" tabindex="0"><img src="../graphics/connection.png"/>Connection</li>
-            <li id="loop-tab" class="TabbedPanelsTab" tabindex="0"><img src="../graphics/highlighter.png"/>Annotation</li>
+            <li id="loop-tab" class="TabbedPanelsTab" tabindex="0"><img src="../graphics/bigLoop.png"/><br>Loop</li>
             <li id="markup-tab" class="TabbedPanelsTab" tabindex="0">Mark Up</li>
           </ul>
           <div class="TabbedPanelsContentGroup">
@@ -145,7 +145,7 @@ Do the following if you're using your customized build of modernizr (http://www.
                      <div class="panelHeading"><img src="../graphics/label.png"/>Label</div>
                             <div class="menuItems"><input type="text" name="varTitle" id="varLabel" value="variable"></div>
                     <div class="panelHeading"><img src="../graphics/shapesSmall.png"/>Shape</div>     
-                      <div class="menuItems"><ul class="radioOptions">
+                      <div class="menuItems bottomEl"><ul class="radioOptions">
                         <li>
                             <input type="radio" id="shapeR" name="shape" value="rect" onclick="handleShapeChange(this);"/>
                             <label for="shapeR"><img src="../graphics/rect.png"/></label>
@@ -160,7 +160,7 @@ Do the following if you're using your customized build of modernizr (http://www.
                         </li>
                      </ul>
                      </div>
-                     <br><br><br>
+                     <p>&nbsp;</p><br>
                      <div class="visibleOptions">
                       <div class="panelHeading">Size</div>
                      <div class="menuItems">Width<input type="range" min="20" max="200" value="25" id="shapeWidth"/>
@@ -203,16 +203,40 @@ Do the following if you're using your customized build of modernizr (http://www.
             
             <!--THIRD PANEL-->
             <div class="TabbedPanelsContent">
-                <div class="panelHeading"><img src="../graphics/loopWsmall.png"/>Loops</div>
+                <div class="panelHeading"><img src="../graphics/loopSmall.png"/>Loops</div>
 
-                    <div class="menuItems bottomEl"><ul class="radioOptions">
+                    <div class="menuItems bottomEl loops"><ul class="radioOptions">
                         <li>
-                            <input type="radio" id="balancing" name="loop" checked="checked" value="ccb" onclick="handleLoopChange(this);"/>
-                            <label for="balancing"><img src="../graphics/balancingLoopW.png"/></label>
+                            <input type="radio" id="ccbalancing" name="loop" checked="checked" value="ccb" onclick="handleLoopChange(this);"/>
+                            <label for="balancing"><img src="../graphics/ccb_w.png"/></label>
                         </li>
                         <li>
-                            <input type="radio" id="reinforcing" name="loop" value ="ccr" onclick="handleShapeChange(this);"/>
-                            <label for="reinforcing"><img src="../graphics/reinforcingLoopW.png"/></label>
+                            <input type="radio" id="ccreinforcing" name="loop" value ="ccr" onclick="handleLoopChange(this);"/>
+                            <label for="ccreinforcing"><img src="../graphics/ccr_w.png"/></label>
+                        </li>
+                        <li>
+                            <input type="radio" id="ccn" name="loop" value ="ccn" onclick="handleLoopChange(this);"/>
+                            <label for="ccn"><img src="../graphics/ccn_w.png"/></label>
+                        </li>
+                        <li>
+                            <input type="radio" id="ccp" name="loop" value ="ccp" onclick="handleLoopChange(this);"/>
+                            <label for="ccp"><img src="../graphics/ccp_w.png"/></label>
+                        </li>
+                        <li>
+                            <input type="radio" id="cb" name="loop" value ="cb" onclick="handleLoopChange(this);"/>
+                            <label for="cb"><img src="../graphics/cb_w.png"/></label>
+                        </li>
+                        <li>
+                            <input type="radio" id="cr" name="loop" value ="cr" onclick="handleLoopChange(this);"/>
+                            <label for="cr"><img src="../graphics/cr_w.png"/></label>
+                        </li>
+                        <li>
+                            <input type="radio" id="cn" name="loop" value ="cn" onclick="handleLoopChange(this);"/>
+                            <label for="cn"><img src="../graphics/cn_w.png"/></label>
+                        </li>
+                        <li>
+                            <input type="radio" id="cp" name="loop" value ="cp" onclick="handleLoopChange(this);"/>
+                            <label for="cp"><img src="../graphics/cp_w.png"/></label>
                         </li>
                    </ul>
                    </div>  

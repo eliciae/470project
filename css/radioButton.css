@@ -7,9 +7,13 @@
 .radioOptions li {
      float:left;
      margin:0 0px 0 0;
-    width:50px;
-    height:40px;
+    width:70px;
     position:relative;
+	font-size: 18px;
+}
+
+.radioOptions ul{
+	height: 70px;	
 }
 
 .radioOptions label, .radioOptions input {
