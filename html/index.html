@@ -49,19 +49,7 @@
 <link href="../css/spectrum.css" rel="stylesheet" type="text/css">
 <link href="../css/tooledViewPlugin.css" type="text/css">
 
-<!-- 
-To learn more about the conditional comments around the html tags at the top of the file:
-paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
 
-Do the following if you're using your customized build of modernizr (http://www.modernizr.com/):
-* insert the link to your js here
-* remove the link below to the html5shiv
-* add the "no-js" class to the html tags at the top
-* you can also remove the link to respond.min.js if you included the MQ Polyfill in your modernizr build 
--->
-<!--[if lt IE 9]>
-<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
 <script src="../respond.min.js"></script>
 <script src="../SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
 <script src="../SpryAssets/SpryTabbedPanels.js" type="text/javascript"></script>
@@ -239,12 +227,6 @@ Do the following if you're using your customized build of modernizr (http://www.
 	</div>
 </div>
 
-            
-<script type="text/javascript">
-    var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
-    var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2");
-</script>
-
 <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-5029684-2']);
@@ -256,41 +238,10 @@ Do the following if you're using your customized build of modernizr (http://www.
       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
-</script>
-<script type="text/javascript">
-	var currentValue = "blank";
+	
+	//initially hide delete button
 	$('#delete').hide();
 	
-	function handleShapeChange(myRadio) {
-		selectedShape = myRadio.value;
-		//disable color and size adjusters when shape selected is "no shape"
-		hideSizeAndColor();
-	}
-
-  function hideSizeAndColor()
-  {
-    if (selectedShape == "noShape") 
-      $('.visibleOptions').hide();  
-    else 
-      $('.visibleOptions').show();
-  }
-	
-	function handleLoopChange(myRadio) {
-		selectedLoop = myRadio.value;
-	}
-	
-	function handleArrowChange(myRadio) {
-		selectedArrow = myRadio.value;
-		if (currentObject != null){
-			if(selectionIsConnection())
-			{ 
-				getCurrentConnCell().label(1, {attrs: {text: {text: selectedArrow}}});
-				getModelElBySvgSelectedID().arrow = selectedArrow;
-			}
-		}
-	}
-	
-
 	$(".full").spectrum({
 		showPaletteOnly: true,
 		showPalette:true,
@@ -320,15 +271,21 @@ Do the following if you're using your customized build of modernizr (http://www.
 				"rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
 			]
 		});
+		
+		
 </script>
 
         <script src="../js/joint.js"></script>
         <script src="../js/init_causal.js"></script>
+        <script src="../js/elDefaults_causal.js"></script>
         <script src="../js/draw_causal.js"></script>
-        <script src="../js/events_causal.js"></script>
-        <script src="../js/tab_update_causal.js"></script>
+        <script src="../js/svgUpdate_causal.js"></script>
+        <script src="../js/tabUpdate_causal.js"></script>
         <script src="../js/touchToMouse.js"></script>
-        <script src="../js/loops_causal.js"></script>
+        <script src="../js/modelToSVG_causal.js"></script>
+        <script src="../js/selection_causal.js"></script>
+        <script src="../js/delete_causal.js"></script>
+        <script src="../js/get_causal.js"></script>
 
 </body>
 </html>

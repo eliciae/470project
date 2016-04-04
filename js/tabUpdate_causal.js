@@ -1,3 +1,44 @@
+var shapeColor = getShapeColor();
+var connectionColor = getConnectionColor();
+
+var shapeWidth = document.getElementById("shapeWidth").value;
+var shapeHeight = document.getElementById("shapeHeight").value;
+
+var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
+var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2");
+
+	function handleShapeChange(myRadio) {
+		selectedShape = myRadio.value;
+		//disable color and size adjusters when shape selected is "no shape"
+		hideSizeAndColor();
+	}
+
+  function hideSizeAndColor()
+  {
+    if (selectedShape == "noShape") 
+      $('.visibleOptions').hide();  
+    else 
+      $('.visibleOptions').show();
+  }
+	
+	function handleLoopChange(myRadio) {
+		selectedLoop = myRadio.value;
+	}
+	
+	function handleArrowChange(myRadio) {
+		selectedArrow = myRadio.value;
+		if (currentObject != null){
+			if(selectionIsConnection())
+			{ 
+				getCurrentConnCell().label(1, {attrs: {text: {text: selectedArrow}}});
+				getModelElBySvgSelectedID().arrow = selectedArrow;
+			}
+		}
+	}
+	
+	
+
+
 /**
 * This is called from the change listener on the color 
 **/
@@ -102,10 +143,10 @@ function updateValuesSelectedInConnectionTab()
 var widthRng = document.getElementById("shapeWidth");
 var heightRng = document.getElementById("shapeHeight");
 
-read("mousedown");
-read("mousemove");
+updateSize("mousedown");
+updateSize("mousemove");
 
-function read(evtType) {
+function updateSize(evtType) {
     widthRng.addEventListener(evtType, function() {
      if (currentObject != null && selectionIsShape())
         resize();
@@ -157,4 +198,69 @@ $('#shapeR, #shapeE, #shapeN').click(function()
   {
     restoreDefaults(selectedShape);
   }
+});
+
+$('#variable-tab').on('mousedown', function(event)
+{
+    $('#variable-tab').click(); 
+    if (selectionIsConnection() || selectionIsLoop())
+    {
+      removeOldSelections();
+    }
+    if (currentObject == null)
+    {
+      restoreDefaults(selectedShape);
+    }
+});
+
+$('#connection-tab').on('mousedown', function(event)
+{
+    $('#connection-tab').click(); 
+    if (selectionIsShape() || selectionIsLoop())
+    {
+      removeOldSelections();
+    }
+    if (currentObject == null)
+    {
+      restoreDefaults('connection');
+    }
+});
+
+$('#notation-tab').on('mousedown', function(event)
+{
+    $('#notation-tab').click(); 
+    if (selectionIsConnection() || selectionIsShape())
+    {
+      removeOldSelections();
+    }
+});
+
+$('#delete').click(function()
+{
+    deleteShape();
+    deleteConn();
+	$('#delete').hide();
+	
+})
+
+function getShapeColor()
+{
+  return $('#shapeColor').attr('value');
+}
+
+function getConnectionColor()
+{
+  return $('#linkColor').attr('value');
+}
+
+$('#undo').on('mousedown', function(){
+  localModel.undo();
+  clearDiagram();
+  redraw();
+});
+
+$('#redo').on('mousedown', function(){
+  localModel.redo();
+  clearDiagram();
+  redraw();
 });

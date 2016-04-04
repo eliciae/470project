@@ -1,56 +1,55 @@
+function somethingWasDeleted()
+{
+  //get any of these tags with a value - this means they are collaborative
+  numSvgCollabElems = $(".Ellipse, .Rect, .Arrow, .Image").length;
+
+  //the number of elements has to be subtracted by one because of the count obj
+  var numModelElems = localModel.getRoot().size - 1;
+
+  //if there are more svg elements than model elements, something has been deleted
+  return (numSvgCollabElems > numModelElems);
+}
+
+function deleteShape()
+{
+	 if (selectionIsShape() || selectionIsLoop())
+   {
+    //get all the links connecnted to the shape that is being deleted
+    links = graph.getConnectedLinks(getCurrentCell());
+    console.log(links[0]);
+    links.forEach(function(link)
+    {
+      var val = link.get("attrs").path.value;
+      //remove the links from the model
+      localModel.getRoot().delete(val);
+    });
+
+	  //find selected item in model and delete it 
+	  localModel.getRoot().delete(getModelElBySvgSelectedID().idName); 
+	  //delete it in the svg
+		getCurrentCell().remove();
+	 }
+}
+
+function deleteConn()
+{
+	if (currentObject.prop("tagName") == "g")
+  { 
+	 //find selected item in model and delete it 
+	  localModel.getRoot().delete(getModelElBySvgSelectedID().idName); 
+	  //delete it in the svg
+		getCurrentConnCell().remove();
+	}
+}
 
 
-
-joint.shapes.devs.UnspecifiedProcess = joint.shapes.devs.Model.extend(_.extend({}, joint.plugins.TooledModelInterface, {
-
-
-markup: ['<g class="rotatable">',
-            '<g class="scalable">',
-                '<rect class="body"/>',
-                '<g xmlns="http://www.w3.org/2000/svg" transform="translate(-549.49953,-824.87393)" id="layer1">',
-                    '<g transform="matrix(0.933025,0,0,-0.2986125,549.49953,846.37362)" id="g3553">',
-                      '<g transform="scale(0.98976,3.0047)" id="g3555">',
-                        '<g clip-path="url(#clipPath3559)" id="g3557">',
-                          '<path d="m 57.805,0.90155 -57.805,0 0,23.06045 57.805,0 L 72.244,12.432 57.805,0.90155 z" id="path3563" style="fill:#b8cde8;fill-opacity:1;fill-rule:evenodd;stroke:none"/>',
-						 // '<ellipse id="v-140" fill="#C9DAF8" stroke="#d7d7d7" rx="30" ry="20" cx="30" cy="20" stroke-width="0" value="0"></ellipse>',
-                        '</g>',
-                      '</g>',
-                    '</g>',
-                '</g>',
-            '</g>',
-            '<g class="inPorts"/>',
-            '<g class="outPorts"/>',
-            '<g class="moveTool"/>',
-            '<g class="resizeTool"/>',
-            '<g class="portsTool"/>',
-            '<g class="deleteTool"/>',
-            '<title class="tooltip"/>',
-        '</g>'].join(''),
-
-defaults: joint.util.deepSupplement({
-    type: 'devs.UnspecifiedProcess',
-    inPorts: [''],
-    outPorts: [''],
-    moveTool: true,
-    resizeTool: true,
-	deleteTool: true,
-    size: { width: 100, height: 31},
-    attrs: {
-        '.inPorts circle': { fill: '#fff' },
-        '.outPorts circle': { fill: '#fff' },
-        '.body': {
-            width: 67, height: 21,
-            stroke: 'none'
-        },
-    }
-}, joint.shapes.devs.Model.prototype.defaults),
-}));
-joint.shapes.devs.UnspecifiedProcessView = joint.shapes.devs.ModelView.extend(joint.plugins.TooledViewInterface);
-
-var elem = new joint.shapes.devs.UnspecifiedProcess({
-    attrs: {
-        '.label': { text: "I'm overriding the label's name"}
-    },
+//a listener for when someone presses the delete key - get rid of the object
+//would be nice if this didn't listen to all key ups...
+document.addEventListener('keyup', function(event)
+{
+  if (event.keyCode === 46)
+  {
+    deleteShape();
+    deleteConn();
+  }
 });
-
-graph.addCell(elem);
