@@ -377,7 +377,7 @@ function touchClickAction(x,y){
           var standardWidth = 50;
           var standardHeight = 1;
           label = defaultEllipseLabel;
-		  shapeColor = '#FFFFFF';	
+		      shapeColor = '#FFFFFF';	
         }
 
         //get the appropriate label for it based on shape
