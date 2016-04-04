@@ -126,7 +126,7 @@ function rect(cVar)
                 fill: cVar.color,
                 stroke: '#000000',
                 'stroke-width': 0,
-				        value: cVar.idName
+				value: cVar.idName
             }
         }
     });
@@ -308,6 +308,7 @@ function getModelIDFromVarID(varID)
 
 function drawShape(cVar)
 {
+	alert(cVar.shape);
   var cell;
   if (cVar.shape == "ellipse" || cVar.shape == "noShape")
   {
@@ -334,9 +335,10 @@ function drawConnection(causalConn)
   connection(causalConn);
 }
 
-function drawLoop(causalConn)
+function drawLoop(causalLoop)
 {
-  loop(causalConn);
+	alert("drawLoop: "+ causalLoop.shape);
+  loop(causalLoop);
 }
 
 
@@ -419,6 +421,7 @@ function touchClickAction(x,y){
         //add the loop into the real time model
         var newCausalLoop = createNewCausalLoop(mousex, mousey, selectedLoop);
         //use the real time object to draw the shape in the svg
+		alert("NEW CAUSAL LOOP: " +newCausalLoop.shape);
         drawLoop(newCausalLoop);
       }
     }

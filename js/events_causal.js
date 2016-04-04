@@ -26,6 +26,15 @@ function selectionIsShape()
     || currentObject.prop("tagName") == "rect");
 }
 
+function selectionIsLoop()
+{
+  if (currentObject == null)
+  {
+    return false;
+  }
+  return (currentObject.prop("tagName") == "image");
+}
+
 function selectionIsConnection()
 {
   if (currentObject == null)
@@ -197,6 +206,19 @@ function selectConnection()
   updateValuesSelectedInConnectionTab();
 }
 
+function selectLoop()
+{
+  removeOldSelections();
+  //show delete button
+  $('#delete').show();
+  currentObject = $( this ).find('image');
+  currentObject.attr('class', 'selectObject');
+  
+  //open variable tab & set tab values to be the selected item's values 
+  $('#notation-tab').click();
+  selectedShape = getModelElBySvgSelectedID().shape;
+}
+
 
 function removeOldSelections()
 {
@@ -216,7 +238,7 @@ function removeOldSelections()
 
 
 function deleteShape(){
-	 if (selectionIsShape()){
+	 if (selectionIsShape() || selectionIsLoop()){
 	  //find selected item in model and delete it 
 	  localModel.getRoot().delete(getModelElBySvgSelectedID().idName); 
 	  //delete it in the svg
@@ -263,6 +285,8 @@ function getModelElBySvgSelectedID()
 		return localModel.getRoot().get(getCurrentCell().get("attrs").ellipse.value);
   else if (currentObject.prop("tagName") == "g")
     return localModel.getRoot().get(getCurrentConnCell().get("attrs").path.value);
+  else if (currentObject.prop("tagName") == "image")
+    return localModel.getRoot().get(getCurrentCell().get("attrs").image.value);
 }
 
 
@@ -283,7 +307,7 @@ document.addEventListener('keyup', function(event)
 $('#variable-tab').on('mousedown', function(event)
 {
     $('#variable-tab').click(); 
-    if (selectionIsConnection())
+    if (selectionIsConnection() || selectionIsLoop())
     {
       removeOldSelections();
     }
@@ -296,13 +320,22 @@ $('#variable-tab').on('mousedown', function(event)
 $('#connection-tab').on('mousedown', function(event)
 {
     $('#connection-tab').click(); 
-    if (selectionIsShape())
+    if (selectionIsShape() || selectionIsLoop())
     {
       removeOldSelections();
     }
     if (currentObject == null)
     {
       restoreDefaults('connection');
+    }
+});
+
+$('#notation-tab').on('mousedown', function(event)
+{
+    $('#notation-tab').click(); 
+    if (selectionIsConnection() || selectionIsShape())
+    {
+      removeOldSelections();
     }
 });
 

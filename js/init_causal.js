@@ -78,7 +78,7 @@ function registerCustomTypes()
 
   gapi.drive.realtime.custom.setInitializer(causalConn, initializeCausalConn);
   
-   //CONNECTION REGISTRATION
+   //LOOP REGISTRATION
   var causalLoop = function() {};
   
   function initializeCausalLoop()
@@ -92,11 +92,11 @@ function registerCustomTypes()
 
   gapi.drive.realtime.custom.registerType(causalLoop, 'causalLoop');
 
-  causalVar.prototype.x = gapi.drive.realtime.custom.collaborativeField('x');
-  causalVar.prototype.y = gapi.drive.realtime.custom.collaborativeField('y');
-  causalVar.prototype.type = gapi.drive.realtime.custom.collaborativeField('type');
-  causalVar.prototype.shape = gapi.drive.realtime.custom.collaborativeField('shape');
-  causalVar.prototype.idName = gapi.drive.realtime.custom.collaborativeField('idName');
+  causalLoop.prototype.x = gapi.drive.realtime.custom.collaborativeField('x');
+  causalLoop.prototype.y = gapi.drive.realtime.custom.collaborativeField('y');
+  causalLoop.prototype.type = gapi.drive.realtime.custom.collaborativeField('type');
+  causalLoop.prototype.shape = gapi.drive.realtime.custom.collaborativeField('shape');
+  causalLoop.prototype.idName = gapi.drive.realtime.custom.collaborativeField('idName');
 
   gapi.drive.realtime.custom.setInitializer(causalLoop, initializeCausalLoop);
 
@@ -176,6 +176,8 @@ function registerCustomTypes()
     localModel.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, displayObjectChangedEvent);
   }
 
+
+//ObjectID get & set
 function getObjectID()
 {
   return localModel.getRoot().get('countObjectID');
@@ -189,6 +191,7 @@ function incrementObjectID()
 }
 
 
+//3 CreateNewCausal Var, Conn, & Loop
 function createNewCausalVar(x, y, width, height, label, shape, color)
 {
   var causalVarShape = localModel.create('causalVar');
@@ -231,7 +234,6 @@ function createNewCausalLoop(x, y, type)
   causalLoop.x = x;
   causalLoop.y = y;
   causalLoop.type = type;
-  causalLoop.shape = "loop";
   causalLoop.idName = getObjectID();
 
   localModel.getRoot().set(getObjectID(), causalLoop);

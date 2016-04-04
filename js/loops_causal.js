@@ -1,5 +1,5 @@
 function loop(cLoop) {
-	alert("loop!");
+	alert("loop!" + cLoop.shape);
 	var imgLink = "";
 	if (cLoop.type == "ccb")
 		imgLink = "/graphics/balancingLoop.png";
@@ -21,11 +21,10 @@ function loop(cLoop) {
 					width : 30,
 					height : 30,
 					value: cLoop.idName
-				}
+					}
 			}
-		});
-	
-	
+			
+		});	
 	function updateSvgElement(evt){
 			if (!evt.isLocal){
 				cell.position(cLoop.x, cLoop.y);
