@@ -20,6 +20,16 @@
 
     <!-- Load the Realtime JavaScript library -->
     <script src="https://apis.google.com/js/api.js"></script>
+    <script type="text/javascript">
+      init = function() {
+          s = new gapi.drive.share.ShareClient();
+          s.setOAuthToken('<OAUTH_TOKEN>');
+          s.setItemIds(['<FILE_ID>']);
+      }
+      window.onload = function() {
+          gapi.load('drive-share', init);
+      }
+    </script>
 
     <!-- Load the utility library -->
     <script src="https://www.gstatic.com/realtime/realtime-client-utils.js"></script>
@@ -102,7 +112,7 @@ Do the following if you're using your customized build of modernizr (http://www.
         <div id="topRightDiv">
             <div id="share">
               <ul id="MenuBar2" class="MenuBarHorizontal">
-                <li id="shareBtn"><a href="#"><img src="../graphics/share.png"/>share</a>    </li>
+                <li id="shareBtn"><a onclick="s.showSettingsDialog()" href="#"><img src="../graphics/share.png"/>share</a>    </li>
               </ul>
             </div>
         </div>

@@ -14,7 +14,7 @@ if (!/^([0-9])$/.test(clientId[0]))
 // Create a new instance of the realtime utility with your client ID.
 var realtimeUtils = new utils.RealtimeUtils({ clientId: clientId });
 
-  authorize();
+authorize();
 
 // Call this function before calling gapi.drive.realtime.load
 function registerCustomTypes()
