@@ -100,7 +100,7 @@ function keyInSVG(key)
 function somethingWasDeleted()
 {
   //get any of these tags with a value - this means they are collaborative
-  numSvgCollabElems = $(".Ellipse, .Rect, .Arrow").length;
+  numSvgCollabElems = $(".Ellipse, .Rect, .Arrow, .Image").length;
 
   //the number of elements has to be subtracted by one because of the count obj
   var numModelElems = localModel.getRoot().size - 1;

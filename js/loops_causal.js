@@ -1,5 +1,5 @@
 function loop(cLoop) {
-	var imgLink = "/graphics/" + selectedLoop +".png";
+	var imgLink = "/graphics/" + cLoop.type +".png";
     var cell = new joint.shapes.basic.Image({
             position : {
 				x : cLoop.x,
@@ -10,6 +10,7 @@ function loop(cLoop) {
 				height : 30
 			},
 			attrs : {
+				'.': { magnet: false },
 				image : {
 					"xlink:href" : imgLink,
 					width : 30,
