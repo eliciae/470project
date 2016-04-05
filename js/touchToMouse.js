@@ -36,4 +36,16 @@ $('#varLabel').on('touchstart', function(event)
 	this.selectionStart = this.selectionEnd = this.value.length;
 });
 
+$('#connLabel').on('touchstart', function(event)
+{
+    $('#connLabel').focus();
+    this.selectionStart = this.selectionEnd = this.value.length;
+});
+
+$('#loopLabel').on('touchstart', function(event)
+{
+    $('#loopLabel').focus();
+    this.selectionStart = this.selectionEnd = this.value.length;
+});
+
 

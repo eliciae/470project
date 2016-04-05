@@ -203,16 +203,18 @@ Do the following if you're using your customized build of modernizr (http://www.
             
             <!--THIRD PANEL-->
             <div class="TabbedPanelsContent">
+                <div class="panelHeading"><img src="../graphics/label.png"/>Label</div>
+                <div class="menuItems"><input type="text" name="loopLabel" id="loopLabel" value=""></div>
                 <div class="panelHeading"><img src="../graphics/loopSmall.png"/>Loops</div>
 
                     <div class="menuItems bottomEl loops"><ul class="radioOptions">
                         <li>
-                            <input type="radio" id="ccbalancing" name="loop" checked="checked" value="ccb" onclick="handleLoopChange(this);"/>
-                            <label for="balancing"><img src="../graphics/ccb_w.png"/></label>
+                            <input type="radio" id="ccb" name="loop" checked="checked" value="ccb" onclick="handleLoopChange(this);"/>
+                            <label for="ccb"><img src="../graphics/ccb_w.png"/></label>
                         </li>
                         <li>
-                            <input type="radio" id="ccreinforcing" name="loop" value ="ccr" onclick="handleLoopChange(this);"/>
-                            <label for="ccreinforcing"><img src="../graphics/ccr_w.png"/></label>
+                            <input type="radio" id="ccr" name="loop" value ="ccr" onclick="handleLoopChange(this);"/>
+                            <label for="ccr"><img src="../graphics/ccr_w.png"/></label>
                         </li>
                         <li>
                             <input type="radio" id="ccn" name="loop" value ="ccn" onclick="handleLoopChange(this);"/>
@@ -255,90 +257,16 @@ Do the following if you're using your customized build of modernizr (http://www.
     var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2");
 </script>
 
-<script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-5029684-2']);
-    _gaq.push(['_setAllowLinker', true]);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-</script>
-<script type="text/javascript">
-	var currentValue = "blank";
-	$('#delete').hide();
-	
-	function handleShapeChange(myRadio) {
-		selectedShape = myRadio.value;
-		//disable color and size adjusters when shape selected is "no shape"
-		hideSizeAndColor();
-	}
-
-  function hideSizeAndColor()
-  {
-    if (selectedShape == "noShape") 
-      $('.visibleOptions').hide();  
-    else 
-      $('.visibleOptions').show();
-  }
-	
-	function handleLoopChange(myRadio) {
-		selectedLoop = myRadio.value;
-	}
-	
-	function handleArrowChange(myRadio) {
-		selectedArrow = myRadio.value;
-		if (currentObject != null){
-			if(selectionIsConnection())
-			{ 
-				getCurrentConnCell().label(1, {attrs: {text: {text: selectedArrow}}});
-				getModelElBySvgSelectedID().arrow = selectedArrow;
-			}
-		}
-	}
-	
-
-	$(".full").spectrum({
-		showPaletteOnly: true,
-		showPalette:true,
-		color: '#C9DAF8',
-		preferredFormat: "hex",
-		change: function(color){
-		  $(this).attr('value', color.toHexString());
-		  updateColor();
-		},
-			move: function (color) {
-		  
-			},
-			palette: [
-				["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
-				"rgb(204, 204, 204)", "rgb(217, 217, 217)","rgb(255, 255, 255)"],
-				["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)",
-				"rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"], 
-				["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)", 
-				"rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)", 
-				"rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)", 
-				"rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)", 
-				"rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)", 
-				"rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)",
-				"rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
-				"rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)",
-				"rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)", 
-				"rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
-			]
-		});
-</script>
-
         <script src="../js/joint.js"></script>
         <script src="../js/init_causal.js"></script>
         <script src="../js/draw_causal.js"></script>
-        <script src="../js/events_causal.js"></script>
+        <script src="../js/delete_causal.js"></script>
+        <script src="../js/selection_causal.js"></script>
+        <script src="../js/svg_update_causal.js"></script>
+        <script src="../js/elem_defaults_causal.js"></script>
         <script src="../js/tab_update_causal.js"></script>
         <script src="../js/touchToMouse.js"></script>
-        <script src="../js/loops_causal.js"></script>
+        <script src="../js/model_to_svg_causal.js"></script>
 
 </body>
 </html>

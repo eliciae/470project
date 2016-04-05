@@ -16,7 +16,12 @@ var realtimeUtils = new utils.RealtimeUtils({ clientId: clientId });
 
 authorize();
 
-// Call this function before calling gapi.drive.realtime.load
+
+/**
+* This is how we get the realtime api to work with our custom types
+* @preconditions - Realtime Utils authorization has passed
+* @postconditions - Call this function before calling gapi.drive.realtime.load
+**/
 function registerCustomTypes()
 {
  //CAUSAL VAR REGISTRATION
@@ -60,7 +65,7 @@ function registerCustomTypes()
     this.color = "#FFFFFF";
     this.dashed = '';
     this.shape = "connection";
-	this.arrow  = "";
+    this.arrow  = "";
   }
 
   gapi.drive.realtime.custom.registerType(causalConn, 'causalConn');
@@ -87,6 +92,7 @@ function registerCustomTypes()
       this.y = 0;
       this.type = "ccb";
       this.shape = "loop"
+      this.label = "";
       this.idName = "";
   }
 
@@ -97,11 +103,18 @@ function registerCustomTypes()
   causalLoop.prototype.type = gapi.drive.realtime.custom.collaborativeField('type');
   causalLoop.prototype.shape = gapi.drive.realtime.custom.collaborativeField('shape');
   causalLoop.prototype.idName = gapi.drive.realtime.custom.collaborativeField('idName');
+  causalLoop.prototype.label = gapi.drive.realtime.custom.collaborativeField('label');
 
   gapi.drive.realtime.custom.setInitializer(causalLoop, initializeCausalLoop);
 
 }
 
+/**
+* Verify the user's google account
+* Will either prompt for a log in, or accept a logged in user
+* @preconditions - realtimeUtils has been initialized
+* @postconditions - 
+**/
   function authorize() {
     // Attempt to authorize
     realtimeUtils.authorize(function(response){
@@ -121,6 +134,12 @@ function registerCustomTypes()
     }, false);
   }
 
+
+/**
+* Check whether the file is new, or being loaded from an old session and choose the appropriate action
+* @preconditions - realtime utils has been initialized and has an id parameter
+* @postconditions - 
+**/
   function dostart() 
   {
 	  $('#markup-tab').click(); 
@@ -147,9 +166,15 @@ function registerCustomTypes()
     }
   }
 
-  // The first time a file is opened, it must be initialized with the
-  // document structure. This function will add a collaborative string
-  // to our model at the root.
+
+/**
+* This is used when a new session needs to be created. It starts out with an empty model
+* and adds a colloborative counter to keep track of ids
+* It also adds an event listener for when the root is changed
+* @preconditions - the model has been initialized
+* @postconditions - 
+* @param - {model} the real time model where all of our objects are stored
+**/
   function onFileInitialize(model) 
   {
     localModel = model;
@@ -164,8 +189,14 @@ function registerCustomTypes()
     model.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, displayObjectChangedEvent);
   }
 
-  // After a file has been initialized and loaded, we can access the
-  // document. We will wire up the data model to the UI.
+
+  /**
+  * If the file was prviously initialized, we just need to load it
+  * Draw everything from the model and add a listener for changes
+  * @preconditions - A file was previously initialized and there is a model with data to read from
+  * @postconditions - All data that was stored in the model has been drawn into the svg
+  * @param - {doc} the pre-existing document that we read the model from
+  **/
   function onFileLoaded(doc) 
   {
     localModel = doc.getModel();
@@ -176,12 +207,22 @@ function registerCustomTypes()
   }
 
 
-//ObjectID get & set
+/**
+* Gets the next id number from the collaborative object
+* this needs to be shared so that the ids stay in sync
+* @preconditions - the model and countObjectID within it both exist
+* @postconditions - the count remains unchanged
+**/
 function getObjectID()
 {
   return localModel.getRoot().get('countObjectID');
 }
 
+/**
+* Increases the collab count 
+* @preconditions - the model and countObjectID within it both exist
+* @postconditions - the object id has been increased by one in the model
+**/
 function incrementObjectID()
 {
   var intId = parseInt(localModel.getRoot().get('countObjectID'));
@@ -190,7 +231,16 @@ function incrementObjectID()
 }
 
 
-//3 CreateNewCausal Var, Conn, & Loop
+/**
+* adds a new causal variable to the model with the gievn parameters
+* @preconditions - the local model is initialized 
+* @postconditions - a causal variable has been added to the model and the collab count has been incremented
+* @param {x, y} the x, y coords to draw at 
+* @param {width, height} of the shape to draw
+* @param {label} the label that will display on the variable in the diagram
+* @param {shape} name of shape to draw
+* @param {color} in hex of the shape
+**/
 function createNewCausalVar(x, y, width, height, label, shape, color)
 {
   var causalVarShape = localModel.create('causalVar');
@@ -209,6 +259,16 @@ function createNewCausalVar(x, y, width, height, label, shape, color)
   return causalVarShape;
 }
 
+/**
+* adds a new causal connection to the model with the given parameters
+* @preconditions - the local model is initialized 
+* @postconditions - a causal connection has been added to the model and the collab count has been incremented
+* @param {source, target} either an id of a variable, or x,y coord for the start and end of the connection
+* @param {label} the label that will display on the connection in the diagram
+* @param {vertices} an array of vertex locations
+* @param {color} in hex of the connection
+* @param {arrow} the type of arrow head to display (+,-)
+**/
 function createNewCausalConn(source, target, label, vertices, color, arrow)
 {
   var causalConn = localModel.create('causalConn');
@@ -227,12 +287,20 @@ function createNewCausalConn(source, target, label, vertices, color, arrow)
   return causalConn;
 }
 
-function createNewCausalLoop(x, y, type)
+/**
+* adds a new causal loop to the model with the given parameters
+* @preconditions - the local model is initialized 
+* @postconditions - a causal loop has been added to the model and the collab count has been incremented
+* @param {x, y} the x, y coords to draw at 
+* @param {type} of loop to show
+**/
+function createNewCausalLoop(x, y, type, label)
 {
   var causalLoop = localModel.create('causalLoop');
   causalLoop.x = x;
   causalLoop.y = y;
   causalLoop.type = type;
+  causalLoop.label = label;
   causalLoop.idName = getObjectID();
 
   localModel.getRoot().set(getObjectID(), causalLoop);
