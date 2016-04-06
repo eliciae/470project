@@ -1,7 +1,7 @@
 function loop(cLoop) {
 	var imgLink = "/graphics/" + cLoop.type +".png";
     var cell = new joint.shapes.basic.Image({
-            position : {
+      position : {
 				x : cLoop.x,
 				y : cLoop.y
 			},
@@ -17,7 +17,7 @@ function loop(cLoop) {
 					width : 30,
 					height : 30,
 					value: cLoop.idName
-					}
+				}
 			}
 			
 		});	
@@ -107,6 +107,7 @@ function ellipse(cVar)
 
 	return cell;
 }
+
 
 
 /**

@@ -159,7 +159,7 @@ function registerCustomTypes()
     else 
     {
       // Create a new document, add it to the URL
-      realtimeUtils.createRealtimeFile('New Quickstart File', function(createResponse) {
+      realtimeUtils.createRealtimeFile('New Causal Loop Diagram', function(createResponse) {
         window.history.pushState(null, null, '?id=' + createResponse.id);
         realtimeUtils.load(createResponse.id, onFileLoaded, onFileInitialize);
       });

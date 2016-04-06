@@ -33,7 +33,7 @@ function displayObjectChangedEvent(evt)
           //if the model element does NOT exists in the SVG, then create it 
           if (!keyInSVG(key))
           {
-           drawShape(localModel.getRoot().get(key));
+           drawIntoSVG(localModel.getRoot().get(key));
           }
         });
       }
@@ -69,12 +69,12 @@ function redraw()
       }
       else 
       {
-        drawShape(modelItem);
+        drawIntoSVG(modelItem);
       }
     }
   });
 
   for (var k = 0; k < connectionIDs.length; k++){
-    drawShape(connectionIDs[k]);
+    drawIntoSVG(connectionIDs[k]);
   }
 }
