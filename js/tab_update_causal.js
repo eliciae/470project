@@ -18,7 +18,12 @@ function getConnectionColor()
 
 
 /**
-* This is called from the change listener on the color 
+* This is called from the change listener on the color picker
+* it will fire any time a color is changed, so you need to figure out which type it is on
+* This sets the color of the current object, or the object about to be drawn
+* It sets the color both locally and in the model
+* @preconditions - the color has been changed on a color picker
+* @postconditions - the color on the current object is updated in svg and rt model
 **/
 function updateColor() 
 { 
@@ -66,6 +71,20 @@ function updateColor()
 }
 
 
+
+///////////////
+//TAB UPDATES//
+///////////////
+
+/**
+* Changes the values displayed in the various selection options to match the 
+* currently selected object
+* @preconditions - an object is currently selected
+*                -the correct tab for the object type is open
+* @postconditions - the tabs reflect the value of whatever is currently selected
+* @param
+* @return 
+**/
 function updateValuesSelectedInVaraiableTab()
 {
   //select correct shape attribute
@@ -134,6 +153,9 @@ function updateValuesSelectedInLoopTab()
   document.getElementById(modelEl.type).checked = true;
   document.getElementById("loopLabel").value = modelEl.label;
 }
+
+
+
 
 
 //resizing at realtime

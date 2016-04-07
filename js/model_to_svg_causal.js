@@ -45,7 +45,7 @@ function loop(cLoop) {
 
   var modelId = cell.id;
   el = $('g[model-id="'+modelId+'"]');
-  el.on('mousedown', selectLoop);
+  el.on('mousedown', {shape: "image"}, selectShape);
 
 
 	return cell;
@@ -103,7 +103,7 @@ function ellipse(cVar)
   //add the selection listener to the cell on mousedown
   var modelId = cell.id;
   el = $('g[model-id="'+modelId+'"]');
-  el.on('mousedown', selectEllipse);
+  el.on('mousedown', {shape: "ellipse"}, selectShape);
 
 	return cell;
 }
@@ -156,7 +156,7 @@ function rect(cVar)
 
   var modelId = cell.id;
   el = $('g[model-id="'+modelId+'"]');
-  el.on('mousedown', selectRect);
+  el.on('mousedown', {shape: "rect"}, selectShape);
   
 	
   return cell;
@@ -266,14 +266,25 @@ function connection(cConn)
 
     var modelId = cell.id;
     el = $('g[model-id="'+modelId+'"]');
-    el.find('circle[class="marker-vertex"]').on('mousedown', selectConnection);
-    el.find('path[class="marker-arrowhead"]').on('mousedown', selectConnection);
-    el.on('mousedown', selectConnection);
+    el.find('circle[class="marker-vertex"]').on('mousedown', {shape: "connection"}, selectShape);
+    el.find('path[class="marker-arrowhead"]').on('mousedown', {shape: "connection"}, selectShape);
+    el.on('mousedown', {shape: "connection"}, selectShape);
 
     return cell;
 }
 
 
+
+/**
+* Gets the id for the model object from the value attribute on the svg in the html
+* matching the given joint js assigned model-id value
+* inverse of the getModelIDFromVarID
+* @postconditions - the svg is unchanged
+* @param - {nodeid} the model-id value that joint js automatically assigns to 
+*               the elements that it creates
+* @return - the value attr within the html element which will be the same as the
+*         id that the object was stored in the model under
+**/
 function getVarIDFromSVG(nodeid)
 {
   //check if the thing you are connecting is an ellipse
@@ -288,6 +299,13 @@ function getVarIDFromSVG(nodeid)
 }
 
 
+/**
+* Gets the model-id value that joint js uses from the id that the object
+* is stored under in the real time model
+* @postconditions - the svg and model are unchanged
+* @param - {varID} the id that the object is stored under in the model
+* @return - the id for the joint js model in the format {id: value}
+**/
 function getModelIDFromVarID(varID)
 {
   //find the element with the matching id from the model
@@ -308,6 +326,13 @@ function getModelIDFromVarID(varID)
 }
 
 
+/**
+* Gets the cell joint js object of the currently selected svg element
+* This function is appropriate for the shape and image items
+* @postconditions - the svg is unchanged
+* @return - the cell joint js object corresponding to the currently selected
+*           item in the svg
+**/
 function getCurrentCell()
 {
   //get the joint js cell
@@ -319,6 +344,13 @@ function getCurrentCell()
   return cell; 
 }
 
+
+/**
+* Get the joint js cell of the currently selected svg connection
+* This fuction is appropriate for the connections only
+* @postconditions - the svg is unchanged
+* @return - the joint js cell of currently selected svg connection
+**/
 function getCurrentConnCell()
 {
   var modelId = currentObject.attr("model-id");
@@ -327,6 +359,13 @@ function getCurrentConnCell()
 }
 
 //returns the model el that has the corresponding id to currentCell
+/**
+* Finds the object in the realtime model that matches to the item selected
+* @preconditions - currentObject is not null
+* @postconditions - the svg and real time model are not changed
+* @return {modelEl} - the object from the real time model that matches the 
+*           currently selected object in the svg
+**/
 function getModelElBySvgSelectedID()
 {
 	if (currentObject.prop("tagName") == "rect")
@@ -340,6 +379,12 @@ function getModelElBySvgSelectedID()
 }
 
 
+
+/**
+* Adds a listener to the undo and redo buttons
+* These functions call a built-in undo from real time, clear the svg
+* and then redraw everything in the svg
+**/
 $('#undo').on('mousedown', function(){
   localModel.undo();
   clearDiagram();

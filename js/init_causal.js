@@ -1,7 +1,7 @@
-//this is the one for the server
+//this is the local one
 var clientId = '707956241542-t1qe821rk6jkmnmrcth0aafrjcfjg441.apps.googleusercontent.com';
 
-//this is the local one
+//this is the one for the server @ causaldiagram.usask.ca
 //var clientId = '707956241542-4s76mlqlkm2rol57nneobntvjb6h5sck.apps.googleusercontent.com';
 
 var localModel;
@@ -186,7 +186,7 @@ function registerCustomTypes()
     model.getRoot().set('countObjectID', countObjectID);
     incrementObjectID();
 
-    model.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, displayObjectChangedEvent);
+    model.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, addAndDeleteEvent);
   }
 
 
@@ -203,7 +203,7 @@ function registerCustomTypes()
 
     redraw();
   
-    localModel.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, displayObjectChangedEvent);
+    localModel.getRoot().addEventListener(gapi.drive.realtime.EventType.OBJECT_CHANGED, addAndDeleteEvent);
   }
 
 
