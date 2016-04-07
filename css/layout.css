@@ -1,8 +1,5 @@
 @charset "utf-8";
-/* Simple fluid media
-   Note: Fluid media requires that you remove the media's height and width attributes from the HTML
-   http://www.alistapart.com/articles/fluid-images/ 
-*/
+
 img, object, embed, video {
 	max-width: 100%;
 }
@@ -144,7 +141,6 @@ svg{
 }
 
 
-/*for all*/
 #hiddenPanel, #markup-tab{
 	display:none;
 }
@@ -160,27 +156,28 @@ svg{
 	padding-left: 10px;	
 }
 
-
+/*this is the zoom attribute 
 html {
 	zoom: 60%;
 }
 
 .gridContainer {
+	/*vh is the view height (this allows for there to be no scrolling on the main window)*/
 	height: 166vh;
 }
 
 
 
-/* Desktop Layout: 769px to a max of 1232px. */
+/* Desktop Layout: at least 800px wide. */
 
 @media only screen and (min-width: 800px) {
 	
-html {
-	zoom: 100%;
-}
-
-.gridContainer{
-	height: 100vh;	
-}
+	html{
+		zoom: 100%;
+	}
+	
+	.gridContainer{
+		height: 100vh;	
+	}
 }
 
