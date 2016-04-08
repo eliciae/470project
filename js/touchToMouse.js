@@ -1,3 +1,9 @@
+/**
+* Allows touch events to act as mouse events
+* @preconditions - touch event of type touchstart or touchmove
+* @postconditions - touchstart event triggers a mousedown event and touchmove event triggers a click event
+* @param {event} touch event
+**/
 function touchHandler(event)
 {
     var touches = event.changedTouches,
@@ -20,16 +26,23 @@ function touchHandler(event)
     event.preventDefault();
 }
 
+/**
+* Creates listener on touchstart and touchmove events
+**/
 function init() 
 {
     document.addEventListener("touchstart", touchHandler, true);
     document.addEventListener("touchmove", touchHandler, true);
-    document.addEventListener("touchend", touchHandler, true);
  
 }
 init();
 
-
+/**
+* Allows touch events on text areas
+* @preconditions - touch event of type touchstart 
+* @postconditions - cursor after last letter in text area
+* @param {event} touch event
+**/
 $('#varLabel').on('touchstart', function(event)
 {
     $('#varLabel').focus();

@@ -1,3 +1,9 @@
+/**
+* Create a joint js image and draw it in the svg
+* @preconditions - a valid causal variable has been added to the real time model
+* @postconditions - the image has been drawn into the svg and the object exists in the graph 
+* @param {cLoop} a causal variable that exists in the model and is used to get the values to draw from
+**/
 function loop(cLoop) {
 	var imgLink = "/graphics/" + cLoop.type +".png";
     var cell = new joint.shapes.basic.Image({
@@ -163,7 +169,12 @@ function rect(cVar)
 }
 
 
-
+/**
+* Create a joint js arrow and draw it in the svg
+* @preconditions - a valid causal variable has been added to the real time model
+* @postconditions - the arrow has been drawn into the svg and the object exists in the graph 
+* @param {cConn} a causal variable that exists in the model and is used to get the values to draw from
+**/
 function connection(cConn) 
 {
     //if the id is set, it is pointing to a variable, not a point.
